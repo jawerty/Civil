@@ -1,4 +1,0 @@
-Civil
-=====
-
-Socializing democracy
