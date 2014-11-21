@@ -2,6 +2,9 @@ var mongoose = require('mongoose')
 ,Schema = mongoose.Schema
 ,ObjectId = Schema.ObjectId;
  
+var db_url = process.env.MONGOHQ_URL || "mongodb://localhost:27017/Civil",
+db = mongoose.connect(db_url);
+
 var usersSchema = new Schema({
 	id: ObjectId,
 	dateCreated: {type: Date, default: Date.now},
@@ -12,14 +15,14 @@ var usersSchema = new Schema({
 	password: {type: String, required: true}
 });
 
-var events = new Schema({
+var eventSchema = new Schema({
     Id: ObjectId,
     date: {type: Date, default: Date.now}, 
     name: {type: String},
     description: {type: String}
 });
 
-var announcements = new Schema({
+var announcementSchema = new Schema({
     Id: ObjectId,
     title: {type: String},
     description: {type: String}
@@ -31,11 +34,9 @@ var movementsSchema = new Schema({
 	founder: {type: String},
 	title: {type: String},
 	description: {type: String},
-	events: [events],
-	announcements: [announcements]
+	events: [eventSchema],
+	announcements: [announcementSchema]
 });
 
-
-
-module.exports = mongoose.model('users', usersSchema); 
-module.exports = mongoose.model('movements', movementsSchema); 
+module.exports = db.model('users', usersSchema); 
+module.exports = db.model('movements', movementsSchema); 

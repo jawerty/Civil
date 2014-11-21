@@ -8,6 +8,8 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var errorHandler = require('errorhandler');
+var mongoose = require("mongoose");
+var schema = require("./schema");
 
 /* Importing routing functions 8 */
 var Movements = require("./routes/movements");

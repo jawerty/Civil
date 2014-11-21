@@ -1,5 +1,12 @@
-exports.movementsPOST = function(req, res) {
-  	res.send("movements");
+var mongoose = require("mongoose");
+var users = mongoose.model('users');
+var movements = mongoose.model('movements');
+
+exports.movementsPOST = function(req, res, next) {
+  	var data = req.body;
+
+  	console.log(data);
+  	res.end();
 }
 
 exports.movementsIdPOST = function(req, res) {
