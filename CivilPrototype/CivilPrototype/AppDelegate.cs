@@ -14,7 +14,6 @@ namespace CivilPrototype
 	public partial class AppDelegate : UIApplicationDelegate
 	{
 		// class-level declarations
-
 		public override UIWindow Window {
 			get;
 			set;
