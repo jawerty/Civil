@@ -18,7 +18,7 @@ var movementsSchema = new Schema({
 	founder: {type: String},
 	title: {type: String},
 	description: {type: String},
-	events: {type: String},
+	events: {type: String}
 });
 
 module.exports = mongoose.model('Post', postSchema); 
