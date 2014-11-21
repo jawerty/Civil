@@ -31,12 +31,6 @@ namespace CivilPrototype
 				}
 			}
 		}
-		public FlyoutNavigationController Navigation{
-
-			get{ return navControl;}
-			set{ navControl = value;}
-
-		}
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
@@ -76,6 +70,11 @@ namespace CivilPrototype
 			navigationView.AddSubview (sliderMenuButton);
 			View.AddSubview (navigationView);
 		}
+		public FlyoutNavigationController Navigation{
 
+			get{ return navControl;}
+			set{ navControl = value;}
+
+		}
 	}
 }

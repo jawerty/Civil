@@ -10,10 +10,6 @@ namespace CivilPrototype
 {
 	partial class RootViewController : UIViewController
 	{
-		RoundableUIView sliderMenuButton;
-		RoundableUIView navigationView;
-		RectangleF navRect;
-		RectangleF sliderRect;
 		FlyoutNavigationController navigation;
 		public RootViewController (IntPtr handle) : base (handle)
 		{
