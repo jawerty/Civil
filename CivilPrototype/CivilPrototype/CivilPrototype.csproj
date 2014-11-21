@@ -84,6 +84,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
+    <Reference Include="MonoTouch.Dialog-1" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
@@ -107,6 +108,8 @@
     <Compile Include="InfoViewController.designer.cs">
       <DependentUpon>InfoViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="SplitViewController.cs" />
+    <Compile Include="ColorsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainStoryboard_iPhone.storyboard" />
