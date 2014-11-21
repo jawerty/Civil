@@ -22,7 +22,7 @@ exports.usersPOST = function(req, res) {
 
 	} catch (err) {
 		console.log(err)
-		res.send(err)
+		sendERR(err)
 	}
   	
 }
@@ -38,14 +38,25 @@ exports.usersIdGET = function(req, res) {
 	try {
 		users.findOne({_id: usersId}, function(err, doc) {
 	  		console.log(doc);
-	  		res.send(doc);
+	  		if (doc) {
+	  			res.send("{ \"message\": \"User found\", \"document\": \""+doc+"\" }");
+	  		} else {
+	  			res.send("{ \"message\": \"User not found\" }");
+	  		}
+	  		
 	  	});
 	} catch (err) {
-		res.send(err)
+		sendERR(err)
 	}
 }
 
 exports.usersIdDELETE = function(req, res) {
 	var usersId = req.params.id;
   	res.send(usersId);
+  	try {
+		users.findOne({_id: usersId}).remove();
+		res.send("{ \"message\": \"User deleted\" }");
+	} catch (err) {
+		sendERR(err)
+	}
 }

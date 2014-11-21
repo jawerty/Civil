@@ -1,7 +1,6 @@
 var express = require('express');
 var app = express();
 var path = require('path');
-var favicon = require('serve-favicon');
 var logger = require('morgan');
 var methodOverride = require('method-override');
 var session = require('express-session');
@@ -17,10 +16,14 @@ var Users = require("./routes/users");
 
 var env = app.settings.env;
 
+app.use(function (req, res, next) {
+	function sendERR(err) {
+		res.send("{ \"message\": \""+err+"\" }");
+	}
+});
+
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(methodOverride());
 app.use(session({ resave: true,
@@ -51,8 +54,12 @@ app.post('/users/:id', Users.usersIdPOST)
 app.delete('/movements/:id', Movements.movementsIdDELETE)
 app.delete('/users/:id', Users.usersIdDELETE)
 
+/* Creating announcements and events */
+app.post('/movements/:id/announcements', Movements.movementsIdAnnuncementsPOST);
+app.post('/movements/:id/events', Movements.movementsIdEventsPOST);
+
 var server = app.listen(3000, function () {
   var host = server.address().address;
   var port = server.address().port;
   console.log('Civil server at http://%s:%s', host, port);
-})
+});

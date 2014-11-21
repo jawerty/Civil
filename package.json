@@ -2,6 +2,9 @@
   "name": "Civil",
   "description": "Socializing Democracy",
   "author": "Jared Wright <jawerty210@gmail.com>",
+  "scripts": {
+ 	"start": "node app.js"
+  },
   "dependencies": {
     "express": "4.10.1",
     "jade": "1.7.0",
