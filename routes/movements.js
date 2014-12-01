@@ -1,24 +1,25 @@
 var mongoose = require("mongoose");
 var users = mongoose.model('users');
 var movements = mongoose.model('movements');
-
+	
 exports.movementsPOST = function(req, res, next) {
   	var data = req.body;
+  	console.log(data);
 
   	try {
-  		var newMovement = new users({
+  		var newMovement = new movements({
 			founder: data.founder,
 			title: data.title,
 			description: data.description
 		});  
+
+		newMovement.save();
+
+		res.send("{ \"message\": \"Movement created\" }");
+
   	} catch (err) {
   		sendERR(err);
   	}
-			
-
-	newMovement.save();
-
-  	res.end();
 }
 
 exports.movementsIdPOST = function(req, res) {

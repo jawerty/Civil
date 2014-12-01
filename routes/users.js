@@ -1,25 +1,44 @@
 var mongoose = require("mongoose");
 var users = mongoose.model('users');
 var movements = mongoose.model('movements');
+var bcrypt = require("bcrypt");
 
 exports.usersPOST = function(req, res) {
 	var data = req.body;
-	console.log(data)
+	console.log(data);	
+
 	try {
-		var newUser = new users({
-			firstName: data.firstName,
-			lastName: data.lastName,
-			email: data.email,
-			username: data.username,
-			password: data.password
-		});
+		if (data.password.length < 8) {
+			sendERR("Password must be at least 8 characters");
+		} else {
+			bcrypt.genSalt(10, function(err, salt) {
+			    bcrypt.hash(data.password, salt, function(err, hash) {
+			        bcrypt.compare(data.password_check, hash, function(err, res) {
+						if (res == true) {
+							var newUser = new users({
+								firstName: data.firstName,
+								lastName: data.lastName,
+								email: data.email,
+								username: data.username,
+								password: hash
+							});
 
-	  	newUser.save();
+						  	newUser.save();
 
-	  	console.log(newUser);
+						  	console.log(newUser);
 
-	  	res.send("{ \"message\": \"User "+data.username+" Created\", \"id\": \""+newUser._id+"\" }");
+						  	res.send("{ \"message\": \"User "+data.username+" Created\", \"id\": \""+newUser._id+"\" }");
+						} else if (res == false) {
+							sendERR("Passwords must match")
+						} else {
+							sendERR("Miscellaneous error in password encryption")
+						}
+					});
+			    });
+			});
 
+			
+	  	}
 	} catch (err) {
 		console.log(err)
 		sendERR(err)

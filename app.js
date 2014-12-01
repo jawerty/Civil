@@ -17,9 +17,16 @@ var Users = require("./routes/users");
 var env = app.settings.env;
 
 app.use(function (req, res, next) {
+
+	res.set({
+	  'Content-Type': 'application/json',
+	});
+
 	function sendERR(err) {
 		res.send("{ \"message\": \""+err+"\" }");
 	}
+
+	next()
 });
 
 app.set('port', process.env.PORT || 3000);
