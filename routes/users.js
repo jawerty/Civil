@@ -4,7 +4,7 @@ var movements = mongoose.model('movements');
 var bcrypt = require("bcrypt");
 
 exports.usersLogin = function(req, res) {
-	res.sendERR("Logi function yet to be made.")
+	sendERR("Logi function yet to be made.")
 }
 
 exports.usersPOST = function(req, res) {
