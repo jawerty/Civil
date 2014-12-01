@@ -13,6 +13,9 @@
 //    limitations under the License.
 
 using System;
+using CivilPrototype;
+
+
 #if __UNIFIED__
 using CoreGraphics;
 using Foundation;
@@ -48,6 +51,7 @@ namespace FlyoutNavigation
 		DialogViewController navigation;
 		int selectedIndex;
 		UIView shadowView;
+		bool isOpen = false;
 		#if __UNIFIED__
 		nfloat startX;
 		#else
@@ -55,7 +59,7 @@ namespace FlyoutNavigation
 		#endif
 		UIColor tintColor;
 		UIView statusImage;
-		protected UIViewController[] viewControllers;
+		protected NavigableViewController[] viewControllers;
 		bool hideShadow;
 
 		public FlyoutNavigationController(IntPtr handle) : base(handle)
@@ -119,7 +123,7 @@ namespace FlyoutNavigation
 			set { shadowView.BackgroundColor = value; }
 		}
 
-		public UIViewController CurrentViewController { get; private set; }
+		public NavigableViewController CurrentViewController { get; private set; }
 
 		UIView mainView
 		{
@@ -136,13 +140,12 @@ namespace FlyoutNavigation
 			get { return navigation.Root; }
 			set { EnsureInvokedOnMainThread(delegate { navigation.Root = value; }); }
 		}
-
 		public UITableView NavigationTableView
 		{
 			get { return navigation.TableView; }
 		}
 
-		public UIViewController[] ViewControllers
+		public NavigableViewController[] ViewControllers
 		{
 			get { return viewControllers; }
 			set
@@ -503,7 +506,7 @@ namespace FlyoutNavigation
 		{
 			if (mainView == null || mainView.Frame.X == 0 || ShouldStayOpen)
 				return;
-
+			CurrentViewController.SliderMenuButton.Alpha = 1.0f;
 			EnsureInvokedOnMainThread(delegate
 				{
 					//isOpen = false;

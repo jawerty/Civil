@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace CivilPrototype
 {
-	partial class NavigableViewController : UIViewController
+	public partial class NavigableViewController : UIViewController
 	{
 		RoundableUIView sliderMenuButton;
 		RoundableUIView navigationView;
@@ -17,6 +17,12 @@ namespace CivilPrototype
 		FlyoutNavigationController navControl;
 		public NavigableViewController () : base ()
 		{
+
+		}
+		public RoundableUIView SliderMenuButton{
+
+			get{ return sliderMenuButton; }
+			set{ sliderMenuButton = value; }
 
 		}
 		public override void TouchesBegan (NSSet touches, UIEvent evt)
@@ -47,7 +53,7 @@ namespace CivilPrototype
 				BackgroundColor = UIColor.Black,
 				Frame = sliderRect,
 				CornerRadius = 4,
-
+				Alpha = 1.0f
 			};
 			var miniViews = new RoundableUIView{new RoundableUIView{
 					Frame = new RectangleF(new PointF(5f,7.5f),new SizeF(20f,3f)),
