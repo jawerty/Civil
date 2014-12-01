@@ -11,7 +11,7 @@ namespace CivilPrototype
 	partial class RootViewController : UIViewController
 	{
 		FlyoutNavigationController navigation;
-		bool userLoggedIn = false;
+		bool userLoggedIn = true;
 		public RootViewController (IntPtr handle) : base (handle)
 		{
 		}

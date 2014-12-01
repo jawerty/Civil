@@ -53,7 +53,6 @@ namespace CivilPrototype
 				Placeholder = "Last Name",
 				BorderStyle = UITextBorderStyle.RoundedRect,
 				Frame = new RectangleF(10, 2*(h+marginBot), w -20, h),
-				SecureTextEntry = true
 			};
 			emailField = new UITextField
 			{
@@ -66,13 +65,13 @@ namespace CivilPrototype
 				Placeholder = "Username",
 				BorderStyle = UITextBorderStyle.RoundedRect,
 				Frame = new RectangleF(10, 4*(h+marginBot), w -20, h),
-				SecureTextEntry = true
 			};
 			passwordField = new UITextField
 			{
 				Placeholder = "Password",
 				BorderStyle = UITextBorderStyle.RoundedRect,
-				Frame = new RectangleF(10, 5*(h+marginBot), w -20, h)
+				Frame = new RectangleF(10, 5*(h+marginBot), w -20, h),
+				SecureTextEntry = true
 			};
 			passwordCheckField = new UITextField
 			{
@@ -115,18 +114,19 @@ namespace CivilPrototype
 		}
 		public bool CreateUser(string firstName,string lastName,string email,string username,string password,string passwordCheck){
 
-			var request = (HttpWebRequest)WebRequest.Create("http://0.0.0.0:3000/users");
+			var request = (HttpWebRequest)WebRequest.Create("http://127.0.0.1:3000/users");
 
-			var postData = "{firstName: " + firstName + "," ;
-			postData += "lastName: " + lastName + "," ;
-			postData += "email: " + email + "," ;
-			postData += "username: " + username + "," ;
-			postData += "password: " + password + "," ;
-			postData += "passwordCheck: " + passwordCheck + "}" ;
+			var postData = "{\"firstName\": " + "\"" + firstName + "\"" + "," ;
+			postData += "\"lastName\": " + "\"" + lastName  + "\"" + "," ;
+			postData += "\"email\": " + "\"" + email  + "\"" + "," ;
+			postData += "\"username\": " + "\"" + username  + "\"" + "," ;
+			postData += "\"password\": " + "\"" + password  + "\"" + "," ;
+			postData += "\"passwordCheck\": " + "\"" + passwordCheck  + "\"" + "}" ;
+			Console.WriteLine (postData);
 			var data = Encoding.ASCII.GetBytes(postData);
 
 			request.Method = "POST";
-			request.ContentType = "application/x-www-form-urlencoded";
+			request.ContentType = "application/json";
 			request.ContentLength = data.Length;
 
 			using (var stream = request.GetRequestStream())
