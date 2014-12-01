@@ -14,7 +14,7 @@ var schema = require("./schema");
 var Movements = require("./routes/movements");
 var Users = require("./routes/users");
 
-var env = app.settings.env;
+var env = app.settings.env; 
 
 app.use(function (req, res, next) {
 

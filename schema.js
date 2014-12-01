@@ -4,6 +4,8 @@ var mongoose = require('mongoose')
  
 var db_url = process.env.MONGOHQ_URL || "mongodb://localhost:27017/Civil",
 db = mongoose.connect(db_url);
+conn = mongoose.connection
+conn.on('error', console.error.bind(console, 'connection error:'));
 
 var usersSchema = new Schema({
 	id: ObjectId,

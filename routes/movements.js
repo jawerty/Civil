@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var users = mongoose.model('users');
 var movements = mongoose.model('movements');
 
-function sendERR(err) {
+function sendERR(err, res) {
 	res.send("{ \"message\": \""+err+"\" }");
 }
 
@@ -22,7 +22,7 @@ exports.movementsPOST = function(req, res, next) {
 		res.send("{ \"message\": \"Movement created\" }");
 
   	} catch (err) {
-  		sendERR(err);
+  		sendERR(err, res);
   	}
 }
 

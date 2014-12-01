@@ -3,26 +3,26 @@ var users = mongoose.model('users');
 var movements = mongoose.model('movements');
 var bcrypt = require("bcrypt");
 
-function sendERR(err) {
+function sendERR(err, res) {
 	res.send("{ \"message\": \""+err+"\" }");
 }
 
 exports.usersAuth = function(req, res) {
-	sendERR("Auth function yet to be made.")
+	sendERR("Auth function yet to be made.", res)
 }
 
-exports.usersPOST = function(req, res) {
+exports.usersPOST = function(req, res, next) {
 	var data = req.body;
 	console.log(data);	
 
 	try {
 		if (data.password.length < 8) {
-			sendERR("Password must be at least 8 characters");
+			sendERR("Password must be at least 8 characters", res);
 		} else {
 			bcrypt.genSalt(10, function(err, salt) {
-			    bcrypt.hash(data.password, salt, function(err, hash) {
-			        bcrypt.compare(data.passwordCheck, hash, function(err, res) {
-						if (res == true) {
+			    bcrypt.hash(data.password, salt, function(err1, hash) {
+			        bcrypt.compare(data.passwordCheck, hash, function(err2, response) {
+						if (response == true) {
 							var newUser = new users({
 								firstName: data.firstName,
 								lastName: data.lastName,
@@ -36,10 +36,11 @@ exports.usersPOST = function(req, res) {
 						  	console.log(newUser);
 
 						  	res.send("{ \"message\": \"User "+data.username+" Created\", \"id\": \""+newUser._id+"\" }");
-						} else if (res == false) {
-							sendERR("Passwords must match")
+						  	next();
+						} else if (response == false) {
+							sendERR("Passwords must match", res)
 						} else {
-							sendERR("Miscellaneous error in password encryption")
+							sendERR("Miscellaneous error in password encryption", res)
 						}
 					});
 			    });
@@ -49,7 +50,7 @@ exports.usersPOST = function(req, res) {
 	  	}
 	} catch (err) {
 		console.log(err)
-		sendERR(err)
+		sendERR(err, res)
 	}
   	
 }
@@ -73,7 +74,7 @@ exports.usersIdGET = function(req, res) {
 	  		
 	  	});
 	} catch (err) {
-		sendERR(err)
+		sendERR(err, res)
 	}
 }
 
@@ -84,6 +85,6 @@ exports.usersIdDELETE = function(req, res) {
 		users.findOne({_id: usersId}).remove();
 		res.send("{ \"message\": \"User deleted\" }");
 	} catch (err) {
-		sendERR(err)
+		sendERR(err, res)
 	}
 }
