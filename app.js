@@ -54,7 +54,7 @@ app.post('/movements', Movements.movementsPOST)
 app.post('/users', Users.usersPOST)
 
 /* User logging in and authentication */
-app.post('/users/login', Users.usersLogin)
+app.post('/users/auth', Users.usersAuth)
 
 /* Updating movement and user information */
 app.post('/movements/:id', Movements.movementsIdPOST)
