@@ -85,6 +85,9 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
     <Reference Include="MonoTouch.Dialog-1" />
+    <Reference Include="FlyoutNavigation">
+      <HintPath>..\Components\flyoutnavigation-1.5\lib\ios\FlyoutNavigation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
@@ -96,24 +99,22 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="LoginController.cs" />
-    <Compile Include="LoginController.designer.cs">
-      <DependentUpon>LoginController.cs</DependentUpon>
+    <Compile Include="RootViewController.cs" />
+    <Compile Include="RootViewController.designer.cs">
+      <DependentUpon>RootViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="HomeController.cs" />
-    <Compile Include="HomeController.designer.cs">
-      <DependentUpon>HomeController.cs</DependentUpon>
-    </Compile>
-    <Compile Include="InfoViewController.cs" />
-    <Compile Include="InfoViewController.designer.cs">
-      <DependentUpon>InfoViewController.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SplitViewController.cs" />
-    <Compile Include="ColorsController.cs" />
+    <Compile Include="RoundableUIView.cs" />
+    <Compile Include="NavigableViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainStoryboard_iPhone.storyboard" />
     <InterfaceDefinition Include="MainStoryboard_iPad.storyboard" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup>
+    <XamarinComponentReference Include="flyoutnavigation">
+      <Version>1.5</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+  </ItemGroup>
 </Project>
