@@ -1,6 +1,6 @@
-# Version: 8.4.0.14 (1d464a1)
+# Version: 8.4.0.43 (840a925)
 # [first argument, ignore] # /Users/Carter/Desktop/Civil/CivilPrototype/CivilPrototype/bin/iPhoneSimulator/Debug/mtouch.exe
-/Library/Frameworks/Xamarin.iOS.framework/Versions/8.4.0.14/bin/mtouch \
+/Library/Frameworks/Xamarin.iOS.framework/Versions/8.4.0.43/bin/mtouch \
 	-sdkroot \
 	/Applications/Xcode.app/Contents/Developer \
 	--cache \
@@ -19,8 +19,6 @@
 	/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/2.1/monotouch.dll \
 	-r \
 	/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/2.1/MonoTouch.Dialog-1.dll \
-	-r \
-	/Users/Carter/Desktop/Civil/CivilPrototype/Components/flyoutnavigation-1.5/lib/ios/FlyoutNavigation.dll \
 	-debug \
 	-nolink \
 	-sdk \

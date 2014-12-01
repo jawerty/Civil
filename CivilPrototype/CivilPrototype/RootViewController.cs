@@ -17,6 +17,11 @@ namespace CivilPrototype
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
+			var viewsControl = new [] {
+				new NavigableViewController () { Navigation = navigation },
+				new NavigableViewController () { Navigation = navigation },
+				new NavigableViewController () { Navigation = navigation },
+			};
 			navigation = new FlyoutNavigationController {
 				// Create the navigation menu
 				NavigationRoot = new RootElement ("Navigation") {
@@ -27,12 +32,12 @@ namespace CivilPrototype
 					}
 				},
 				// Supply view controllers corresponding to menu items:
-				ViewControllers = new [] {
-					new NavigableViewController() { Navigation = navigation },
-					new NavigableViewController() { Navigation = navigation },
-					new NavigableViewController() { Navigation = navigation },
-				},
+				ViewControllers = viewsControl
 			};
+			viewsControl [0].Navigation = navigation;
+			viewsControl [1].Navigation = navigation;
+			viewsControl [2].Navigation = navigation;
+
 			// Show the navigation view
 			View.AddSubview (navigation.View);
 			navigation.View.Hidden = true;
