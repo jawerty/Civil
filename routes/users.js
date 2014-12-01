@@ -3,6 +3,10 @@ var users = mongoose.model('users');
 var movements = mongoose.model('movements');
 var bcrypt = require("bcrypt");
 
+function sendERR(err) {
+	res.send("{ \"message\": \""+err+"\" }");
+}
+
 exports.usersAuth = function(req, res) {
 	sendERR("Auth function yet to be made.")
 }

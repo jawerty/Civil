@@ -22,10 +22,6 @@ app.use(function (req, res, next) {
 	  'Content-Type': 'application/json',
 	});
 
-	function sendERR(err) {
-		res.send("{ \"message\": \""+err+"\" }");
-	}
-
 	next()
 });
 

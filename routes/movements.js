@@ -1,7 +1,11 @@
 var mongoose = require("mongoose");
 var users = mongoose.model('users');
 var movements = mongoose.model('movements');
-	
+
+function sendERR(err) {
+	res.send("{ \"message\": \""+err+"\" }");
+}
+
 exports.movementsPOST = function(req, res, next) {
   	var data = req.body;
   	console.log(data);
