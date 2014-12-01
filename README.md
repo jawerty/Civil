@@ -13,7 +13,7 @@ and
 ```
 
 ## Movements
-#### POST /movements
+### POST /movements
 DATA
 ```
 {
@@ -23,10 +23,10 @@ DATA
 }
 ```
 
-#### GET /movements
+### GET /movements
 TBD....
 
-#### GET /movements/:id
+### GET /movements/:id
 RESPONSE
 ```
 {
@@ -40,14 +40,14 @@ RESPONSE
 }
 ```
 
-#### POST /movements/:id
+### POST /movements/:id
 DATA
 ```
 {
 	//any combination of values: 'founder', 'title', 'events', etc.
 }
 ```
-#### DELETE /movements/:id
+### DELETE /movements/:id
 RESPONSE
 ```
 {
@@ -55,20 +55,20 @@ RESPONSE
 }
 ```
 
-#### POST /movements/:id/announcements
+### POST /movements/:id/announcements
 TBD....
 
-#### GET /movements/:id/announcements
+### GET /movements/:id/announcements
 TBD....
 
-#### POST /movements/:id/events
+### POST /movements/:id/events
 TBD....
 
-#### GET /movements/:id/events
+### GET /movements/:id/events
 TBD....
 
 ## Users
-#### POST /users
+### POST /users
 DATA 
 ```
 {
@@ -81,7 +81,7 @@ DATA
 }
 ```
 
-#### GET /users/:id
+### GET /users/:id
 RESPONSE 
 ```
 {
@@ -94,7 +94,7 @@ RESPONSE
 }
 ```
 
-#### POST /users/:id
+### POST /users/:id
 DATA
 ```
 {
@@ -102,7 +102,7 @@ DATA
 }
 ```
 
-#### DELETE /users/:id
+### DELETE /users/:id
 RESPONSE 
 ```
 {
