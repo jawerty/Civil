@@ -17,12 +17,13 @@ namespace CivilPrototype
 		}
 		public bool LoginUser(string username, string password){
 
-
+			return true;
 
 		}
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
+			NavigationController.NavigationBarHidden = true;
 			if (userLoggedIn) {
 				var viewsControl = new [] {
 					new NavigableViewController () { Navigation = navigation },
@@ -52,6 +53,7 @@ namespace CivilPrototype
 				navigation.ToggleMenu ();
 				navigation.View.Hidden = false;
 			} else {
+
 					UITextField usernameField, passwordField;
 					// keep the code the username UITextField
 					float h = 31.0f;
@@ -77,8 +79,16 @@ namespace CivilPrototype
 					{
 						string username = usernameField.Text;
 						string password = passwordField.Text;
-						
+						LoginUser(username,password);
 					};
+					var createAccountButton = UIButton.FromType(UIButtonType.RoundedRect);
+					createAccountButton.Frame = new RectangleF(10, 200, w - 20, 44);
+					createAccountButton.SetTitle("Create Account", UIControlState.Normal);
+					createAccountButton.TouchUpInside += delegate
+					{
+					NavigationController.PushViewController(new CreateAccountController(this.NavigationController),true);
+					};
+					View.AddSubview(createAccountButton);
 					View.AddSubview(submitButton);
 					View.AddSubview(usernameField); 
 					View.AddSubview(passwordField);

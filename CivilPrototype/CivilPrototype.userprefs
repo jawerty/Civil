@@ -1,15 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.1" />
-  <MonoDevelop.Ide.Workbench>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="CivilPrototype" expanded="True">
-            <Node name="RootViewController.cs" selected="True" />
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
+  <MonoDevelop.Ide.Workbench ActiveDocument="CivilPrototype/RootViewController.cs">
+    <Files>
+      <File FileName="CivilPrototype/NavigableViewController.cs" Line="4" Column="4" />
+      <File FileName="CivilPrototype/FlyoutNavigationController.cs" Line="56" Column="56" />
+      <File FileName="CivilPrototype/OpenMenuGestureRecognizer.cs" Line="45" Column="45" />
+      <File FileName="CivilPrototype/RootViewController.cs" Line="20" Column="20" />
+    </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
