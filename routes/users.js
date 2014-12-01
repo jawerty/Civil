@@ -13,7 +13,7 @@ exports.usersPOST = function(req, res) {
 		} else {
 			bcrypt.genSalt(10, function(err, salt) {
 			    bcrypt.hash(data.password, salt, function(err, hash) {
-			        bcrypt.compare(data.password_check, hash, function(err, res) {
+			        bcrypt.compare(data.passwordCheck, hash, function(err, res) {
 						if (res == true) {
 							var newUser = new users({
 								firstName: data.firstName,
