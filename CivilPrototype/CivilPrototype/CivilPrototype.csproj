@@ -105,6 +105,8 @@
     <Compile Include="FlyoutNavigationController.cs" />
     <Compile Include="OpenMenuGestureRecognizer.cs" />
     <Compile Include="CreateAccountController.cs" />
+    <Compile Include="DesignConstants.cs" />
+    <Compile Include="DataLayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainStoryboard_iPhone.storyboard" />

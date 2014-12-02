@@ -18,6 +18,7 @@ namespace CivilPrototype
 		UIColor surfer = UIColor.FromRGB (26, 149, 149);
 		UIColor grey = UIColor.FromRGB (110, 115, 123);
 		UIColor lgrey = UIColor.FromRGB (192, 198, 200);
+		string response;
 		public CreateAccountController (UINavigationController nav) : base ()
 		{
 			navigation = nav;
@@ -98,7 +99,9 @@ namespace CivilPrototype
 				string password = passwordField.Text;
 				string email = emailField.Text;
 				string passwordCheck = passwordCheckField.Text;
-				CreateUser(firstName,lastName,email,username,password,passwordCheck);
+				CreateAsync(firstName,lastName,email,username,password,passwordCheck);
+				navigation.PopToRootViewController(true);
+				navigation.ViewControllers[0].ViewDidLoad();
 			};
 			var loginButton = UIButton.FromType(UIButtonType.RoundedRect);
 			loginButton.Frame = new RectangleF(10, 430, w - 20, 50);
@@ -107,7 +110,7 @@ namespace CivilPrototype
 			loginButton.TouchUpInside += delegate
 			{
 				navigation.PopToRootViewController(true);
-
+				navigation.ViewControllers[0].ViewDidLoad();
 			};
 			View.AddSubview(loginButton);
 			View.AddSubview(submitButton);
@@ -120,33 +123,10 @@ namespace CivilPrototype
 			View.AddSubview(passwordCheckField);
 			// Perform any additional setup after loading the view, typically from a nib.
 		}
-		public bool CreateUser(string firstName,string lastName,string email,string username,string password,string passwordCheck){
+		public async void CreateAsync(string firstName,string lastName,string email,string username,string password,string passwordCheck){
 
-			var request = (HttpWebRequest)WebRequest.Create("http://127.0.0.1:3000/users");
-
-			var postData = "{\"firstName\": " + "\"" + firstName + "\"" + "," ;
-			postData += "\"lastName\": " + "\"" + lastName  + "\"" + "," ;
-			postData += "\"email\": " + "\"" + email  + "\"" + "," ;
-			postData += "\"username\": " + "\"" + username  + "\"" + "," ;
-			postData += "\"password\": " + "\"" + password  + "\"" + "," ;
-			postData += "\"passwordCheck\": " + "\"" + passwordCheck  + "\"" + "}" ;
-			Console.WriteLine (postData);
-			var data = Encoding.ASCII.GetBytes(postData);
-
-			request.Method = "POST";
-			request.ContentType = "application/json";
-			request.ContentLength = data.Length;
-
-			using (var stream = request.GetRequestStream())
-			{
-				stream.Write(data, 0, data.Length);
-			}
-
-			var response = (HttpWebResponse)request.GetResponse();
-
-			var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-			Console.WriteLine (responseString);
-			return false;
+			response = await DataLayer.CreateUser(firstName,lastName,email,username,password,passwordCheck);
+			Console.WriteLine (response);
 		}
 	}
 }
