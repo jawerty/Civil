@@ -11,7 +11,12 @@ namespace CivilPrototype
 	partial class RootViewController : UIViewController
 	{
 		FlyoutNavigationController navigation;
-		bool userLoggedIn = true;
+		bool userLoggedIn = false;
+		UIColor teal = UIColor.FromRGB (12, 91, 108);
+		UIColor peakcock = UIColor.FromRGB (7, 57, 62);
+		UIColor surfer = UIColor.FromRGB (26, 149, 149);
+		UIColor grey = UIColor.FromRGB (110, 115, 123);
+		UIColor lgrey = UIColor.FromRGB (192, 198, 200);
 		public RootViewController (IntPtr handle) : base (handle)
 		{
 		}
@@ -24,19 +29,51 @@ namespace CivilPrototype
 		{
 			base.ViewDidLoad ();
 			NavigationController.NavigationBarHidden = true;
+
 			if (userLoggedIn) {
 				var viewsControl = new [] {
-					new NavigableViewController () { Navigation = navigation },
-					new NavigableViewController () { Navigation = navigation },
-					new NavigableViewController () { Navigation = navigation },
+					new NavigableViewController () { Navigation = navigation, 
+						MainView = new UIView(View.Bounds){
+							new UITextView
+							{
+								Text = "Discover",
+								BackgroundColor = UIColor.Clear,
+								Font = UIFont.FromName("Baskerville",25),
+								TextAlignment = UITextAlignment.Center,
+								Frame = new RectangleF(40, 10.0f, View.Bounds.Width - 80, 40.0f)
+							},
+						} 
+					},
+					new NavigableViewController () { Navigation = navigation, 
+						MainView = new UIView(View.Bounds){
+							new UITextView
+							{
+								Text = "Profile",
+								Font = UIFont.FromName("Baskerville",25),
+								BackgroundColor = UIColor.Clear,
+								TextAlignment = UITextAlignment.Center,
+								Frame = new RectangleF(40, 10.0f, View.Bounds.Width - 80, 40.0f)
+							},
+						}  },
+					new NavigableViewController () { Navigation = navigation, 
+						MainView = new UIView(View.Bounds){
+							new UITextView
+							{
+								Text = "Settings",
+								BackgroundColor = UIColor.Clear,
+								Font = UIFont.FromName("Baskerville",25),
+								TextAlignment = UITextAlignment.Center,
+								Frame = new RectangleF(40, 10.0f, View.Bounds.Width - 80, 40.0f),
+							},
+						}  },
 				};
 				navigation = new FlyoutNavigationController {
 					// Create the navigation menu
 					NavigationRoot = new RootElement ("Navigation") {
-						new Section ("Pages") {
-							new StringElement ("Animals"),
-							new StringElement ("Vegetables"),
-							new StringElement ("Minerals"),
+						new Section ("Civil") {
+							new StringElement ("Discover"),
+							new StringElement ("Profile"),
+							new StringElement ("Settings"),
 						}
 					},
 					// Supply view controllers corresponding to menu items:
@@ -53,27 +90,35 @@ namespace CivilPrototype
 				navigation.ToggleMenu ();
 				navigation.View.Hidden = false;
 			} else {
-
+					View.BackgroundColor = lgrey;
 					UITextField usernameField, passwordField;
+					UITextView titleView;
 					// keep the code the username UITextField
-					float h = 31.0f;
+					float h = 45.0f;
 					float w = View.Bounds.Width;
-					Title = "Login";
+					titleView = new UITextView {
+						Text = "Civil",
+						BackgroundColor = UIColor.Clear,
+						Font = UIFont.FromName ("Baskerville", 25),
+						TextAlignment = UITextAlignment.Center,
+						Frame = new RectangleF(10, 20, w -20, h),
+					};
 					usernameField = new UITextField
 					{
 						Placeholder = "Username",
 						BorderStyle = UITextBorderStyle.RoundedRect,
-						Frame = new RectangleF(10, 32, w -20, h)
+						Frame = new RectangleF(10, 32+(2*h), w -20, h)
 					};
 					passwordField = new UITextField
 					{
 						Placeholder = "Password",
 						BorderStyle = UITextBorderStyle.RoundedRect,
-						Frame = new RectangleF(10, 35+h, w -20, h),
+						Frame = new RectangleF(10, 40+(3*h), w -20, h),
 						SecureTextEntry = true
 					};
 					var submitButton = UIButton.FromType(UIButtonType.RoundedRect);
-					submitButton.Frame = new RectangleF(10, 120, w - 20, 44);
+					submitButton.Frame = new RectangleF(10, 40+(5*h), w - 20, 50);
+					submitButton.Font = UIFont.FromName ("COPPERPLATE", 30);
 					submitButton.SetTitle("Login", UIControlState.Normal);
 					submitButton.TouchUpInside += delegate
 					{
@@ -82,7 +127,8 @@ namespace CivilPrototype
 						LoginUser(username,password);
 					};
 					var createAccountButton = UIButton.FromType(UIButtonType.RoundedRect);
-					createAccountButton.Frame = new RectangleF(10, 200, w - 20, 44);
+					createAccountButton.Frame = new RectangleF(10, 400, w - 20, 50);
+					createAccountButton.Font = UIFont.FromName ("COPPERPLATE", 15);
 					createAccountButton.SetTitle("Create Account", UIControlState.Normal);
 					createAccountButton.TouchUpInside += delegate
 					{
@@ -92,6 +138,7 @@ namespace CivilPrototype
 					View.AddSubview(submitButton);
 					View.AddSubview(usernameField); 
 					View.AddSubview(passwordField);
+					View.AddSubview (titleView);
 			}
 		}
 	}

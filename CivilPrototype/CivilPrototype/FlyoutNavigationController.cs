@@ -43,12 +43,17 @@ namespace FlyoutNavigation
 	public class FlyoutNavigationController : UIViewController
 	{
 		const float sidebarFlickVelocity = 1000.0f;
-		public const int menuWidth = 280;
+		public const int menuWidth = 200;
 		//public UISearchBar SearchBar;
 		UIButton closeButton;
 		bool firstLaunch = true;
 		FlyOutNavigationPosition position;
 		DialogViewController navigation;
+		UIColor teal = UIColor.FromRGB (12, 91, 108);
+		UIColor peakcock = UIColor.FromRGB (7, 57, 62);
+		UIColor surfer = UIColor.FromRGB (26, 149, 149);
+		UIColor grey = UIColor.FromRGB (110, 115, 123);
+		UIColor lgrey = UIColor.FromRGB (192, 198, 200);
 		int selectedIndex;
 		UIView shadowView;
 		bool isOpen = false;
@@ -354,6 +359,17 @@ namespace FlyoutNavigation
 		protected void NavigationItemSelected(int index)
 		{
 			selectedIndex = index;
+			for (int i = 0; i < navigation.Root [0].Count; i++) {
+				if (i == index){
+					navigation.TableView.CellAt (GetIndexPath (i)).BackgroundColor = teal;
+				navigation.TableView.CellAt (GetIndexPath (i)).TextLabel.TextColor = UIColor.White;
+			}
+				else{
+					navigation.TableView.CellAt (GetIndexPath(i)).BackgroundColor = UIColor.White;
+				navigation.TableView.CellAt (GetIndexPath(i)).TextLabel.TextColor = UIColor.Black;
+		}
+
+			}
 			if (viewControllers == null || viewControllers.Length <= index || index < 0)
 			{
 				if (SelectedIndexChanged != null)

@@ -13,6 +13,11 @@ namespace CivilPrototype
 	public class CreateAccountController : UIViewController
 	{
 		UINavigationController navigation;
+		UIColor teal = UIColor.FromRGB (12, 91, 108);
+		UIColor peakcock = UIColor.FromRGB (7, 57, 62);
+		UIColor surfer = UIColor.FromRGB (26, 149, 149);
+		UIColor grey = UIColor.FromRGB (110, 115, 123);
+		UIColor lgrey = UIColor.FromRGB (192, 198, 200);
 		public CreateAccountController (UINavigationController nav) : base ()
 		{
 			navigation = nav;
@@ -29,18 +34,19 @@ namespace CivilPrototype
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			this.View.BackgroundColor = UIColor.White;
+			this.View.BackgroundColor = lgrey;
 			UITextField firstNameField,lastNameField,emailField,usernameField, passwordField,passwordCheckField;
 			UITextView titleView;
 			// keep the code the username UITextField
-			float h = 31.0f;
-			float marginBot = 20;
+			float h = 45.0f;
+			float marginBot = 10;
 			float w = View.Bounds.Width;
 			titleView = new UITextView {
-
-				Text = "Create Account",
-				Frame = new RectangleF (10, h - 5, w - 20, h),
-				TextAlignment = UITextAlignment.Center
+				Text = "Sign up",
+				BackgroundColor = UIColor.Clear,
+				Font = UIFont.FromName ("Baskerville", 25),
+				TextAlignment = UITextAlignment.Center,
+				Frame = new RectangleF(10, 10, w -20, h),
 			};
 			firstNameField = new UITextField
 			{
@@ -81,8 +87,9 @@ namespace CivilPrototype
 				SecureTextEntry = true
 			};
 			var submitButton = UIButton.FromType(UIButtonType.RoundedRect);
-			submitButton.Frame = new RectangleF(10, 7*(h+marginBot), w - 20, 44);
-			submitButton.SetTitle("Sign up", UIControlState.Normal);
+			submitButton.Frame = new RectangleF(10, 375, w - 20, 50);
+			submitButton.Font = UIFont.FromName ("COPPERPLATE", 25);
+			submitButton.SetTitle("Create my account!", UIControlState.Normal);
 			submitButton.TouchUpInside += delegate
 			{
 				string firstName = firstNameField.Text;
@@ -94,7 +101,8 @@ namespace CivilPrototype
 				CreateUser(firstName,lastName,email,username,password,passwordCheck);
 			};
 			var loginButton = UIButton.FromType(UIButtonType.RoundedRect);
-			loginButton.Frame = new RectangleF(10, 8*(h+marginBot), w - 20, 44);
+			loginButton.Frame = new RectangleF(10, 430, w - 20, 50);
+			loginButton.Font = UIFont.FromName ("COPPERPLATE", 15);
 			loginButton.SetTitle("Login", UIControlState.Normal);
 			loginButton.TouchUpInside += delegate
 			{
@@ -103,7 +111,7 @@ namespace CivilPrototype
 			};
 			View.AddSubview(loginButton);
 			View.AddSubview(submitButton);
-			View.AddSubview (titleView);
+			View.AddSubview(titleView);
 			View.AddSubview(firstNameField); 
 			View.AddSubview(lastNameField);
 			View.AddSubview(emailField); 
