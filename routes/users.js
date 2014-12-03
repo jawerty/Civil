@@ -8,7 +8,7 @@ function sendERR(err, res) {
 }
 
 exports.usersAuth = function(req, res) {
-	sendERR("Auth function yet to be made.", res)
+	var data = req.body;
 }
 
 exports.usersPOST = function(req, res, next) {

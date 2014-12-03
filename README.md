@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Civil
 Socializing democracy
 
@@ -110,9 +109,12 @@ RESPONSE
 	message: "User <id> deleted"
 }
 ```
-=======
-# CIVIL
-Socializing Democracy
 
-<INSERT DOCS HERE>
->>>>>>> 75a82fda59112a9eede9ddb186fe5a706fb42674
+### POST /users/auth
+DATA
+```
+{
+	username: ...,
+	password: ...
+}
+```
