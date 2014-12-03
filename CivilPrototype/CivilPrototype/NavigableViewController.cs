@@ -14,11 +14,6 @@ namespace CivilPrototype
 		RoundableUIView navigationView;
 		RectangleF navRect;
 		RectangleF sliderRect;
-		UIColor teal = UIColor.FromRGB (12, 91, 108);
-		UIColor peakcock = UIColor.FromRGB (7, 57, 62);
-		UIColor surfer = UIColor.FromRGB (26, 149, 149);
-		UIColor grey = UIColor.FromRGB (110, 115, 123);
-		UIColor lgrey = UIColor.FromRGB (192, 198, 200);
 		UIView mainView;
 		FlyoutNavigationController navControl;
 		public NavigableViewController () : base ()
@@ -63,24 +58,24 @@ namespace CivilPrototype
 			};
 			sliderMenuButton = new RoundableUIView
 			{
-				BackgroundColor = grey,
+				BackgroundColor = DesignConstants.grey,
 				Frame = sliderRect,
 				CornerRadius = 4,
 				Alpha = 1.0f
 			};
 			var miniViews = new RoundableUIView{new RoundableUIView{
 					Frame = new RectangleF(new PointF(5f,7.5f),new SizeF(20f,3f)),
-					BackgroundColor = surfer,
+					BackgroundColor = DesignConstants.surfer,
 					CornerRadius = 2
 				},	
 				new RoundableUIView{
 					Frame = new RectangleF(new PointF(5f,13.5f),new SizeF(20f,3f)),
-					BackgroundColor = surfer,
+					BackgroundColor = DesignConstants.surfer,
 					CornerRadius = 2
 				},
 				new RoundableUIView{
 					Frame = new RectangleF(new PointF(5f,20f),new SizeF(20f,3f)),
-					BackgroundColor = surfer,
+					BackgroundColor = DesignConstants.surfer,
 					CornerRadius = 2
 
 				}
@@ -90,7 +85,7 @@ namespace CivilPrototype
 			View.AddSubview (navigationView);
 			View.AddSubview (mainView);
 			View.BringSubviewToFront (mainView);
-			View.BackgroundColor = lgrey;
+			View.BackgroundColor = DesignConstants.lgrey;
 		}
 		public FlyoutNavigationController Navigation{
 

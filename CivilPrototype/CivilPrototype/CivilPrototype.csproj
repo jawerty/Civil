@@ -107,6 +107,7 @@
     <Compile Include="CreateAccountController.cs" />
     <Compile Include="DesignConstants.cs" />
     <Compile Include="DataLayer.cs" />
+    <Compile Include="Security.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainStoryboard_iPhone.storyboard" />

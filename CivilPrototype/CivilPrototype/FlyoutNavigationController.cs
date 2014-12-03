@@ -49,11 +49,6 @@ namespace FlyoutNavigation
 		bool firstLaunch = true;
 		FlyOutNavigationPosition position;
 		DialogViewController navigation;
-		UIColor teal = UIColor.FromRGB (12, 91, 108);
-		UIColor peakcock = UIColor.FromRGB (7, 57, 62);
-		UIColor surfer = UIColor.FromRGB (26, 149, 149);
-		UIColor grey = UIColor.FromRGB (110, 115, 123);
-		UIColor lgrey = UIColor.FromRGB (192, 198, 200);
 		int selectedIndex;
 		UIView shadowView;
 		bool isOpen = false;
@@ -361,12 +356,12 @@ namespace FlyoutNavigation
 			selectedIndex = index;
 			for (int i = 0; i < navigation.Root [0].Count; i++) {
 				if (i == index){
-					navigation.TableView.CellAt (GetIndexPath (i)).BackgroundColor = teal;
-				navigation.TableView.CellAt (GetIndexPath (i)).TextLabel.TextColor = UIColor.White;
+					navigation.TableView.CellAt (GetIndexPath (i)).BackgroundColor = DesignConstants.teal;
+					navigation.TableView.CellAt (GetIndexPath (i)).TextLabel.TextColor = UIColor.White;
 			}
 				else{
 					navigation.TableView.CellAt (GetIndexPath(i)).BackgroundColor = UIColor.White;
-				navigation.TableView.CellAt (GetIndexPath(i)).TextLabel.TextColor = UIColor.Black;
+					navigation.TableView.CellAt (GetIndexPath(i)).TextLabel.TextColor = UIColor.Black;
 		}
 
 			}
