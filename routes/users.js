@@ -9,6 +9,16 @@ function sendERR(err, res) {
 
 exports.usersAuth = function(req, res) {
 	var data = req.body;
+
+	users.findOne({username: data.username}, function(err, foundUser) {
+		if (foundUser) {
+			res.send("{ \"message\": \"User Authenticated\", \"token\": \"hash\"");
+		} else {
+			sendERR("User not found in database", res);
+		}
+		
+	});
+	
 }
 
 exports.usersPOST = function(req, res, next) {
@@ -19,32 +29,43 @@ exports.usersPOST = function(req, res, next) {
 		if (data.password.length < 8) {
 			sendERR("Password must be at least 8 characters", res);
 		} else {
-			bcrypt.genSalt(10, function(err, salt) {
-			    bcrypt.hash(data.password, salt, function(err1, hash) {
-			        bcrypt.compare(data.passwordCheck, hash, function(err2, response) {
-						if (response == true) {
-							var newUser = new users({
-								firstName: data.firstName,
-								lastName: data.lastName,
-								email: data.email,
-								username: data.username,
-								password: hash
+			users.findOne({username: data.username}, function(err, foundUser) {
+				console.log(foundUser);
+				if (foundUser) {
+					sendERR("User found in database", res);
+				} else {
+					bcrypt.genSalt(10, function(err, salt) {
+					    bcrypt.hash(data.password, salt, function(err1, hash) {
+					        bcrypt.compare(data.passwordCheck, hash, function(err2, response) {
+								if (response == true) {
+									var newUser = new users({
+										firstName: data.firstName,
+										lastName: data.lastName,
+										email: data.email,
+										username: data.username,
+										password: hash
+									});
+
+								  	newUser.save();
+
+								  	console.log(newUser);
+
+								  	res.send("{ \"message\": \"User "+data.username+" Created\", \"id\": \""+newUser._id+"\" }");
+								  	next();
+								} else if (response == false) {
+									sendERR("Passwords do not match.", res)
+								} else {
+									sendERR("Miscellaneous error in password encryption", res)
+								}
 							});
-
-						  	newUser.save();
-
-						  	console.log(newUser);
-
-						  	res.send("{ \"message\": \"User "+data.username+" Created\", \"id\": \""+newUser._id+"\" }");
-						  	next();
-						} else if (response == false) {
-							sendERR("Passwords must match", res)
-						} else {
-							sendERR("Miscellaneous error in password encryption", res)
-						}
-					});
-			    });
-			});
+					    });
+					});	
+				}
+				
+			})
+		
+			
+			
 
 			
 	  	}
