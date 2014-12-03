@@ -1,14 +1,14 @@
-# Version: 8.4.0.43 (840a925)
-# [first argument, ignore] # /Users/Carter/Desktop/Civil/CivilPrototype/CivilPrototype/bin/iPhoneSimulator/Debug/mtouch.exe
-/Library/Frameworks/Xamarin.iOS.framework/Versions/8.4.0.43/bin/mtouch \
+# Version: 8.4.0.16 (80e9ff7)
+# [first argument, ignore] # /Users/carter/Desktop/Civil/CivilPrototype/CivilPrototype/bin/iPhoneSimulator/Debug/mtouch.exe
+/Library/Frameworks/Xamarin.iOS.framework/Versions/8.4.0.16/bin/mtouch \
 	-sdkroot \
 	/Applications/Xcode.app/Contents/Developer \
 	--cache \
-	/Users/Carter/Desktop/Civil/CivilPrototype/CivilPrototype/obj/iPhoneSimulator/Debug/mtouch-cache \
+	/Users/carter/Desktop/Civil/CivilPrototype/CivilPrototype/obj/iPhoneSimulator/Debug/mtouch-cache \
 	--nomanifest \
 	--nosign \
 	-sim \
-	/Users/Carter/Desktop/Civil/CivilPrototype/CivilPrototype/bin/iPhoneSimulator/Debug/CivilPrototype.app \
+	/Users/carter/Desktop/Civil/CivilPrototype/CivilPrototype/bin/iPhoneSimulator/Debug/CivilPrototype.app \
 	-r \
 	/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/2.1/System.dll \
 	-r \
@@ -26,4 +26,4 @@
 	-targetver \
 	7.0 \
 	--abi=i386 \
-	/Users/Carter/Desktop/Civil/CivilPrototype/CivilPrototype/bin/iPhoneSimulator/Debug/CivilPrototype.exe \
+	/Users/carter/Desktop/Civil/CivilPrototype/CivilPrototype/bin/iPhoneSimulator/Debug/CivilPrototype.exe \
