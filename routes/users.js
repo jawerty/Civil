@@ -38,7 +38,7 @@ exports.usersPOST = function(req, res, next) {
 				if (foundUser) {
 					sendERR("Username already in use", res);
 				} else {
-					users.findOne({email: data.email, function(err, foundEmail) {
+					users.findOne({email: data.email}, function(err, foundEmail) {
 						if (err) console.log(err);
 						if (foundEmail) {
 							sendERR("Email already in use", res);
@@ -70,7 +70,7 @@ exports.usersPOST = function(req, res, next) {
 							    });
 							});	
 						}
-					}})
+					})
 						
 				}
 				
@@ -98,7 +98,7 @@ exports.usersIdGET = function(req, res) {
 	console.log(usersId)
 	try {
 		users.findOne({_id: usersId}, function(err, doc) {
-	  		console.log(doc);
+			if (err) console.log(err);
 	  		if (doc) {
 	  			res.send("{ \"message\": \"User found\", \"document\": \""+doc+"\" }");
 	  		} else {
