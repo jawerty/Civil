@@ -40,5 +40,5 @@ var movementsSchema = new Schema({
 	announcements: [announcementSchema]
 });
 
-module.exports = db.model('users', usersSchema); 
-module.exports = db.model('movements', movementsSchema); 
+module.exports = db.model('user', usersSchema, 'user'); 
+module.exports = db.model('movement', movementsSchema, 'movement'); 

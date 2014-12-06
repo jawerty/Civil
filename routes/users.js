@@ -1,7 +1,8 @@
 var mongoose = require("mongoose");
-var users = mongoose.model('users');
-var movements = mongoose.model('movements');
+var users = mongoose.model('user');
+var movements = mongoose.model('movement');
 var bcrypt = require("bcrypt");
+var crypto = require('crypto');
 
 function sendERR(err, res) {
 	res.send("{ \"message\": \""+err+"\" }");
@@ -9,10 +10,13 @@ function sendERR(err, res) {
 
 exports.usersAuth = function(req, res) {
 	var data = req.body;
-
+			
 	users.findOne({username: data.username}, function(err, foundUser) {
+		if(err) console.log(err);
 		if (foundUser) {
-			res.send("{ \"message\": \"User Authenticated\", \"token\": \"hash\"");
+			console.log(foundUser);
+			var token = crypto.randomBytes(32).toString("hex");
+			res.send("{ \"message\": \"User Authenticated\", \"token\": \""+token+"\"");
 		} else {
 			sendERR("User not found in database", res);
 		}
@@ -30,36 +34,44 @@ exports.usersPOST = function(req, res, next) {
 			sendERR("Password must be at least 8 characters", res);
 		} else {
 			users.findOne({username: data.username}, function(err, foundUser) {
-				console.log(foundUser);
+				if (err) console.log(err);
 				if (foundUser) {
-					sendERR("User found in database", res);
+					sendERR("Username already in use", res);
 				} else {
-					bcrypt.genSalt(10, function(err, salt) {
-					    bcrypt.hash(data.password, salt, function(err1, hash) {
-					        bcrypt.compare(data.passwordCheck, hash, function(err2, response) {
-								if (response == true) {
-									var newUser = new users({
-										firstName: data.firstName,
-										lastName: data.lastName,
-										email: data.email,
-										username: data.username,
-										password: hash
+					users.findOne({email: data.email, function(err, foundEmail) {
+						if (err) console.log(err);
+						if (foundEmail) {
+							sendERR("Email already in use", res);
+						} else {
+							bcrypt.genSalt(10, function(err, salt) {
+							    bcrypt.hash(data.password, salt, function(err1, hash) {
+							        bcrypt.compare(data.passwordCheck, hash, function(err2, response) {
+										if (response == true) {
+											var newUser = new users({
+												firstName: data.firstName,
+												lastName: data.lastName,
+												email: data.email,
+												username: data.username,
+												password: hash
+											});
+
+										  	newUser.save();
+
+										  	console.log(newUser);
+
+										  	res.send("{ \"message\": \"User "+data.username+" Created\", \"id\": \""+newUser._id+"\" }");
+										  	next();
+										} else if (response == false) {
+											sendERR("Passwords do not match.", res)
+										} else {
+											sendERR("Miscellaneous error in password validation", res)
+										}
 									});
-
-								  	newUser.save();
-
-								  	console.log(newUser);
-
-								  	res.send("{ \"message\": \"User "+data.username+" Created\", \"id\": \""+newUser._id+"\" }");
-								  	next();
-								} else if (response == false) {
-									sendERR("Passwords do not match.", res)
-								} else {
-									sendERR("Miscellaneous error in password encryption", res)
-								}
-							});
-					    });
-					});	
+							    });
+							});	
+						}
+					}})
+						
 				}
 				
 			})

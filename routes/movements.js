@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
-var users = mongoose.model('users');
-var movements = mongoose.model('movements');
+var users = mongoose.model('user');
+var movements = mongoose.model('movement');
 
 function sendERR(err, res) {
 	res.send("{ \"message\": \""+err+"\" }");
