@@ -64,6 +64,9 @@ app.delete('/users/:id', Users.usersIdDELETE)
 app.post('/movements/:id/announcements', Movements.movementsIdAnnuncementsPOST);
 app.post('/movements/:id/events', Movements.movementsIdEventsPOST);
 
+/* logout */
+app.post('/users/logout', Users.usersLogout);
+
 var server = app.listen(3000, function () {
   var host = server.address().address;
   var port = server.address().port;
