@@ -24,6 +24,7 @@ namespace CivilPrototype
 		{
 			base.ViewDidLoad ();
 			userLoggedIn = NSUserDefaults.StandardUserDefaults.BoolForKey ("userLoggedIn");
+			userLoggedIn = true;
 			NavigationController.NavigationBarHidden = true;
 
 			if (userLoggedIn) {
@@ -130,7 +131,7 @@ namespace CivilPrototype
 					};
 				var submitButton = UIButton.FromType(DesignConstants.ButtonType);
 						submitButton.Frame = new RectangleF(DesignConstants.ButtonFrameX, 
-							340, 
+						340, 
 							View.Bounds.Width + DesignConstants.ButtonWidth, 
 							DesignConstants.ButtonHeight);
 						submitButton.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.HeaderFontSize);
