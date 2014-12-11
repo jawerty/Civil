@@ -17,12 +17,13 @@ exports.usersAuth = function(req, res) {
 		if (foundUser) {
 			bcrypt.compare(data.password, foundUser.password, function(err1, response) {
 				if (response === true) {
+					console.log(foundUser)
 					var token = crypto.randomBytes(32).toString("hex");
 
 					sess = req.session
 					sess.token = token;
 
-					res.send("{ \"message\": \"User authenticated\", \"token\": \""+token+"\", \"userID\": \""+foundUser.id+"\"}");
+					res.send("{ \"message\": \"User authenticated\", \"token\": \""+token+"\", \"userID\": \""+foundUser._id+"\"}");
 
 				} else if (response === false){
 					sendERR("User not authenticated; invalid password", res);
