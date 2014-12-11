@@ -13,7 +13,7 @@ exports.usersAuth = function(req, res) {
 	var data = req.body;
 
 	users.findOne({username: data.username}, function(err, foundUser) {
-		if(err) console.log(err);
+		if (err) console.log(err);
 		if (foundUser) {
 			bcrypt.compare(data.password, foundUser.password, function(err1, response) {
 				if (response === true) {
