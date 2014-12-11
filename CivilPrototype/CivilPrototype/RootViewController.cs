@@ -15,16 +15,17 @@ namespace CivilPrototype
 		public RootViewController (IntPtr handle) : base (handle)
 		{
 		}
-		public bool LoginUser(string username, string password){
 
-			return true;
+		//Async
+		public async void LoginUserAsync(string username,string password){
 
+			await DataLayer.LoginUser(username,password);
+			this.ViewDidLoad ();
 		}
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 			userLoggedIn = NSUserDefaults.StandardUserDefaults.BoolForKey ("userLoggedIn");
-			userLoggedIn = true;
 			NavigationController.NavigationBarHidden = true;
 
 			if (userLoggedIn) {
@@ -91,10 +92,6 @@ namespace CivilPrototype
 
 				// Show the navigation view
 				View.AddSubview (navigation.View);
-				navigation.View.Hidden = true;
-				navigation.ToggleMenu ();
-				navigation.ToggleMenu ();
-				navigation.View.Hidden = false;
 			} else {
 					View.BackgroundColor = DesignConstants.lgrey;
 					UITextField usernameField, passwordField;
@@ -140,7 +137,7 @@ namespace CivilPrototype
 						{
 							string username = usernameField.Text;
 							string password = passwordField.Text;
-							LoginUser(username,password);
+							LoginUserAsync(username,password);
 						};
 					var createAccountButton = UIButton.FromType(DesignConstants.ButtonType);
 						createAccountButton.Frame = new RectangleF(DesignConstants.ButtonFrameX, 
@@ -152,6 +149,7 @@ namespace CivilPrototype
 						createAccountButton.TouchUpInside += delegate
 						{
 							NavigationController.PushViewController(new CreateAccountController(this.NavigationController),true);
+							
 						};
 					View.AddSubview(createAccountButton);
 					View.AddSubview(submitButton);

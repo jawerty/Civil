@@ -13,7 +13,6 @@ namespace CivilPrototype
 	public class CreateAccountController : UIViewController
 	{
 		UINavigationController navigation;
-		string response;
 		public CreateAccountController (UINavigationController nav) : base ()
 		{
 			navigation = nav;
@@ -124,9 +123,7 @@ namespace CivilPrototype
 
 		//Async
 		public async void CreateAsync(string firstName,string lastName,string email,string username,string password,string passwordCheck){
-
-			response = await DataLayer.CreateUser(firstName,lastName,email,username,password,passwordCheck);
-			Console.WriteLine (response);
+			await DataLayer.CreateUser(firstName,lastName,email,username,password,passwordCheck);
 		}
 	}
 }

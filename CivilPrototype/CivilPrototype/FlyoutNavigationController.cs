@@ -254,7 +254,6 @@ namespace FlyoutNavigation
 			closeButton.AccessibilityLabel = "Close Menu";
 			closeButton.TouchUpInside += delegate { HideMenu(); };
 			AlwaysShowLandscapeMenu = true;
-
 			View.AddGestureRecognizer (new OpenMenuGestureRecognizer (DragContentView, shouldReceiveTouch));
 		}
 

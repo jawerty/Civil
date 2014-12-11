@@ -85,6 +85,9 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
     <Reference Include="MonoTouch.Dialog-1" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Components\json.net-4.5.11.1\lib\ios\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
@@ -114,4 +117,10 @@
     <InterfaceDefinition Include="MainStoryboard_iPad.storyboard" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+  <ItemGroup>
+    <XamarinComponentReference Include="json.net">
+      <Version>4.5.11.1</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+  </ItemGroup>
 </Project>

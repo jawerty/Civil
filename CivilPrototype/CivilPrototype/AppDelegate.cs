@@ -21,6 +21,7 @@ namespace CivilPrototype
 		public override void FinishedLaunching (UIApplication application)
 		{
 			NSUserDefaults.StandardUserDefaults.SetBool (false, "userLoggedIn");
+
 		}
 		// This method is invoked when the application is about to move from active to inactive state.
 		// OpenGL applications should use this method to pause.
