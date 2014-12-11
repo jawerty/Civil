@@ -11,8 +11,8 @@ function sendERR(err, res) {
 
 exports.usersAuth = function(req, res) {
 	var data = req.body;
- 
- 	users.findOne({username: data.username}, function(err, foundUser) {
+
+	users.findOne({username: data.username}, function(err, foundUser) {
 		if(err) console.log(err);
 		if (foundUser) {
 			bcrypt.compare(data.password, foundUser.password, function(err1, response) {
@@ -22,7 +22,7 @@ exports.usersAuth = function(req, res) {
 					sess = req.session
 					sess.token = token;
 
-					res.send("{ \"message\": \"User authenticated\", \"token\": \""+token+"\"}");
+					res.send("{ \"message\": \"User authenticated\", \"token\": \""+token+"\", \"userID\": \""+foundUser.id+"\"}");
 
 				} else if (response === false){
 					sendERR("User not authenticated; invalid password", res);
@@ -73,12 +73,12 @@ exports.usersPOST = function(req, res, next) {
 													password: hash
 												});
 
-											  	newUser.save();
+													newUser.save();
 
-											  	console.log(newUser);
+													console.log(newUser);
 
-											  	res.send("{ \"message\": \"User "+data.username+" Created\", \"id\": \""+newUser._id+"\" }");
-											  	next();
+													res.send("{ \"message\": \"User "+data.username+" Created\", \"id\": \""+newUser._id+"\" }");
+													next();
 											} else if (response == false) {
 												sendERR("Passwords do not match.", res)
 											} else {
@@ -106,7 +106,6 @@ exports.usersPOST = function(req, res, next) {
 	} else {
 		sendERR("Your email and username are not valid", res)
 	}
-	
   	
 }
 
@@ -135,8 +134,8 @@ exports.usersIdGET = function(req, res) {
 
 exports.usersIdDELETE = function(req, res) {
 	var usersId = req.params.id;
-  	res.send(usersId);
-  	try {
+		res.send(usersId);
+		try {
 		users.findOne({_id: usersId}).remove();
 		res.send("{ \"message\": \"User deleted\" }");
 	} catch (err) {
