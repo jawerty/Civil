@@ -2,20 +2,11 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.1" />
   <MonoDevelop.Ide.Workbench ActiveDocument="CivilPrototype/RootViewController.cs">
     <Files>
-      <File FileName="CivilPrototype/RootViewController.cs" Line="29" Column="29" />
-      <File FileName="CivilPrototype/CreateAccountController.cs" Line="25" Column="25" />
-      <File FileName="CivilPrototype/DataLayer.cs" Line="1" Column="1" />
+      <File FileName="CivilPrototype/RootViewController.cs" Line="4" Column="4" />
+      <File FileName="CivilPrototype/CreateAccountController.cs" Line="1" Column="1" />
+      <File FileName="CivilPrototype/DataLayer.cs" Line="3" Column="3" />
+      <File FileName="CivilPrototype/DesignConstants.cs" Line="54" Column="54" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="CivilPrototype" expanded="True">
-            <Node name="ComponentReferenceFolder" expanded="True" />
-            <Node name="RootViewController.cs" selected="True" />
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
