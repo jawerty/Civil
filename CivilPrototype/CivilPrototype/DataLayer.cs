@@ -36,7 +36,7 @@ namespace CivilPrototype
 			var responseString = new StreamReader (response.GetResponseStream ()).ReadToEnd ();
 			var responseObj = Newtonsoft.Json.Linq.JObject.Parse (responseString);
 			if (((String)responseObj ["message"]).Contains("Created")) {
-				LoginUser (username, password);
+				await LoginUser(username, password);
 			}
 			return responseString;
 		}
@@ -76,8 +76,10 @@ namespace CivilPrototype
 
 			var responseString = new StreamReader (response.GetResponseStream ()).ReadToEnd ();
 			Console.WriteLine (responseString);
-			var responseObj = Newtonsoft.Json.Linq.JObject.Parse (responseString);
+			var responseObj = Newtonsoft.Json.Linq.JObject.Parse (responseString.Insert(7,'\''.ToString()).Insert(32,'\''.ToString()));
+			string document = ((string)responseObj ["document"]).Insert(7,'\''.ToString()).Insert(32,'\''.ToString());
 			if ((string)responseObj ["message"] == "User found") {
+				//var ln = (string)document ["firstName"];
 				NSUserDefaults.StandardUserDefaults.SetString ((string)responseObj["firstName"], "currentUserFirstName");
 				NSUserDefaults.StandardUserDefaults.SetString ((string)responseObj["lastName"], "currentUserLastName");
 				NSUserDefaults.StandardUserDefaults.SetString ((string)responseObj["username"], "currentUserUsername");

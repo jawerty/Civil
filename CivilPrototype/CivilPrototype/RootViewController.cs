@@ -26,7 +26,6 @@ namespace CivilPrototype
 		{
 			base.ViewDidLoad ();
 			userLoggedIn = NSUserDefaults.StandardUserDefaults.BoolForKey ("userLoggedIn");
-			userLoggedIn = true;
 			NavigationController.NavigationBarHidden = true;
 
 			if (userLoggedIn) {

@@ -96,8 +96,6 @@ namespace CivilPrototype
 					string email = emailField.Text;
 					string passwordCheck = passwordCheckField.Text;
 					CreateAsync(firstName,lastName,email,username,password,passwordCheck);
-					navigation.PopToRootViewController(true);
-					navigation.ViewControllers[0].ViewDidLoad();
 				};
 			var loginButton = UIButton.FromType(DesignConstants.ButtonType);
 				loginButton.Frame = new RectangleF(DesignConstants.ButtonFrameX, 435, View.Bounds.Width + DesignConstants.ButtonWidth, DesignConstants.ButtonHeight);
@@ -124,6 +122,8 @@ namespace CivilPrototype
 		//Async
 		public async void CreateAsync(string firstName,string lastName,string email,string username,string password,string passwordCheck){
 			await DataLayer.CreateUser(firstName,lastName,email,username,password,passwordCheck);
+			navigation.PopToRootViewController(true);
+			navigation.ViewControllers[0].ViewDidLoad();
 		}
 	}
 }
