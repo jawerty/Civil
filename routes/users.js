@@ -112,7 +112,7 @@ exports.usersPOST = function(req, res, next) {
 
 exports.usersIdPOST = function(req, res) {
 	var usersId = req.params.id;
-  	res.send(usersId);
+  res.send(usersId);
 }
 
 exports.usersIdGET = function(req, res) {
@@ -122,11 +122,10 @@ exports.usersIdGET = function(req, res) {
 		users.findOne({_id: usersId}, function(err, doc) {
 			if (err) console.log(err);
 	  		if (doc) {
-	  			res.send("{ \"message\": \"User found\", \"document\": \""+doc+"\" }");
+	  			res.send("{ \"message\": \"User found\", \"document\": "+JSON.stringify(doc)+" }");
 	  		} else {
 	  			res.send("{ \"message\": \"User not found\" }");
 	  		}
-	  		
 	  	});
 	} catch (err) {
 		sendERR(err, res)

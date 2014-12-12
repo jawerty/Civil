@@ -33,7 +33,20 @@ exports.movementsIdPOST = function(req, res) {
 
 exports.movementsIdGET = function(req, res) {
 	var movementId = req.params.id;
-  	res.send(movementId);
+
+	console.log(movementId)
+	try {
+		movements.findOne({_id: movementId}, function(err, doc) {
+			if (err) console.log(err);
+	  		if (doc) {
+	  			res.send("{ \"message\": \"Movement found\", \"document\": \""+JSON.stringify(doc)+"\" }");
+	  		} else {
+	  			res.send("{ \"message\": \"Movement not found\" }");
+	  		};
+	  	});
+	} catch (err) {
+		sendERR(err, res)
+	}
 }
 
 exports.movementsIdDELETE = function(req, res) {
