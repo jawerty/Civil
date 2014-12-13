@@ -104,7 +104,6 @@ namespace CivilPrototype
 				loginButton.TouchUpInside += delegate
 				{
 					navigation.PopToRootViewController(true);
-					navigation.ViewControllers[0].ViewDidLoad();
 				};
 			View.AddSubview(loginButton);
 			View.AddSubview(submitButton);

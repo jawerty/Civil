@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
+    <BundleResource Include="edit.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -111,6 +112,7 @@
     <Compile Include="DesignConstants.cs" />
     <Compile Include="DataLayer.cs" />
     <Compile Include="Security.cs" />
+    <Compile Include="EditProfileButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainStoryboard_iPhone.storyboard" />

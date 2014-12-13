@@ -29,6 +29,15 @@ namespace CivilPrototype
 			NavigationController.NavigationBarHidden = true;
 
 			if (userLoggedIn) {
+
+				string userFirstName = NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserFirstName");
+				string userLastName = NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserLastName");
+				string userEmail = NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserEmail");
+				string userName = NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserUsername");
+				var editButton = new EditProfileButton (View.Bounds.Width);
+				editButton.ButtonTapped += delegate(NSSet touches, UIEvent evt) {
+					editButton.BackgroundColor = UIColor.Blue;
+				};
 				var viewsControl = new [] {
 					new NavigableViewController () { Navigation = navigation, 
 						MainView = new UIView(View.Bounds){
@@ -58,6 +67,7 @@ namespace CivilPrototype
 									View.Bounds.Width + DesignConstants.HeaderFrameWidth, 
 									DesignConstants.HeaderFrameHeight)
 							},
+							editButton,
 						}  },
 					new NavigableViewController () { Navigation = navigation, 
 						MainView = new UIView(View.Bounds){

@@ -65,7 +65,7 @@ namespace CivilPrototype
 				NSUserDefaults.StandardUserDefaults.SetString ((string)responseObj["userID"], "currentUserID");
 				NSUserDefaults.StandardUserDefaults.SetString ((string)responseObj["token"], "currentUserToken");
 				var s = (string)NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserID");
-				GetUserData(s);
+				await GetUserData(s);
 			}
 			return responseString;
 		}
@@ -75,16 +75,15 @@ namespace CivilPrototype
 			var response = (HttpWebResponse) await request.GetResponseAsync();
 
 			var responseString = new StreamReader (response.GetResponseStream ()).ReadToEnd ();
+			responseString = responseString.Insert (39, '\''.ToString ()).Insert (responseString.Length-1, '\''.ToString ());
 			Console.WriteLine (responseString);
-			var responseObj = Newtonsoft.Json.Linq.JObject.Parse (responseString.Insert(7,'\''.ToString()).Insert(32,'\''.ToString()));
-			string document = ((string)responseObj ["document"]).Insert(7,'\''.ToString()).Insert(32,'\''.ToString());
+			var responseObj = Newtonsoft.Json.Linq.JObject.Parse (responseString);
+			var document = Newtonsoft.Json.Linq.JObject.Parse ((string)responseObj ["document"]);
 			if ((string)responseObj ["message"] == "User found") {
-				//var ln = (string)document ["firstName"];
-				NSUserDefaults.StandardUserDefaults.SetString ((string)responseObj["firstName"], "currentUserFirstName");
-				NSUserDefaults.StandardUserDefaults.SetString ((string)responseObj["lastName"], "currentUserLastName");
-				NSUserDefaults.StandardUserDefaults.SetString ((string)responseObj["username"], "currentUserUsername");
-				NSUserDefaults.StandardUserDefaults.SetString ((string)responseObj["email"], "currentUserEmail");
-				NSUserDefaults.StandardUserDefaults.SetString ((string)responseObj["movements"], "currentUserMovements");
+				NSUserDefaults.StandardUserDefaults.SetString ((string)document["firstName"], "currentUserFirstName");
+				NSUserDefaults.StandardUserDefaults.SetString ((string)document["lastName"], "currentUserLastName");
+				NSUserDefaults.StandardUserDefaults.SetString ((string)document["username"], "currentUserUsername");
+				NSUserDefaults.StandardUserDefaults.SetString ((string)document["email"], "currentUserEmail");
 			}
 			return responseString;
 		}
