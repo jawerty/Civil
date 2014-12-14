@@ -51,7 +51,12 @@ exports.movementsIdGET = function(req, res) {
 
 exports.movementsIdDELETE = function(req, res) {
 	var movementId = req.params.id;
-  	res.send(movementId);
+	try {
+		movements.findOne({_id: movementId}).remove();
+		res.send("{ \"message\": \"Movement deleted\" }");
+	} catch (err) {
+		sendERR(err, res)
+	}
 }
 
 exports.movementsIdAnnuncementsPOST = function(req, res) {

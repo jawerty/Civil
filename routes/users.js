@@ -134,8 +134,7 @@ exports.usersIdGET = function(req, res) {
 
 exports.usersIdDELETE = function(req, res) {
 	var usersId = req.params.id;
-		res.send(usersId);
-		try {
+	try {
 		users.findOne({_id: usersId}).remove();
 		res.send("{ \"message\": \"User deleted\" }");
 	} catch (err) {
