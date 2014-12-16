@@ -43,7 +43,7 @@ exports.usersAuth = function(req, res) {
 exports.usersPOST = function(req, res, next) {
 	var data = req.body;
 	console.log(data);	
-
+	console.log("IMAGE: "+data.avatar)
 	//validation
 	var emailCheck = validator.isEmail(data.email);
 	var usernameCheck = validator.isAlphanumeric(data.username);
