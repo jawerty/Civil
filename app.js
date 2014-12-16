@@ -50,7 +50,7 @@ app.post('/movements', Movements.movementsPOST)
 app.post('/users', Users.usersPOST)
 
 /* User logging in and authentication */
-app.post('/users/auth', Users.usersAuth)
+app.post('/usersAuth', Users.usersAuth)
 
 /* Updating movement and user information */
 app.post('/movements/:id', Movements.movementsIdPOST)
@@ -65,7 +65,7 @@ app.post('/movements/:id/announcements', Movements.movementsIdAnnuncementsPOST);
 app.post('/movements/:id/events', Movements.movementsIdEventsPOST);
 
 /* logout */
-app.post('/users/logout', Users.usersLogout);
+app.post('/usersLogout', Users.usersLogout);
 
 var server = app.listen(3000, function () {
   var host = server.address().address;
