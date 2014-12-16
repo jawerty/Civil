@@ -18,7 +18,7 @@ var usersSchema = new Schema({
 	username: {type: String, index: { unique: true }, required: true},
 	password: {type: String, required: true},
 	gravatar: {type: String},
-	avatar: { data: Buffer, contentType: String }
+	avatar: [{ data: Buffer, contentType: String }]
 });
 
 var eventSchema = new Schema({
