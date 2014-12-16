@@ -113,6 +113,9 @@
     <Compile Include="DataLayer.cs" />
     <Compile Include="Security.cs" />
     <Compile Include="EditProfileButton.cs" />
+    <Compile Include="MainProfileView.cs" />
+    <Compile Include="LoginView.cs" />
+    <Compile Include="DiscoverView.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainStoryboard_iPhone.storyboard" />

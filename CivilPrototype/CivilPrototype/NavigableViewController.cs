@@ -16,6 +16,12 @@ namespace CivilPrototype
 		RectangleF sliderRect;
 		UIView mainView;
 		FlyoutNavigationController navControl;
+		public delegate void MovedTouches(MonoTouch.Foundation.NSSet touches, UIEvent evt);
+		public event MovedTouches touchMoved = delegate {};
+		public delegate void BeganTouches(MonoTouch.Foundation.NSSet touches, UIEvent evt);
+		public event BeganTouches touchBegan = delegate {};
+		public delegate void EndedTouches(MonoTouch.Foundation.NSSet touches, UIEvent evt);
+		public event EndedTouches touchEnded = delegate {};
 		public NavigableViewController () : base ()
 		{
 
@@ -44,6 +50,17 @@ namespace CivilPrototype
 					navControl.ToggleMenu ();
 				}
 			}
+			touchBegan (touches, evt);
+		}
+		public override void TouchesMoved (NSSet touches, UIEvent evt)
+		{
+			base.TouchesMoved (touches, evt);
+			touchMoved (touches, evt);
+		}
+		public override void TouchesEnded(NSSet touches,UIEvent evt){
+			base.TouchesEnded (touches, evt);
+			touchEnded (touches, evt);
+
 		}
 		public override void ViewDidLoad ()
 		{
