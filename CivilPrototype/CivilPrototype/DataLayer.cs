@@ -89,44 +89,43 @@ namespace CivilPrototype
 			}
 			return responseString;
 		}
-		public async static Task<string> SendBitMap(){
-			var request = (HttpWebRequest)WebRequest.Create("http://127.0.0.1:3000/users");
-			string firstName = "jeff";
-			string lastName = "chester";
-			string email = "carter@mail.com";
-			string username = "jeff";
-			string password = "testtest";
-			string passwordCheck = "testtest";
-			var bites = ToBytes (UIImage.FromFile ("edit.png"));
-			var str = Encoding.UTF8.GetString(bites, 0, bites.Length);
-			var postData = "{\"firstName\": " + "\"" + firstName + "\"" + "," ;
-			postData += "\"lastName\": " + "\"" + lastName  + "\"" + "," ;
-			postData += "\"email\": " + "\"" + email  + "\"" + "," ;
-			postData += "\"username\": " + "\"" + username  + "\"" + "," ;
-			postData += "\"password\": " + "\"" + password  + "\"" + "," ;
-			postData += "\"avatar\": " + "\"" + str  + "\"" + "," ;
-			postData += "\"passwordCheck\": " + "\"" + passwordCheck  + "\"" + "}" ;
-			Console.WriteLine (postData);
-			var data = Encoding.ASCII.GetBytes(postData);
-
-			request.Method = "POST";
-			request.ContentType = "application/json";
-			request.ContentLength = data.Length;
-
-			using (var stream = request.GetRequestStream())
-			{
-				stream.Write(data, 0, data.Length);
-			}
-
-			var response = (HttpWebResponse) await request.GetResponseAsync();
-
-			var responseString = new StreamReader (response.GetResponseStream ()).ReadToEnd ();
-			var responseObj = Newtonsoft.Json.Linq.JObject.Parse (responseString);
-			if (((String)responseObj ["message"]).Contains("Created")) {
-				await LoginUser(username, password);
-			}
-			return responseString;
-		}
+//		public async static Task<string> SendBitMap(){
+//			var request = (HttpWebRequest)WebRequest.Create("http://127.0.0.1:3000/users");
+//			string firstName = "jeff";
+//			string lastName = "chester";
+//			string email = "carter@mail.com";
+//			string username = "jeff";
+//			string password = "testtest";
+//			string passwordCheck = "testtest";
+//			var bites = ToBytes (UIImage.FromFile ("edit.png"));
+//			var postData = "{\"firstName\": " + "\"" + firstName + "\"" + "," ;
+//			postData += "\"lastName\": " + "\"" + lastName  + "\"" + "," ;
+//			postData += "\"email\": " + "\"" + email  + "\"" + "," ;
+//			postData += "\"username\": " + "\"" + username  + "\"" + "," ;
+//			postData += "\"password\": " + "\"" + password  + "\"" + "," ;
+//			postData += "\"avatar\": " + "\"" + Convert.ToBase64String(bites)  + "\"" + "," ;
+//			postData += "\"passwordCheck\": " + "\"" + passwordCheck  + "\"" + "}" ;
+//			Console.WriteLine (postData);
+//			var data = Encoding.ASCII.GetBytes(postData);
+//
+//			request.Method = "POST";
+//			request.ContentType = "application/json";
+//			request.ContentLength = data.Length;
+//
+//			using (var stream = request.GetRequestStream())
+//			{
+//				stream.Write(data, 0, data.Length);
+//			}
+//
+//			var response = (HttpWebResponse) await request.GetResponseAsync();
+//
+//			var responseString = new StreamReader (response.GetResponseStream ()).ReadToEnd ();
+//			var responseObj = Newtonsoft.Json.Linq.JObject.Parse (responseString);
+//			if (((String)responseObj ["message"]).Contains("Created")) {
+//				await LoginUser(username, password);
+//			}
+//			return responseString;
+//		}
 		public static UIImage ToImage(byte[] data)
 		{
 			if (data==null) {
@@ -166,9 +165,6 @@ namespace CivilPrototype
 				}
 			}
 			return data;
-		}
-		public async static Task<UIImage> GetBitMap(){
-			return new UIImage ();
 		}
 		public async static Task<string> EditUser(string id, string username, string password,string passwordCheck, string firstName, string lastName, string email, string movements=""){
 

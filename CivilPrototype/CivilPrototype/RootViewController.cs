@@ -22,7 +22,7 @@ namespace CivilPrototype
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			DataLayer.SendBitMap ();
+//			DataLayer.SendBitMap ();
 			userLoggedIn = NSUserDefaults.StandardUserDefaults.BoolForKey ("userLoggedIn");
 			NavigationController.NavigationBarHidden = true;
 			if (userLoggedIn) {
