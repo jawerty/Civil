@@ -15,8 +15,7 @@ namespace CivilPrototype
 		bool editing = false;
 		public async void EditProfileAsync (string id, string username, string password, string passwordCheck, string firstName, string lastName, string email, string movements = "")
 		{
-			//await DataLayer.EditUser (id, username, password, passwordCheck, firstName, lastName, email);
-
+			await DataLayer.EditUser (id, username, password, passwordCheck, firstName, lastName, email);
 		}
 
 		private void SlowMethod ()

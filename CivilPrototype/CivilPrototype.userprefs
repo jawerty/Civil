@@ -1,14 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.1" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CivilPrototype/RootViewController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CivilPrototype/DataLayer.cs">
     <Files>
-      <File FileName="CivilPrototype/RootViewController.cs" Line="52" Column="52" />
-      <File FileName="CivilPrototype/DiscoverView.cs" Line="41" Column="41" />
-      <File FileName="CivilPrototype/NavigableViewController.cs" Line="5" Column="5" />
+      <File FileName="CivilPrototype/RootViewController.cs" Line="34" Column="34" />
+      <File FileName="CivilPrototype/MainProfileView.cs" Line="97" Column="97" />
+      <File FileName="CivilPrototype/DataLayer.cs" Line="25" Column="25" />
+      <File FileName="CivilPrototype/Main.cs" Line="3" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/Carter/Desktop/Civil/CivilPrototype/CivilPrototype/DataLayer.cs" line="148" column="1" />
+      <Breakpoint file="/Users/Carter/Desktop/Civil/CivilPrototype/CivilPrototype/DataLayer.cs" line="163" column="74" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
