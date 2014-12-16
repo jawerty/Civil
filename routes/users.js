@@ -66,24 +66,24 @@ exports.usersPOST = function(req, res, next) {
 								bcrypt.genSalt(10, function(err, salt) {
 								    bcrypt.hash(data.password, salt, function(err1, hash) {
 								        bcrypt.compare(data.passwordCheck, hash, function(err2, response) {
-											if (response == true) {
-												var secureUrl = gravatar.url(data.email, {s: '100', r: 'x', d: 'retro'}, true);
+												if (response == true) {
+														var secureUrl = gravatar.url(data.email, {s: '100', r: 'x', d: 'retro'}, true);
 
-												var newUser = new users({
-													firstName: data.firstName,
-													lastName: data.lastName,
-													email: data.email,
-													username: data.username,
-													password: hash,
-													gravatar: secureUrl
-												});
+														var newUser = new users({
+															firstName: data.firstName,
+															lastName: data.lastName,
+															email: data.email,
+															username: data.username,
+															password: hash,
+															avatar: data.avatar
+														});
 
-													newUser.save();
+														newUser.save();
 
-													console.log(newUser);
+														console.log(newUser);
 
-													res.send("{ \"message\": \"User "+data.username+" Created\", \"id\": \""+newUser._id+"\" }");
-													next();
+														res.send("{ \"message\": \"User "+data.username+" Created\", \"id\": \""+newUser._id+"\" }");
+														next();
 											} else if (response == false) {
 												sendERR("Passwords do not match.", res)
 											} else {
