@@ -4,6 +4,7 @@ var movements = mongoose.model('movement');
 var bcrypt = require("bcrypt");
 var crypto = require('crypto');
 var validator = require('validator');
+var gravatar = require('gravatar');
 
 function sendERR(err, res) {
 	res.send("{ \"message\": \""+err+"\" }");
@@ -66,12 +67,15 @@ exports.usersPOST = function(req, res, next) {
 								    bcrypt.hash(data.password, salt, function(err1, hash) {
 								        bcrypt.compare(data.passwordCheck, hash, function(err2, response) {
 											if (response == true) {
+												var secureUrl = gravatar.url(data.email, {s: '100', r: 'x', d: 'retro'}, true);
+
 												var newUser = new users({
 													firstName: data.firstName,
 													lastName: data.lastName,
 													email: data.email,
 													username: data.username,
-													password: hash
+													password: hash,
+													gravatar: secureUrl
 												});
 
 													newUser.save();
@@ -120,7 +124,7 @@ exports.usersIdPOST = function(req, res, next) {
 	  	if (doc) {
 
 	  		for (var key in data) {
-	  			if (key == "_id" || key == "dateCreated" || key == "password" || key == "username" || key =="email") {
+	  			if (key == "_id" || key == "dateCreated" || key == "password" || key == "username" || key == "email") {
 	  				sendERR("Cannot update this data", res)
 	  			}
 	  			if (data[key] != null) {
@@ -137,7 +141,7 @@ exports.usersIdPOST = function(req, res, next) {
 	  		});
 
 	  	} else {
-	  		next();
+	  		sendERR("User not found", res)
 	  	}
 	  	});
 	} catch (err) {

@@ -16,7 +16,8 @@ var usersSchema = new Schema({
 	movements: [{type: String}],
 	email: {type: String, index: { unique: true }, required: true},
 	username: {type: String, index: { unique: true }, required: true},
-	password: {type: String, required: true}
+	password: {type: String, required: true},
+	gravatar: {type: String}
 });
 
 var eventSchema = new Schema({
