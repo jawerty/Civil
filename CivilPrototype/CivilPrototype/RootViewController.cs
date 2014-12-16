@@ -36,9 +36,6 @@ namespace CivilPrototype
 					var location = touch.LocationInView (this.View);
 					diff = location.X-lastTouchLocation.X;
 					discoverView.MoveMovement(diff);
-					Console.WriteLine("diff: " +diff);
-					Console.WriteLine("this touch: " +location);
-					Console.WriteLine("last touch: " +lastTouchLocation);
 					lastTouchLocation= location;
 				};
 				discoverController.touchBegan += (touches, evt) => {
