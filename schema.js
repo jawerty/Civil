@@ -12,6 +12,8 @@ var usersSchema = new Schema({
 	dateCreated: {type: Date, default: Date.now},
 	firstName: {type: String},
 	lastName: {type: String},
+	skills:  [{type: String}],
+	movements: [{type: String}],
 	email: {type: String, index: { unique: true }, required: true},
 	username: {type: String, index: { unique: true }, required: true},
 	password: {type: String, required: true}
