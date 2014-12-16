@@ -124,17 +124,17 @@ exports.usersIdPOST = function(req, res, next) {
 	  	if (doc) {
 
 	  		for (var key in data) {
-	  			if (key == "_id" || key == "dateCreated" || key == "password" || key == "username" || key == "email") {
-	  				sendERR("Cannot update this data", res)
+	  			if (key != "_id" || key != "dateCreated" || key != "password" || key != "username" || key != "email") {
+	  				if (data[key] != null) {
+		  				doc[key] = data[key];
+		  			} 
 	  			}
-	  			if (data[key] != null) {
-	  				doc[key] = data[key];
-	  			} 
+	  			
 	  		}
 
 	  		doc.save(function(err) {
 	  			if (err) {
-	  				sendERR(err, res)
+	  				sendERR("Could not save the data", res)
 	  			} else {
 	  				res.send("{ \"message\": \"Documents updated successfully\" }");
 	  			}
@@ -143,7 +143,7 @@ exports.usersIdPOST = function(req, res, next) {
 	  	} else {
 	  		sendERR("User not found", res)
 	  	}
-	  	});
+	  });
 	} catch (err) {
 		sendERR(err, res)
 	}
