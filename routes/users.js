@@ -110,9 +110,39 @@ exports.usersPOST = function(req, res, next) {
   	
 }
 
-exports.usersIdPOST = function(req, res) {
+exports.usersIdPOST = function(req, res, next) {
 	var usersId = req.params.id;
-  res.send(usersId);
+	var data = req.body;
+
+  try {
+		users.findOne({_id: usersId}, function(err, doc) {
+			if (err) console.log(err);
+	  	if (doc) {
+
+	  		for (var key in data) {
+	  			if (key == "_id" || key == "dateCreated" || key == "password" || key == "username" || key =="email") {
+	  				sendERR("Cannot update this data", res)
+	  			}
+	  			if (data[key] != null) {
+	  				doc[key] = data[key];
+	  			} 
+	  		}
+
+	  		doc.save(function(err) {
+	  			if (err) {
+	  				sendERR(err, res)
+	  			} else {
+	  				res.send("{ \"message\": \"Documents updated successfully\" }");
+	  			}
+	  		});
+
+	  	} else {
+	  		next();
+	  	}
+	  	});
+	} catch (err) {
+		sendERR(err, res)
+	}
 }
 
 exports.usersIdGET = function(req, res) {
