@@ -91,6 +91,8 @@ namespace CivilPrototype
 				BackgroundColor = UIColor.White,
 				BorderStyle = DesignConstants.TextFieldBorderStyle,
 			};
+			var skillsList = new EditableListView (new string[]{"hello","hi"});
+			skillsList.Frame = new RectangleF ((Bounds.Width / 2) - 100, 600, 200, 200);
 			var submit = UIButton.FromType (DesignConstants.ButtonType);
 			submit.Frame = new RectangleF ((Bounds.Width / 2) - 100, 600, 200, 40);
 			submit.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.NormalButtonFontSize);
@@ -136,7 +138,8 @@ namespace CivilPrototype
 						scrollProfileView.Add (ln);
 						scrollProfileView.Add (p);
 						scrollProfileView.Add (pCheck);
-						scrollProfileView.Add (submit);
+						//scrollProfileView.Add (submit);
+						scrollProfileView.Add (skillsList);
 					});
 				} else {
 					editing = false;

@@ -116,6 +116,8 @@
     <Compile Include="Static\OpenMenuGestureRecognizer.cs" />
     <Compile Include="Abstracts\RoundableUIView.cs" />
     <Compile Include="Static\Security.cs" />
+    <Compile Include="Abstracts\EditableListView.cs" />
+    <Compile Include="Abstracts\EditableTableViewSource.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
