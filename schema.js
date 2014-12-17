@@ -44,6 +44,8 @@ var movementsSchema = new Schema({
 	    type: [Number],  // [<longitude>, <latitude>]
 	    index: '2d'      // create the geospatial index
     },
+    upvotes: {type: Number},
+    downvotes: {type: Number},
 	events: [eventSchema],
 	announcements: [announcementSchema]
 });
