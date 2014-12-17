@@ -56,7 +56,7 @@ namespace CivilPrototype
 							new UITextView {
 								Text = "Settings",
 								BackgroundColor = DesignConstants.HeaderBackground,
-								Font = UIFont.FromName (DesignConstants.HeaderFontStyle, DesignConstants.HeaderFontSize),
+								Font = UIFont.FromName (DesignConstants.HeaderFontStyle, DesignConstants.HeaderLargeFontSize),
 								TextAlignment = DesignConstants.HeaderAlignment,
 								Frame = new RectangleF (DesignConstants.HeaderFrameX, 
 									DesignConstants.HeaderFrameY, 

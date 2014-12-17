@@ -17,8 +17,9 @@ namespace CivilPrototype
 			// keep the code the username UITextField
 			titleView = new UITextView {
 				Text = "Civil",
+				TextColor = DesignConstants.peakcock,
 				BackgroundColor = DesignConstants.HeaderBackground,
-				Font = UIFont.FromName (DesignConstants.HeaderFontStyle, DesignConstants.HeaderFontSize),
+				Font = UIFont.FromName (DesignConstants.HeaderFontStyle, DesignConstants.HeaderLargeFontSize),
 				TextAlignment = DesignConstants.HeaderAlignment,
 				Frame = new RectangleF (DesignConstants.HeaderFrameX, 
 					DesignConstants.HeaderFrameY + 10,
@@ -28,6 +29,7 @@ namespace CivilPrototype
 			usernameField = new UITextField {
 				Placeholder = "Username",
 				BorderStyle = DesignConstants.TextFieldBorderStyle,
+				Font = UIFont.FromName (DesignConstants.TextFieldFontStyle, DesignConstants.TextFieldFontSize),
 				Frame = new RectangleF (DesignConstants.TextFieldFrameX, 
 					(4 * DesignConstants.TextFieldMarginBottom), 
 					Bounds.Width + DesignConstants.TextFieldWidth, 
@@ -36,6 +38,7 @@ namespace CivilPrototype
 			passwordField = new UITextField {
 				Placeholder = "Password",
 				BorderStyle = DesignConstants.TextFieldBorderStyle,
+				Font = UIFont.FromName (DesignConstants.TextFieldFontStyle, DesignConstants.TextFieldFontSize),
 				Frame = new RectangleF (DesignConstants.TextFieldFrameX, 
 					(6 * DesignConstants.TextFieldMarginBottom), 
 					Bounds.Width + DesignConstants.TextFieldWidth, 
@@ -47,7 +50,7 @@ namespace CivilPrototype
 				340, 
 				Bounds.Width + DesignConstants.ButtonWidth, 
 				DesignConstants.ButtonHeight);
-			submitButton.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.HeaderFontSize);
+			submitButton.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.LargeButtonFontSize);
 			submitButton.SetTitle ("Login", DesignConstants.ButtonControlState);
 			submitButton.TouchUpInside += delegate {
 				string username = usernameField.Text;
@@ -59,7 +62,7 @@ namespace CivilPrototype
 				400, 
 				Bounds.Width + DesignConstants.ButtonWidth, 
 				DesignConstants.ButtonHeight);
-			createAccountButton.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.HeaderFontSize);
+			createAccountButton.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.NormalButtonFontSize);
 			createAccountButton.SetTitle ("Create Account", DesignConstants.ButtonControlState);
 			createAccountButton.TouchUpInside += delegate {
 				rootControl.NavigationController.PushViewController (new CreateAccountController (rootControl.NavigationController), true);

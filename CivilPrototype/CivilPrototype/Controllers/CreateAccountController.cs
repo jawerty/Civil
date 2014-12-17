@@ -38,7 +38,7 @@ namespace CivilPrototype
 			titleView = new UITextView {
 				Text = "Create an account",
 				BackgroundColor = DesignConstants.HeaderBackground,
-				Font = UIFont.FromName (DesignConstants.HeaderFontStyle, DesignConstants.HeaderFontSize),
+				Font = UIFont.FromName (DesignConstants.HeaderFontStyle, DesignConstants.HeaderLargeFontSize),
 				TextAlignment = DesignConstants.HeaderAlignment,
 				Frame = new RectangleF(-DesignConstants.HeaderFrameX, 
 					DesignConstants.HeaderFrameY, 
@@ -99,7 +99,7 @@ namespace CivilPrototype
 				};
 			var loginButton = UIButton.FromType(DesignConstants.ButtonType);
 				loginButton.Frame = new RectangleF(DesignConstants.ButtonFrameX, 435, View.Bounds.Width + DesignConstants.ButtonWidth, DesignConstants.ButtonHeight);
-				loginButton.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.LargeButtonFontSize);
+				loginButton.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.NormalButtonFontSize);
 				loginButton.SetTitle("Back to Login", DesignConstants.ButtonControlState);
 				loginButton.TouchUpInside += delegate
 				{

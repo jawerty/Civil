@@ -16,6 +16,33 @@ namespace CivilPrototype
 		public async void EditProfileAsync (string id, string username, string password, string passwordCheck, string firstName, string lastName, string email, string movements = "")
 		{
 			await DataLayer.EditUser (id, username, password, passwordCheck, firstName, lastName, email);
+			scrollProfileView.RemoveFromSuperview ();
+			scrollProfileView = new UIScrollView (new RectangleF (0, 50, Bounds.Width, 500)) {
+				new UITextView {
+					Text = "Username: " + NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserUsername"),
+					Frame = new RectangleF ((Bounds.Width / 2) - 100, 100, 200, 40),
+					BackgroundColor = UIColor.Clear,
+				},
+				new UITextView {
+					Text = "Email: " + NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserEmail"),
+					Frame = new RectangleF ((Bounds.Width / 2) - 100, 200, 200, 40),
+					BackgroundColor = UIColor.Clear,
+				},
+				new UITextView {
+					Text = "First Name: " + NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserFirstName"),
+					Frame = new RectangleF ((Bounds.Width / 2) - 100, 300, 200, 40),
+					BackgroundColor = UIColor.Clear,
+				},
+				new UITextView {
+					Text = "Last Name: " + NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserLastName"),
+					Frame = new RectangleF ((Bounds.Width / 2) - 100, 400, 200, 40),
+					BackgroundColor = UIColor.Clear,
+				},
+			};
+			scrollProfileView.DelaysContentTouches = false;
+			scrollProfileView.CanCancelContentTouches = false;
+			scrollProfileView.ContentSize = new SizeF (Bounds.Width, 800);
+			Add (scrollProfileView);
 		}
 
 		private void SlowMethod ()
@@ -66,7 +93,7 @@ namespace CivilPrototype
 			};
 			var submit = UIButton.FromType (DesignConstants.ButtonType);
 			submit.Frame = new RectangleF ((Bounds.Width / 2) - 100, 600, 200, 40);
-			submit.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.HeaderFontSize);
+			submit.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.NormalButtonFontSize);
 			submit.SetTitle ("Make Changes", DesignConstants.ButtonControlState);
 			submit.TouchUpInside += delegate {
 				var user = u.Text;
@@ -76,6 +103,12 @@ namespace CivilPrototype
 				var pass = p.Text;
 				var passCheck = pCheck.Text;
 				this.EditProfileAsync (NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserID"), user, pass, passCheck, first, last, email);
+				u.Text = "";
+				fn.Text = "";
+				ln.Text = "";
+				p.Text = "";
+				pCheck.Text = "";
+				e.Text = "";
 				u.RemoveFromSuperview ();
 				fn.RemoveFromSuperview ();
 				ln.RemoveFromSuperview ();
@@ -120,7 +153,7 @@ namespace CivilPrototype
 			};
 			profileView = new UITextView {
 				Text = "Profile",
-				Font = UIFont.FromName (DesignConstants.HeaderFontStyle, DesignConstants.HeaderFontSize),
+				Font = UIFont.FromName (DesignConstants.HeaderFontStyle, DesignConstants.HeaderLargeFontSize),
 				BackgroundColor = DesignConstants.HeaderBackground,
 				TextAlignment = DesignConstants.HeaderAlignment,
 				Frame = new RectangleF (DesignConstants.HeaderFrameX, 

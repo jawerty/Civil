@@ -12,8 +12,9 @@ namespace CivilPrototype
 		public static UIColor lgrey = UIColor.FromRGB (192, 198, 200);
 
 		//Header Styles
-		public static int HeaderFontSize = 25;
-		public static string HeaderFontStyle = "Baskerville";
+		public static int HeaderLargeFontSize = 25;
+		public static int HeaderSmallFontSize = 15;
+		public static string HeaderFontStyle = "MarkerFelt-Thin";
 		public static float HeaderFrameX = 40.0f;
 		public static float HeaderFrameY = 10.0f;
 		public static float HeaderFrameWidth =  -80.0f; //Added to Bounds.Width
@@ -23,6 +24,8 @@ namespace CivilPrototype
 
 		//Text Field Styles
 		public static UITextBorderStyle TextFieldBorderStyle = UITextBorderStyle.RoundedRect;
+		public static string TextFieldFontStyle = "MarkerFelt-Thin";
+		public static int TextFieldFontSize = 15;
 		public static float TextFieldMarginBottom = 35.0f;
 		public static float TextFieldWidth = -20.0f; //Added to Bounds.Width
 		public static float TextFieldHeight = 45.0f;
@@ -33,9 +36,9 @@ namespace CivilPrototype
 		public static float ButtonHeight = 50.0f;
 		public static float ButtonFrameX = 10.0f;
 		public static UIButtonType ButtonType = UIButtonType.RoundedRect;
-		public static float LargeButtonFontSize = 30.0f;
-		public static float NormalButtonFontSize = 15.0f;
-		public static string ButtonFontStyle = "Baskerville";
+		public static float LargeButtonFontSize = 27.0f;
+		public static float NormalButtonFontSize = 18.0f;
+		public static string ButtonFontStyle = "MarkerFelt-Thin";
 		public static UIControlState ButtonControlState = UIControlState.Normal;
 	}
 }
