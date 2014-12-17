@@ -118,7 +118,7 @@ exports.usersIdPOST = function(req, res, next) {
 	var usersId = req.params.id;
 	var data = req.body;
 
-  try {
+    try {
 		users.findOne({_id: usersId}, function(err, doc) {
 			if (err) console.log(err);
 	  	if (doc) {
@@ -136,7 +136,7 @@ exports.usersIdPOST = function(req, res, next) {
 	  			if (err) {
 	  				sendERR("Could not save the data", res)
 	  			} else {
-	  				res.send("{ \"message\": \"Documents updated successfully\" }");
+	  				res.send("{ \"message\": \"User documents updated successfully\" }");
 	  			}
 	  		});
 

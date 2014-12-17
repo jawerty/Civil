@@ -28,7 +28,37 @@ exports.movementsPOST = function(req, res, next) {
 
 exports.movementsIdPOST = function(req, res) {
 	var movementId = req.params.id;
-  	res.send(movementId);
+  	var data = req.body;
+
+    try {
+		movements.findOne({_id: movementId}, function(err, doc) {
+			if (err) console.log(err);
+		  	if (doc) {
+
+		  		for (var key in data) {
+		  			if (key != "_id" || key != "dateCreated" || key != "location" || key != "founder") {
+		  				if (data[key] != null) {
+			  				doc[key] = data[key];
+			  			} 
+		  			}
+		  			
+		  		}
+
+		  		doc.save(function(err) {
+		  			if (err) {
+		  				sendERR("Could not save the data", res)
+		  			} else {
+		  				res.send("{ \"message\": \"Movement documents updated successfully\" }");
+		  			}
+		  		});
+
+		  	} else {
+		  		sendERR("Movement not found", res)
+		  	}
+		});
+	} catch (err) {
+		sendERR(err, res)
+	}
 }
 
 exports.movementsIdGET = function(req, res) {
