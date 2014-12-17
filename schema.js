@@ -40,6 +40,10 @@ var movementsSchema = new Schema({
 	founder: {type: String},
 	title: {type: String},
 	description: {type: String},
+	location: {
+	    type: [Number],  // [<longitude>, <latitude>]
+	    index: '2d'      // create the geospatial index
+    },
 	events: [eventSchema],
 	announcements: [announcementSchema]
 });
