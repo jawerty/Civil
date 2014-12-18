@@ -7,12 +7,14 @@ using MonoTouch.UIKit;
 using System.Net;
 using System.IO;
 using System.Text;
+using System.Collections.Generic;
 
 namespace CivilPrototype
 {
 	public class CreateAccountController : UIViewController
 	{
 		UINavigationController navigation;
+		float skillsListHeight;
 		public CreateAccountController (UINavigationController nav) : base ()
 		{
 			navigation = nav;
@@ -83,6 +85,9 @@ namespace CivilPrototype
 				Frame = new RectangleF(DesignConstants.TextFieldFrameX, 6*(2*(DesignConstants.TextFieldMarginBottom-marginAdjustment)), View.Bounds.Width + DesignConstants.TextFieldWidth, DesignConstants.TextFieldHeight-heightAdjustment),
 				SecureTextEntry = true
 			};
+			var skillsList = new EditableListView (new List<string>{},new RectangleF (DesignConstants.TextFieldFrameX, 7*(2*(DesignConstants.TextFieldMarginBottom-marginAdjustment)),	View.Bounds.Width + DesignConstants.TextFieldWidth, 200 ));
+			skillsList.Frame = new RectangleF (DesignConstants.TextFieldFrameX, 7*(2*(DesignConstants.TextFieldMarginBottom-marginAdjustment)),	View.Bounds.Width + DesignConstants.TextFieldWidth, skillsList.Height );
+			skillsListHeight = skillsList.Height;
 			var submitButton = UIButton.FromType(DesignConstants.ButtonType);
 				submitButton.Frame = new RectangleF(DesignConstants.ButtonFrameX, 375, View.Bounds.Width + DesignConstants.ButtonWidth, DesignConstants.ButtonHeight);
 				submitButton.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.LargeButtonFontSize);

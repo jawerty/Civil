@@ -81,11 +81,14 @@ namespace CivilPrototype
 			Console.WriteLine (responseString);
 			var responseObj = Newtonsoft.Json.Linq.JObject.Parse (responseString);
 			var document = Newtonsoft.Json.Linq.JObject.Parse ((string)responseObj ["document"]);
+			var skills = ((Newtonsoft.Json.Linq.JArray)document ["skills"]).ToString();
 			if ((string)responseObj ["message"] == "User found") {
 				NSUserDefaults.StandardUserDefaults.SetString ((string)document["firstName"], "currentUserFirstName");
 				NSUserDefaults.StandardUserDefaults.SetString ((string)document["lastName"], "currentUserLastName");
 				NSUserDefaults.StandardUserDefaults.SetString ((string)document["username"], "currentUserUsername");
 				NSUserDefaults.StandardUserDefaults.SetString ((string)document["email"], "currentUserEmail");
+				//NSUserDefaults.StandardUserDefaults.SetString ((string)document["movements"], "currentUserMovements");
+				NSUserDefaults.StandardUserDefaults.SetString (skills, "currentUserSkills");
 			}
 			return responseString;
 		}

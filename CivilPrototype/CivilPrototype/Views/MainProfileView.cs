@@ -3,6 +3,8 @@ using MonoTouch.UIKit;
 using System.Threading;
 using System.Drawing;
 using MonoTouch.Foundation;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CivilPrototype
 {
@@ -12,6 +14,10 @@ namespace CivilPrototype
 		UITextView profileView;
 		UIView mainProfileView;
 		UIScrollView scrollProfileView;
+		float scrollViewWidth;
+		float scrollViewX;
+		float skillsListHeight;
+		List<string> listSkills;
 		bool editing = false;
 		public async void EditProfileAsync (string id, string username, string password, string passwordCheck, string firstName, string lastName, string email, string movements = "")
 		{
@@ -20,28 +26,36 @@ namespace CivilPrototype
 			scrollProfileView = new UIScrollView (new RectangleF (0, 50, Bounds.Width, 500)) {
 				new UITextView {
 					Text = "Username: " + NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserUsername"),
-					Frame = new RectangleF ((Bounds.Width / 2) - 100, 100, 200, 40),
+					TextAlignment = DesignConstants.HeaderAlignment,
+					Frame = new RectangleF (scrollViewX, 100, scrollViewWidth, 40),
+					Font = UIFont.FromName(DesignConstants.HeaderFontStyle,DesignConstants.HeaderSmallFontSize),
 					BackgroundColor = UIColor.Clear,
 				},
 				new UITextView {
 					Text = "Email: " + NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserEmail"),
-					Frame = new RectangleF ((Bounds.Width / 2) - 100, 200, 200, 40),
+					TextAlignment = DesignConstants.HeaderAlignment,
+					Frame = new RectangleF (scrollViewX, 200, scrollViewWidth, 40),
+					Font = UIFont.FromName(DesignConstants.HeaderFontStyle,DesignConstants.HeaderSmallFontSize),
 					BackgroundColor = UIColor.Clear,
 				},
 				new UITextView {
 					Text = "First Name: " + NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserFirstName"),
-					Frame = new RectangleF ((Bounds.Width / 2) - 100, 300, 200, 40),
+					TextAlignment = DesignConstants.HeaderAlignment,
+					Frame = new RectangleF (scrollViewX, 300, scrollViewWidth, 40),
+					Font = UIFont.FromName(DesignConstants.HeaderFontStyle,DesignConstants.HeaderSmallFontSize),
 					BackgroundColor = UIColor.Clear,
 				},
 				new UITextView {
 					Text = "Last Name: " + NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserLastName"),
-					Frame = new RectangleF ((Bounds.Width / 2) - 100, 400, 200, 40),
+					TextAlignment = DesignConstants.HeaderAlignment,
+					Frame = new RectangleF (scrollViewX, 400, scrollViewWidth, 40),
+					Font = UIFont.FromName(DesignConstants.HeaderFontStyle,DesignConstants.HeaderSmallFontSize),
 					BackgroundColor = UIColor.Clear,
 				},
 			};
 			scrollProfileView.DelaysContentTouches = false;
 			scrollProfileView.CanCancelContentTouches = false;
-			scrollProfileView.ContentSize = new SizeF (Bounds.Width, 800);
+			scrollProfileView.ContentSize = new SizeF (Bounds.Width, 825 + skillsListHeight);
 			Add (scrollProfileView);
 		}
 
@@ -55,46 +69,61 @@ namespace CivilPrototype
 		public MainProfileView (RectangleF frame) :  base()
 		{
 			this.Frame = frame;
+			string userFirstName = NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserFirstName");
+			string userLastName = NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserLastName");
+			string userEmail = NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserEmail");
+			string userName = NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserUsername");
+			string skills = NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserSkills");
+			listSkills = (Newtonsoft.Json.Linq.JArray.Parse(skills)).Select(t =>(string)t).ToList();
+			this.scrollViewWidth = Bounds.Width - 20;
+			this.scrollViewX = (Bounds.Width / 2) - (scrollViewWidth / 2);
 			var u = new UITextField {
 				Placeholder = "Username",
-				Frame = new RectangleF ((Bounds.Width / 2) - 100, 150, 200, 40),
+				Frame = new RectangleF (scrollViewX, 150, scrollViewWidth, 40),
 				BackgroundColor = UIColor.White,
 				BorderStyle = DesignConstants.TextFieldBorderStyle,
+				Font = UIFont.FromName(DesignConstants.HeaderFontStyle,DesignConstants.HeaderSmallFontSize),
 			};
 			var e = new UITextField {
 				Placeholder = "Email",
-				Frame = new RectangleF ((Bounds.Width / 2) - 100, 250, 200, 40),
+				Frame = new RectangleF (scrollViewX, 250, scrollViewWidth, 40),
 				BackgroundColor = UIColor.White,
 				BorderStyle = DesignConstants.TextFieldBorderStyle,
+				Font = UIFont.FromName(DesignConstants.HeaderFontStyle,DesignConstants.HeaderSmallFontSize),
 			};
 			var fn = new UITextField {
 				Placeholder = "First Name",
-				Frame = new RectangleF ((Bounds.Width / 2) - 100, 350, 200, 40),
+				Frame = new RectangleF (scrollViewX, 350, scrollViewWidth, 40),
 				BackgroundColor = UIColor.White,
 				BorderStyle = DesignConstants.TextFieldBorderStyle,
+				Font = UIFont.FromName(DesignConstants.HeaderFontStyle,DesignConstants.HeaderSmallFontSize),
 			};
 			var ln = new UITextField {
 				Placeholder = "Last Name",
-				Frame = new RectangleF ((Bounds.Width / 2) - 100, 450, 200, 40),
+				Frame = new RectangleF (scrollViewX, 450, scrollViewWidth, 40),
 				BackgroundColor = UIColor.White,
 				BorderStyle = DesignConstants.TextFieldBorderStyle,
+				Font = UIFont.FromName(DesignConstants.HeaderFontStyle,DesignConstants.HeaderSmallFontSize),
 			};
 			var p = new UITextField {
 				Placeholder = "Password",
-				Frame = new RectangleF ((Bounds.Width / 2) - 100, 500, 200, 40),
+				Frame = new RectangleF (scrollViewX, 500, scrollViewWidth, 40),
 				BackgroundColor = UIColor.White,
 				BorderStyle = DesignConstants.TextFieldBorderStyle,
+				Font = UIFont.FromName(DesignConstants.HeaderFontStyle,DesignConstants.HeaderSmallFontSize),
 			};
 			var pCheck = new UITextField {
 				Placeholder = "Password Check",
-				Frame = new RectangleF ((Bounds.Width / 2) - 100, 550, 200, 40),
+				Frame = new RectangleF (scrollViewX, 550, scrollViewWidth, 40),
 				BackgroundColor = UIColor.White,
 				BorderStyle = DesignConstants.TextFieldBorderStyle,
+				Font = UIFont.FromName(DesignConstants.HeaderFontStyle,DesignConstants.HeaderSmallFontSize),
 			};
-			var skillsList = new EditableListView (new string[]{"hello","hi"});
-			skillsList.Frame = new RectangleF ((Bounds.Width / 2) - 100, 600, 200, 200);
+			var skillsList = new EditableListView (listSkills,new RectangleF (scrollViewX, 600,	scrollViewWidth, 200 ));
+			skillsList.Frame = new RectangleF (scrollViewX, 600,	scrollViewWidth, skillsList.Height);
+			skillsListHeight = skillsList.Height;
 			var submit = UIButton.FromType (DesignConstants.ButtonType);
-			submit.Frame = new RectangleF ((Bounds.Width / 2) - 100, 600, 200, 40);
+			submit.Frame = new RectangleF (scrollViewX, 625 + skillsListHeight, scrollViewWidth, 40);
 			submit.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.NormalButtonFontSize);
 			submit.SetTitle ("Make Changes", DesignConstants.ButtonControlState);
 			submit.TouchUpInside += delegate {
@@ -118,12 +147,9 @@ namespace CivilPrototype
 				pCheck.RemoveFromSuperview ();
 				submit.RemoveFromSuperview ();
 				e.RemoveFromSuperview ();
+				skillsList.RemoveFromSuperview();
 				editing = false;
 			};
-			string userFirstName = NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserFirstName");
-			string userLastName = NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserLastName");
-			string userEmail = NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserEmail");
-			string userName = NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserUsername");
 			editButton = new EditProfileButton (Bounds.Width);
 			editButton.ButtonTapped += delegate(NSSet touches, UIEvent evt) {
 				editButton.BackgroundColor = DesignConstants.lgrey;
@@ -138,7 +164,7 @@ namespace CivilPrototype
 						scrollProfileView.Add (ln);
 						scrollProfileView.Add (p);
 						scrollProfileView.Add (pCheck);
-						//scrollProfileView.Add (submit);
+						scrollProfileView.Add (submit);
 						scrollProfileView.Add (skillsList);
 					});
 				} else {
@@ -151,6 +177,7 @@ namespace CivilPrototype
 						pCheck.RemoveFromSuperview ();
 						submit.RemoveFromSuperview ();
 						e.RemoveFromSuperview ();
+						skillsList.RemoveFromSuperview();
 					});
 				}
 			};
@@ -167,28 +194,36 @@ namespace CivilPrototype
 			scrollProfileView = new UIScrollView (new RectangleF (0, 50, Bounds.Width, 500)) {
 				new UITextView {
 					Text = "Username: " + NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserUsername"),
-					Frame = new RectangleF ((Bounds.Width / 2) - 100, 100, 200, 40),
+					TextAlignment = DesignConstants.HeaderAlignment,
+					Frame = new RectangleF (scrollViewX, 100, scrollViewWidth, 40),
+					Font = UIFont.FromName(DesignConstants.HeaderFontStyle,DesignConstants.HeaderSmallFontSize),
 					BackgroundColor = UIColor.Clear,
 				},
 				new UITextView {
 					Text = "Email: " + NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserEmail"),
-					Frame = new RectangleF ((Bounds.Width / 2) - 100, 200, 200, 40),
+					TextAlignment = DesignConstants.HeaderAlignment,
+					Frame = new RectangleF (scrollViewX, 200, scrollViewWidth, 40),
+					Font = UIFont.FromName(DesignConstants.HeaderFontStyle,DesignConstants.HeaderSmallFontSize),
 					BackgroundColor = UIColor.Clear,
 				},
 				new UITextView {
 					Text = "First Name: " + NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserFirstName"),
-					Frame = new RectangleF ((Bounds.Width / 2) - 100, 300, 200, 40),
+					TextAlignment = DesignConstants.HeaderAlignment,
+					Frame = new RectangleF (scrollViewX, 300, scrollViewWidth, 40),
+					Font = UIFont.FromName(DesignConstants.HeaderFontStyle,DesignConstants.HeaderSmallFontSize),
 					BackgroundColor = UIColor.Clear,
 				},
 				new UITextView {
 					Text = "Last Name: " + NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserLastName"),
-					Frame = new RectangleF ((Bounds.Width / 2) - 100, 400, 200, 40),
+					TextAlignment = DesignConstants.HeaderAlignment,
+					Frame = new RectangleF (scrollViewX, 400, scrollViewWidth, 40),
+					Font = UIFont.FromName(DesignConstants.HeaderFontStyle,DesignConstants.HeaderSmallFontSize),
 					BackgroundColor = UIColor.Clear,
 				},
 			};
 			scrollProfileView.DelaysContentTouches = false;
 			scrollProfileView.CanCancelContentTouches = false;
-			scrollProfileView.ContentSize = new SizeF (Bounds.Width, 800);
+			scrollProfileView.ContentSize = new SizeF (Bounds.Width, 825 + skillsListHeight);
 			Add (scrollProfileView);
 			Add (profileView);
 			Add (editButton);
