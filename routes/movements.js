@@ -7,68 +7,90 @@ function sendERR(err, res) {
 }	
 	
 exports.movementsGET = function(req, res, next) {
+	function rate(y, n) { //popular algorithm in javascript
+		var r;
+
+		if ((y-n) >= 0) {
+			r = 1-(n/y);
+		} else {
+			r = -1 * (1-(y/n));
+		}
+
+		return r; // returns ratio from -1 to 1
+	}
+
 	function discover(type, location, skip, distance) {
-		skip = skip * 20;
+		var tquery;
+		new_skip = skip * 20;
 
 		if (type == "pop") {
 			sort = {yays: -1, nays: 1};
-
+			tquery = [	
+		  	{
+				$project: {
+			    	yays: "$yays",
+			    	nays: "$nays",	
+					rate: {
+						$cond: [ 
+					      	{ $and: [{$eq: ["$nays", 1]}, {$eq: ["$nays", 1]}] },
+							-1, 
+							{
+								$cond: [ 
+							      	{$gte:[{ $subtract: ["$yays", "$nays"] },0]},
+									{$subtract: [1,  { $divide: ["$nays", "$yays"] }] }, 
+									{$multiply: [
+										-1, 
+										{$subtract: [1, {$divide: ["$yays", "$nays"]}]}
+									]}
+								] 
+							}
+						] 
+						
+					}
+				}
+			},
+			{
+				$sort: { rate: -1 }
+			}]
 		} else if (type == "hot") {
-			sort = {};
-
+			tquery = [{
+				$match: { 
+					yays: { $gt: 1 }
+				}
+		  	},	
+			{ 
+			    $project: {
+			    	yays: "$yays",
+			    	nays: "$nays",
+			    	difference: {$subtract: ["$yays", "$nays"] },
+				   	net: {
+				   		$cond: [ 
+					      	{$lt:[{ $subtract: ["$yays", "$nays"] },0]},
+							{$subtract: [0,  { $subtract: ["$yays", "$nays"] }] }, 
+							{ $subtract: ["$yays", "$nays"] }
+						] 
+				  	} 	
+			    }
+			},  
+			{ 
+			    $sort: { net: 1 } 
+			}]
 		} else if (type == "new") {
-			sort = {dateCreated: -1};
+			tquery = [{
+				$sort: { dateCreated: -1 }
+			}]
 		} else {
-			sort = {yays: -1, nays: 1};
+			tquery = [{
+				$sort: { yays: -1 }
+			}]
 		}
-
-		console.log(sort)
-
-		if (location == "all") {
-			if (type == "hot") {
-				movements.aggregate([
-				  {
-					  $match: { 
-				        	yays: { $gt: 0 }
-				      }
-			  	  },	
-				  { 
-				    $project: {
-				    	yays: "$yays",
-				    	nays: "$nays",
-				    	difference: {$subtract: ["$yays", "$nays"] },
-					   	net: {
-					   		$cond: [ 
-						      	{$lt:[{ $subtract: ["$yays", "$nays"] },0]},
-								{$subtract: [0,  { $subtract: ["$yays", "$nays"] }] }, 
-								{ $subtract: ["$yays", "$nays"] }
-							] 
-					  	} 	
-				    }
-				  },  
-				  { 
-				    $sort: { net: 1 } 
-				  }
-				]).limit(20).skip(skip).exec(function(err, movementsFound) {
-					if (err) sendERR(err, res);
-					if (movementsFound) {
-						res.send(movementsFound)
-					}
-				});
-			} else {
-				movements.find({}).sort(sort).limit(20).skip(skip).exec(function(err, movementsFound) { 
-					if (err) sendERR(err, res);
-					if (movementsFound) {
-						res.send(movementsFound);
-					} else {
-						sendERR("Movements not found", res);
-					}
-				});
+		console.log(new_skip)
+		movements.aggregate(tquery).skip(new_skip).limit(20).exec(function(err, movementsFound) {
+			if (err) sendERR(err, res);
+			if (movementsFound) {
+				res.send(movementsFound)
 			}
-		} else {
-			/* lat and long 'find' function */
-			sendERR("Location functionality not optimal", res);
-		}
+		});
 
 		
 	}
@@ -77,7 +99,7 @@ exports.movementsGET = function(req, res, next) {
 
 	var type = query.type;
 	console.log(type)
-	var skip =  query.skip * 20;
+	var skip =  query.skip;
 	var location = query.location || "all";
 	
 	//var tags = query.tags || [];
@@ -101,8 +123,8 @@ exports.movementsPOST = function(req, res, next) {
 			founder: data.founder,
 			title: data.title,
 			description: data.description,
-			yays: 0,
-			nays: 0,
+			yays: 1,
+			nays: 1,
 			tags: data.tags
 		});  
 
