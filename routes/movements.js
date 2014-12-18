@@ -33,7 +33,6 @@ exports.movementsGET = function(req, res, next) {
 				      }
 			  	  },	
 				  { 
-			        
 				    $project: {
 				    	yays: "$yays",
 				    	nays: "$nays",
@@ -50,7 +49,7 @@ exports.movementsGET = function(req, res, next) {
 				  { 
 				    $sort: { net: 1 } 
 				  }
-				]).limit(20).exec(function(err, movementsFound) {
+				]).limit(20).skip(skip).exec(function(err, movementsFound) {
 					if (err) sendERR(err, res);
 					if (movementsFound) {
 						res.send(movementsFound)
