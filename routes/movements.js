@@ -14,12 +14,15 @@ exports.movementsPOST = function(req, res, next) {
   		var newMovement = new movements({
 			founder: data.founder,
 			title: data.title,
-			description: data.description
+			description: data.description,
+			yays: 0,
+			nays: 0,
+			tags: data.tags
 		});  
 
 		newMovement.save();
 
-		res.send("{ \"message\": \"Movement created\" }");
+		res.send("{ \"message\": \"Movement created\", \"id\": \""+newMovement._id+"\" }");
 
   	} catch (err) {
   		sendERR(err, res);
@@ -97,4 +100,29 @@ exports.movementsIdAnnuncementsPOST = function(req, res) {
 exports.movementsIdEventsPOST = function(req, res) {
 	var movementId = req.params.id;
 	
+}
+
+exports.movementsIdYayPUT = function(req, res) {
+	var movementId = req.params.id;
+
+	movements.findOneAndUpdate({ _id: movementId }, { $inc: { yays: 1 } }).exec(function(err, response) { 
+		if (err) 
+			sendERR(err, res);
+		else 
+			console.log(response); 
+			res.send("{ \"message\": \""+movementId+" received a yay\" }");
+	});
+
+}
+
+exports.movementsIdNayPUT = function(req, res) {
+	var movementId = req.params.id;
+	movements.findOneAndUpdate({ _id: movementId }, { $inc: { nays: 1 } }).exec(function(err, response) { 
+		if (err) 
+			sendERR(err, res);
+		else 
+			console.log(response); 
+			res.send("{ \"message\": \""+movementId+" received a nay\" }");
+
+	});
 }

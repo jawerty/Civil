@@ -67,6 +67,10 @@ app.post('/movements/:id/events', Movements.movementsIdEventsPOST);
 /* logout */
 app.post('/usersLogout', Users.usersLogout);
 
+/* yays and nays */
+app.put('/movements/:id/yay', Movements.movementsIdYayPUT);
+app.put('/movements/:id/nay', Movements.movementsIdNayPUT)
+
 var server = app.listen(3000, function () {
   var host = server.address().address;
   var port = server.address().port;

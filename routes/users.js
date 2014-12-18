@@ -75,7 +75,8 @@ exports.usersPOST = function(req, res, next) {
 															email: data.email,
 															username: data.username,
 															password: hash,
-															avatar: data.avatar
+															avatar: data.avatar,
+															skills: data.skills
 														});
 
 														newUser.save();
