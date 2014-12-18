@@ -12,8 +12,9 @@ exports.movementsGET = function(req, res, next) {
 
 		if (type == "pop") {
 			sort = {yays: -1, nays: 1};
+
 		} else if (type == "hot") {
-			sort = {net: -1, yays: -1};
+			sort = {};
 
 		} else if (type == "new") {
 			sort = {dateCreated: -1};
@@ -21,15 +22,50 @@ exports.movementsGET = function(req, res, next) {
 			sort = {yays: -1, nays: 1};
 		}
 
+		console.log(sort)
+
 		if (location == "all") {
-			movements.find({}).sort(sort).limit(20).skip(skip).exec(function(err, movementsFound) { 
-				if (err) sendERR(err, res);
-				if (movementsFound) {
-					res.send(movementsFound);
-				} else {
-					sendERR("Movements not found", res);
-				}
-			});
+			if (type == "hot") {
+				movements.aggregate([
+				  {
+					  $match: { 
+				        	yays: { $gt: 0 }
+				      }
+			  	  },	
+				  { 
+			        
+				    $project: {
+				    	yays: "$yays",
+				    	nays: "$nays",
+				    	difference: {$subtract: ["$yays", "$nays"] },
+					   	net: {
+					   		$cond: [ 
+						      	{$lt:[{ $subtract: ["$yays", "$nays"] },0]},
+								{$subtract: [0,  { $subtract: ["$yays", "$nays"] }] }, 
+								{ $subtract: ["$yays", "$nays"] }
+							] 
+					  	} 	
+				    }
+				  },  
+				  { 
+				    $sort: { net: 1 } 
+				  }
+				]).limit(20).exec(function(err, movementsFound) {
+					if (err) sendERR(err, res);
+					if (movementsFound) {
+						res.send(movementsFound)
+					}
+				});
+			} else {
+				movements.find({}).sort(sort).limit(20).skip(skip).exec(function(err, movementsFound) { 
+					if (err) sendERR(err, res);
+					if (movementsFound) {
+						res.send(movementsFound);
+					} else {
+						sendERR("Movements not found", res);
+					}
+				});
+			}
 		} else {
 			/* lat and long 'find' function */
 			sendERR("Location functionality not optimal", res);
@@ -41,6 +77,7 @@ exports.movementsGET = function(req, res, next) {
 	var query = req.query;
 
 	var type = query.type;
+	console.log(type)
 	var skip =  query.skip * 20;
 	var location = query.location || "all";
 	

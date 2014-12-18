@@ -48,6 +48,7 @@ var movementsSchema = new Schema({
     yays: {type: Number},
     nays: {type: Number},
     net: {type: Number},
+    abs_net: {type: Number},
 	events: [eventSchema],
 	announcements: [announcementSchema]
 });
