@@ -47,6 +47,7 @@ var movementsSchema = new Schema({
     tags: [{type: String}],
     yays: {type: Number},
     nays: {type: Number},
+    net: {type: Number},
 	events: [eventSchema],
 	announcements: [announcementSchema]
 });

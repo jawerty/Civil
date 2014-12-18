@@ -4,8 +4,58 @@ var movements = mongoose.model('movement');
 
 function sendERR(err, res) {
 	res.send("{ \"message\": \""+err+"\" }");
-}
+}	
+	
+exports.movementsGET = function(req, res, next) {
+	function discover(type, location, skip, distance) {
+		skip = skip * 20;
 
+		if (type == "pop") {
+			sort = {yays: -1, nays: 1};
+		} else if (type == "hot") {
+			sort = {net: -1, yays: -1};
+
+		} else if (type == "new") {
+			sort = {dateCreated: -1};
+		} else {
+			sort = {yays: -1, nays: 1};
+		}
+
+		if (location == "all") {
+			movements.find({}).sort(sort).limit(20).skip(skip).exec(function(err, movementsFound) { 
+				if (err) sendERR(err, res);
+				if (movementsFound) {
+					res.send(movementsFound);
+				} else {
+					sendERR("Movements not found", res);
+				}
+			});
+		} else {
+			/* lat and long 'find' function */
+			sendERR("Location functionality not optimal", res);
+		}
+
+		
+	}
+
+	var query = req.query;
+
+	var type = query.type;
+	var skip =  query.skip * 20;
+	var location = query.location || "all";
+	
+	//var tags = query.tags || [];
+
+	if (location == "all") {
+		var distance = undefined;
+	} else {
+		var distance = query.distance || "25";
+	}
+
+	discover(type, location, skip, distance)
+
+}	
+	
 exports.movementsPOST = function(req, res, next) {
   	var data = req.body;
   	console.log(data);

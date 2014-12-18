@@ -41,6 +41,9 @@ if (env == "development") {
 	app.use(errorHandler());
 }
 
+/* Movement discovery */
+app.get('/movements', Movements.movementsGET);
+
 /* Returning data from movements and users */
 app.get('/movements/:id', Movements.movementsIdGET)
 app.get('/users/:id', Users.usersIdGET)
