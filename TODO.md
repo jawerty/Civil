@@ -1,9 +1,11 @@
 # TODO
-* **/movements GET**
+* Make time factor in pop and hot discovery
+* Add validation to Movement creation
+* Add validation to User creation
 * Events and Announcements POST
-* Updating movement /movements/:id POST
-
+* API Authorization
 * Polish encryption
+
 
 
 
