@@ -72,7 +72,7 @@ exports.movementsIdGET = function(req, res) {
 		movements.findOne({_id: movementId}, function(err, doc) {
 			if (err) console.log(err);
 	  		if (doc) {
-	  			res.send("{ \"message\": \"Movement found\", \"document\": \""+JSON.stringify(doc)+"\" }");
+	  			res.send("{ \"message\": \"Movement found\", \"document\": "+JSON.stringify(doc)+" }");
 	  		} else {
 	  			res.send("{ \"message\": \"Movement not found\" }");
 	  		};
