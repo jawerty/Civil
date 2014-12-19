@@ -19,7 +19,7 @@ var usersSchema = new Schema({
 	password: {type: String, required: true},
 	gravatar: {type: String},
 	avatar: {type: String},
-	requests: [type: String]
+	requests: {type: String}
 });
 
 var eventSchema = new Schema({

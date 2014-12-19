@@ -70,7 +70,7 @@ exports.usersPOST = function(req, res, next) {
 														var secureUrl = gravatar.url(data.email, {s: '100', r: 'x', d: 'retro'}, true);
 
 														var newUser = new users({
-														w	lastName: data.lastName,
+															lastName: data.lastName,
 															email: data.email,
 															username: data.username,
 															password: hash,
