@@ -91,14 +91,14 @@ exports.usersPOST = function(req, res, next) {
 												sendERR("Miscellaneous error in password validation", res)
 											}
 										});
-								    });
+									});
 								});	
 							}
 						})
 							
 					}
 					
-				})	
+				})
 				
 		  	}
 		} catch (err) {

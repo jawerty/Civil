@@ -7,7 +7,7 @@ function sendERR(err, res) {
 }	
 	
 exports.movementsGET = function(req, res, next) {
-	function rate(y, n) { //popular algorithm in javascript
+	function rate(y, n) { //"pop" algorithm in javascript
 		var r;
 
 		if ((y-n) >= 0) {
