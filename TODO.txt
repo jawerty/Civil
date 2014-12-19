@@ -4,3 +4,5 @@ Write add skills ui and functionality
 Add skills editer to create account
 Make create account span multiple pages
 and a million other things...
+
+An App for activism, becoming an activist, ordinary people becomign activists

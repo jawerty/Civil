@@ -8,6 +8,7 @@ using MonoTouch.CoreGraphics;
 using MonoTouch.UIKit;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace CivilPrototype
 {
@@ -118,7 +119,7 @@ namespace CivilPrototype
 			var response = (HttpWebResponse) await request.GetResponseAsync();
 
 			var responseString = new StreamReader (response.GetResponseStream ()).ReadToEnd ();
-			var responseObj = Newtonsoft.Json.Linq.JObject.Parse (responseString);
+			var responseObj = JObject.Parse (responseString);
 			if ((string)responseObj ["message"] == "User authenticated") {
 				NSUserDefaults.StandardUserDefaults.SetBool (true, "userLoggedIn");
 				NSUserDefaults.StandardUserDefaults.SetString ((string)responseObj["userID"], "currentUserID");
