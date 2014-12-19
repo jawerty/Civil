@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using MonoTouch.Foundation;
 using MonoTouch.CoreGraphics;
 using MonoTouch.UIKit;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace CivilPrototype
 {
@@ -42,6 +44,61 @@ namespace CivilPrototype
 			}
 			return responseString;
 		}
+		public async static Task<Movement> GetMovement(string id){
+			string url = "http://localhost:3000/movements/" + id;
+			var request = (HttpWebRequest)WebRequest.Create(url);
+			request.Method = "GET";
+			var response = (HttpWebResponse) await request.GetResponseAsync();
+
+			var responseString = new StreamReader (response.GetResponseStream ()).ReadToEnd ();
+			var responseObj = Newtonsoft.Json.Linq.JObject.Parse (responseString);
+			var document = responseObj ["document"];
+			var movement = new Movement ();
+			if ((string)responseObj ["message"] == "Movement found") {
+				movement.dateCreated = (DateTime)(document ["dateCreated"]);
+				movement.description = (string)(document ["description"]);
+				movement.founder = (string)(document ["founder"]);
+				movement.title = (string)(document ["title"]);
+			}
+			return movement;
+		}
+		public async static Task<List<MovementID>> GetMovements(string type,int skips){
+			string url = "http://localhost:3000/movements?type=" + type +"&skip=" + skips;
+			var request = (HttpWebRequest)WebRequest.Create(url);
+			request.Method = "GET";
+			var response = (HttpWebResponse) await request.GetResponseAsync();
+
+			var responseString = new StreamReader (response.GetResponseStream ()).ReadToEnd ();
+			var responseObj = JsonConvert.DeserializeObject<List<MovementID>>(responseString);
+			return responseObj;
+		}
+		public async static Task<string> CreateMovement(string title,string description){
+
+			var request = (HttpWebRequest)WebRequest.Create("http://127.0.0.1:3000/movements");
+
+			var postData = "{\"title\": " + "\"" + title + "\"" + "," ;
+			postData += "\"description\": " + "\"" + description  + "\"" + "," ;
+			postData += "\"tags\": " + "\"" + "[]"  + "\"" + "," ;
+			postData += "\"founder\": " + "\"" + NSUserDefaults.StandardUserDefaults.StringForKey("currentUserUsername")  + "\"" + "}" ;
+			Console.WriteLine (postData);
+			var data = Encoding.ASCII.GetBytes(postData);
+
+			request.Method = "POST";
+			request.ContentType = "application/json";
+			request.ContentLength = data.Length;
+
+			using (var stream = request.GetRequestStream())
+			{
+				stream.Write(data, 0, data.Length);
+			}
+
+			var response = (HttpWebResponse) await request.GetResponseAsync();
+
+			var responseString = new StreamReader (response.GetResponseStream ()).ReadToEnd ();
+			var responseObj = Newtonsoft.Json.Linq.JObject.Parse (responseString);
+			return responseString;
+		}
+
 		public async static Task<string> LoginUser(string username, string password){
 			var request = (HttpWebRequest)WebRequest.Create("http://127.0.0.1:3000/usersAuth");
 
@@ -230,6 +287,20 @@ namespace CivilPrototype
 		public string username{ get; set;}
 		public string skills { get; set;}
 
+	}
+	public class MovementID
+	{
+		[JsonProperty("_id")]
+		public string id { get; set; }
+
+
+	}
+	public class Movement
+	{
+		public string title { get; set; }
+		public string description { get; set; }
+		public string founder { get; set; }
+		public DateTime dateCreated { get; set; }
 	}
 }
 

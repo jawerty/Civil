@@ -11,7 +11,6 @@ namespace CivilPrototype
 		public EditProfileButton (float BoundsWidth) : base()
 		{
 			BackgroundColor = UIColor.White;
-
 			CornerRadius = 4;
 			Frame = new RectangleF (BoundsWidth - 32f, 
 				20f, 
@@ -29,6 +28,7 @@ namespace CivilPrototype
 			base.TouchesBegan (touches, evt);
 			ButtonTapped (touches,evt);
 		}
+
 	}
 }
 

@@ -118,6 +118,8 @@
     <Compile Include="Static\Security.cs" />
     <Compile Include="Abstracts\EditableListView.cs" />
     <Compile Include="Abstracts\EditableTableViewSource.cs" />
+    <Compile Include="Controllers\CreateMovementController.cs" />
+    <Compile Include="Abstracts\RoundableUITextView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>

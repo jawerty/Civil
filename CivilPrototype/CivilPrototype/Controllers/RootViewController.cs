@@ -26,7 +26,7 @@ namespace CivilPrototype
 			userLoggedIn = NSUserDefaults.StandardUserDefaults.BoolForKey ("userLoggedIn");
 			NavigationController.NavigationBarHidden = true;
 			if (userLoggedIn) {
-				var discoverView = new DiscoverView (new RectangleF (0, 0, View.Bounds.Width, View.Bounds.Height));
+				var discoverView = new DiscoverView (new RectangleF (0, 0, View.Bounds.Width, View.Bounds.Height),this);
 				var discoverController = new NavigableViewController () { 
 					Navigation = navigation, 
 					MainView = discoverView,
