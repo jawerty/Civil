@@ -57,15 +57,15 @@ exports.movementsGET = function(req, res, next) {
 				$match: { 
 					yays: { $gt: 1 }
 				}
-		  	},	
-			{ 
-			    $project: {
-			    	yays: "$yays",
-			    	nays: "$nays",
-			    	difference: {$subtract: ["$yays", "$nays"] },
-				   	net: {
-				   		$cond: [ 
-					      	{$lt:[{ $subtract: ["$yays", "$nays"] },0]},
+			},
+			{
+				$project: {
+					yays: "$yays",
+					nays: "$nays",
+					difference: {$subtract: ["$yays", "$nays"] },
+					net: {
+						$cond: [ 
+							{$lt:[{ $subtract: ["$yays", "$nays"] },0]},
 							{$subtract: [0,  { $subtract: ["$yays", "$nays"] }] }, 
 							{ $subtract: ["$yays", "$nays"] }
 						] 
@@ -174,17 +174,17 @@ exports.movementsIdPOST = function(req, res) {
 
 exports.movementsIdGET = function(req, res) {
 	var movementId = req.params.id;
-
-	console.log(movementId)
+	console.log(movementId);
+	
 	try {
 		movements.findOne({_id: movementId}, function(err, doc) {
 			if (err) console.log(err);
-	  		if (doc) {
-	  			res.send("{ \"message\": \"Movement found\", \"document\": "+JSON.stringify(doc)+" }");
-	  		} else {
-	  			res.send("{ \"message\": \"Movement not found\" }");
-	  		};
-	  	});
+			if (doc) {
+				res.send("{ \"message\": \"Movement found\", \"document\": "+JSON.stringify(doc)+" }");
+			} else {
+				res.send("{ \"message\": \"Movement not found\" }");
+			};
+		});
 	} catch (err) {
 		sendERR(err, res)
 	}
@@ -214,9 +214,9 @@ exports.movementsIdYayPUT = function(req, res) {
 	var movementId = req.params.id;
 
 	movements.findOneAndUpdate({ _id: movementId }, { $inc: { yays: 1 } }).exec(function(err, response) { 
-		if (err) 
+		if (err)
 			sendERR(err, res);
-		else 
+		else
 			console.log(response); 
 			res.send("{ \"message\": \""+movementId+" received a yay\" }");
 	});

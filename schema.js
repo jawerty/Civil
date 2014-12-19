@@ -18,7 +18,8 @@ var usersSchema = new Schema({
 	username: {type: String, index: { unique: true }, required: true},
 	password: {type: String, required: true},
 	gravatar: {type: String},
-	avatar: {type: String}
+	avatar: {type: String},
+	requests: [type: String]
 });
 
 var eventSchema = new Schema({
@@ -30,6 +31,7 @@ var eventSchema = new Schema({
 
 var announcementSchema = new Schema({
     Id: ObjectId,
+    date: {type: Date, default: Date.now},
     title: {type: String},
     description: {type: String}
 });
@@ -47,10 +49,10 @@ var movementsSchema = new Schema({
     tags: [{type: String}],
     yays: {type: Number},
     nays: {type: Number},
-    net: {type: Number},
-    abs_net: {type: Number},
 	events: [eventSchema],
-	announcements: [announcementSchema]
+	announcements: [announcementSchema],
+	coverPicture: {type: String}
+
 });
 
 module.exports = db.model('user', usersSchema, 'user'); 

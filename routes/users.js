@@ -70,8 +70,7 @@ exports.usersPOST = function(req, res, next) {
 														var secureUrl = gravatar.url(data.email, {s: '100', r: 'x', d: 'retro'}, true);
 
 														var newUser = new users({
-															firstName: data.firstName,
-															lastName: data.lastName,
+														w	lastName: data.lastName,
 															email: data.email,
 															username: data.username,
 															password: hash,
@@ -182,9 +181,37 @@ exports.usersLogout = function(req, res) {
 	console.log(token);
 	if (req.session.token == token) {
 		delete req.session.token;
-		console.log("User session <"+token+"> successfully deleted")
+		console.log("User session <"+token+"> successfully deleted");
 		res.send("{ \"message\": \"User session <"+token+"> successfully deleted\" }");
 	} else {
 		sendERR("Token is invalid", res);
 	}
+}
+
+exports.usersSkillsSearch = function(req, res) {
+	//example query = http://localhost:3000/usersSkills?skills=this,that,those&skip=1
+	var query = req.query;
+
+	var skip = query.skip * 20 || 0;
+	var skills = query.skills.split(',') || null;
+
+	var tquery = [{
+		skills: { $in: skills }
+	}];
+
+	users.aggregate(tquery).skip(skip).limit(20).exec(function(err, usersFound) {
+		if (err) sendERR(err, res);
+		if (usersFound) {
+			res.send(usersFound)
+		}
+	});
+}
+
+exports.usersRequest = function(req, res) {
+	var data = req.body;
+	
+	var movementId = data.movementId;
+	var username = data.username;
+
+	sendERR("Not functional yet", res);
 }
