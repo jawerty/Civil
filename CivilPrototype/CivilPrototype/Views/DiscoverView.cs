@@ -13,13 +13,14 @@ namespace CivilPrototype
 		PointF originMovement;
 		SizeF sizeMovement;
 		float rotationAngle;
-		int currentMovementIndex;
+		int currentMovementIndex = -1;
 		int numMovementsReturned;
 		bool fullMovementReturn;
 		int idealMovementsReturn = 25;
 		int numQueuedMovements = 5;
 		int movementRectsCount;
-		bool reachedEndOfMovements = false; 
+		bool reachedEndOfMovements = false;
+		List<MovementID> movementIds;
 		EditProfileButton postButton;
 		UIViewController rootControl;
 		private void SlowMethod ()
@@ -31,7 +32,7 @@ namespace CivilPrototype
 			});
 		}
 		private async void Initialize(){
-			var movementIds = await DataLayer.GetMovements ("pop",0);
+			movementIds = await DataLayer.GetMovements ("pop",0);
 			numMovementsReturned = movementIds.Count;
 			fullMovementReturn = (numMovementsReturned == idealMovementsReturn);
 			List<Movement> movements = new List<Movement>{ };
@@ -40,60 +41,88 @@ namespace CivilPrototype
 			if (numMovementsReturned >= numQueuedMovements) {
 
 				for (int i = 0; i < numQueuedMovements; i++) {
-					var movement = await DataLayer.GetMovement (movementIds [i].id);
+ 					var movement = await DataLayer.GetMovement (movementIds [i].id);
 					movements.Add (movement);
+				}
+				for (int i = 0; i < movements.Count; i++) {
+						var view = new RoundableUIView {
+							CornerRadius = 7,
+							BackgroundColor = UIColor.White,
+							Frame = new RectangleF (originMovement, sizeMovement)
+						};
+						view.Add (new UITextView {
+							Text = movements [i].title,
+							Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 0, sizeMovement.Width * .8f, 40),
+							TextAlignment = UITextAlignment.Center
+						});
+						view.Add (new UITextView {
+							Text = movements [i].description,
+							Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 45, sizeMovement.Width * .8f, 40),
+							TextAlignment = UITextAlignment.Center
+						});
+						view.Add (new UITextView {
+							Text = movements [i].founder,
+							Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 90, sizeMovement.Width * .8f, 40),
+							TextAlignment = UITextAlignment.Center
+						});
+						view.Add (new UITextView {
+							Text = movements [i].dateCreated.ToString (),
+							Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 150, sizeMovement.Width * .8f, 40),
+							TextAlignment = UITextAlignment.Center
+						});
+						movementRects.Add (view);
 				}
 			} else {
 				for (int i = 0; i < numMovementsReturned; i++) {
+					currentMovementIndex++;
 					var movement = await DataLayer.GetMovement (movementIds [i].id);
 					movements.Add (movement);
 				}
-			}
-
-			for (int i = 0; i < movements.Count + 1; i++) {
-				if (i < movements.Count) {
-					var view = new RoundableUIView {
-						CornerRadius = 7,
-						BackgroundColor = UIColor.White,
-						Frame = new RectangleF (originMovement, sizeMovement)
-					};
-					view.Add (new UITextView {
-						Text = movements [i].title,
-						Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 0, sizeMovement.Width * .8f, 40),
-						TextAlignment = UITextAlignment.Center
-					});
-					view.Add (new UITextView {
-						Text = movements [i].description,
-						Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 45, sizeMovement.Width * .8f, 40),
-						TextAlignment = UITextAlignment.Center
-					});
-					view.Add (new UITextView {
-						Text = movements [i].founder,
-						Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 90, sizeMovement.Width * .8f, 40),
-						TextAlignment = UITextAlignment.Center
-					});
-					view.Add (new UITextView {
-						Text = movements [i].dateCreated.ToString (),
-						Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 150, sizeMovement.Width * .8f, 40),
-						TextAlignment = UITextAlignment.Center
-					});
-					movementRects.Add (view);
-				} else {
-
-					var view = new RoundableUIView {
-						CornerRadius = 7,
-						BackgroundColor = UIColor.White,
-						Frame = new RectangleF (originMovement, sizeMovement)
-					};
-					view.Add (new UITextView {
-						Text = "No Movements Available",
-						Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 0, sizeMovement.Width * .8f, 40),
-						TextAlignment = UITextAlignment.Center
-					});
-					reachedEndOfMovements = true;
-					movementRects.Add (view);
+				for (int i = 0; i < movements.Count + 1; i++) {
+					if (i < movements.Count) {
+						var view = new RoundableUIView {
+							CornerRadius = 7,
+							BackgroundColor = UIColor.White,
+							Frame = new RectangleF (originMovement, sizeMovement)
+						};
+						view.Add (new UITextView {
+							Text = movements [i].title,
+							Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 0, sizeMovement.Width * .8f, 40),
+							TextAlignment = UITextAlignment.Center
+						});
+						view.Add (new UITextView {
+							Text = movements [i].description,
+							Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 45, sizeMovement.Width * .8f, 40),
+							TextAlignment = UITextAlignment.Center
+						});
+						view.Add (new UITextView {
+							Text = movements [i].founder,
+							Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 90, sizeMovement.Width * .8f, 40),
+							TextAlignment = UITextAlignment.Center
+						});
+						view.Add (new UITextView {
+							Text = movements [i].dateCreated.ToString (),
+							Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 150, sizeMovement.Width * .8f, 40),
+							TextAlignment = UITextAlignment.Center
+						});
+						movementRects.Add (view);
+					} else {
+						var view = new RoundableUIView {
+							CornerRadius = 7,
+							BackgroundColor = UIColor.White,
+							Frame = new RectangleF (originMovement, sizeMovement)
+						};
+						view.Add (new UITextView {
+							Text = "No Movements Available",
+							Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 0, sizeMovement.Width * .8f, 40),
+							TextAlignment = UITextAlignment.Center
+						});
+						reachedEndOfMovements = true;
+						movementRects.Add (view);
+					}
 				}
 			}
+				
 			movementRectsCount = movementRects.Count;
 			Add (movementRects[0]);
 		}
@@ -122,6 +151,50 @@ namespace CivilPrototype
 			};
 			Add (header);
 			Add (postButton);
+		}
+		public async void storeNextMovement(int h){
+			var i = currentMovementIndex;
+			if (i >= movementIds.Count) {
+				var view = new RoundableUIView {
+					CornerRadius = 7,
+					BackgroundColor = UIColor.White,
+					Frame = new RectangleF (originMovement, sizeMovement)
+				};
+				view.Add (new UITextView {
+					Text = "No Movements Available",
+					Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 0, sizeMovement.Width * .8f, 40),
+					TextAlignment = UITextAlignment.Center
+				});
+				movementRects [h] = view;
+			} else {
+				var s = await DataLayer.GetMovement (movementIds [i].id);
+				var view = new RoundableUIView {
+					CornerRadius = 7,
+					BackgroundColor = UIColor.White,
+					Frame = new RectangleF (originMovement, sizeMovement)
+				};
+				view.Add (new UITextView {
+					Text = s.title,
+					Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 0, sizeMovement.Width * .8f, 40),
+					TextAlignment = UITextAlignment.Center
+				});
+				view.Add (new UITextView {
+					Text = s.description,
+					Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 45, sizeMovement.Width * .8f, 40),
+					TextAlignment = UITextAlignment.Center
+				});
+				view.Add (new UITextView {
+					Text = s.founder,
+					Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 90, sizeMovement.Width * .8f, 40),
+					TextAlignment = UITextAlignment.Center
+				});
+				view.Add (new UITextView {
+					Text = s.dateCreated.ToString (),
+					Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 150, sizeMovement.Width * .8f, 40),
+					TextAlignment = UITextAlignment.Center
+				});
+				movementRects [h] = view;
+			}
 		}
 		public void MoveMovement(float diff){
 			if ((movementRects[0].Subviews.GetLength(0)) == 1) {
@@ -199,16 +272,8 @@ namespace CivilPrototype
 					movementRects[0].RemoveFromSuperview();
 					for(int i =0; i< movementRectsCount;i++){
 						if(i==(movementRectsCount-1)){
-							movementRects[i] = new RoundableUIView {
-								CornerRadius = 7,
-								BackgroundColor = UIColor.White,
-								Frame = new RectangleF (originMovement, sizeMovement)
-							};
-							movementRects[i].Add (new UITextView {
-								Text = "Movement",
-								Frame = new RectangleF (sizeMovement.Width - (sizeMovement.Width * .9f), 0, sizeMovement.Width * .8f, 40),
-								TextAlignment = UITextAlignment.Center
-							}); 
+							currentMovementIndex++;
+							storeNextMovement(i);
 						}
 						else{
 							movementRects[i] = movementRects[i+1];
@@ -217,6 +282,7 @@ namespace CivilPrototype
 					}
 				}
 			);
+
 			Add (movementRects [1]);
 			rotationAngle = rotationAngle + .005f;
 			originMovement = new PointF ((Bounds.Width / 2) - (sizeMovement.Width / 2), (Bounds.Height / 2) - (sizeMovement.Height / 2));
