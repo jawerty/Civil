@@ -18,10 +18,12 @@ namespace CivilPrototype
 		float scrollViewX;
 		float skillsListHeight;
 		List<string> listSkills;
+		EditableListView skillsList;
 		bool editing = false;
 		public async void EditProfileAsync (string id, string username, string password, string passwordCheck, string firstName, string lastName, string email, string movements = "")
 		{
-			await DataLayer.EditUser (id, username, password, passwordCheck, firstName, lastName, email);
+			await DataLayer.EditUser (id, username, password, passwordCheck, firstName, lastName, email, listSkills);
+			skillsList.SetEditing (false,false);
 			scrollProfileView.RemoveFromSuperview ();
 			scrollProfileView = new UIScrollView (new RectangleF (0, 50, Bounds.Width, 500)) {
 				new UITextView {
@@ -52,10 +54,11 @@ namespace CivilPrototype
 					Font = UIFont.FromName(DesignConstants.HeaderFontStyle,DesignConstants.HeaderSmallFontSize),
 					BackgroundColor = UIColor.Clear,
 				},
+				skillsList
 			};
 			scrollProfileView.DelaysContentTouches = false;
 			scrollProfileView.CanCancelContentTouches = false;
-			scrollProfileView.ContentSize = new SizeF (Bounds.Width, 825 + skillsListHeight);
+			scrollProfileView.ContentSize = new SizeF (Bounds.Width, 825 + skillsList.Height);
 			Add (scrollProfileView);
 		}
 
@@ -119,11 +122,25 @@ namespace CivilPrototype
 				BorderStyle = DesignConstants.TextFieldBorderStyle,
 				Font = UIFont.FromName(DesignConstants.HeaderFontStyle,DesignConstants.HeaderSmallFontSize),
 			};
-			var skillsList = new EditableListView (listSkills,new RectangleF (scrollViewX, 600,	scrollViewWidth, 200 ));
+			var submit = UIButton.FromType (DesignConstants.ButtonType);
+			skillsList = new EditableListView (listSkills,new RectangleF (scrollViewX, 600,	scrollViewWidth, 200 ));
+			skillsList.sourceRowDelete += delegate {
+				UIView.Animate(.1,delegate {
+					skillsList.Frame = new RectangleF (scrollViewX, 600,	scrollViewWidth, skillsList.Height);
+					submit.Frame = new RectangleF (scrollViewX, 625 + skillsList.Height, scrollViewWidth, 40);
+					scrollProfileView.ContentSize = new SizeF (Bounds.Width, 825 + skillsList.Height);
+				});
+			};
+			skillsList.sourceRowInsert += delegate {
+				UIView.Animate(.1,delegate {
+					skillsList.Frame = new RectangleF (scrollViewX, 600,	scrollViewWidth, skillsList.Height);
+					scrollProfileView.ContentSize = new SizeF (Bounds.Width, 825 + skillsList.Height);
+					submit.Frame = new RectangleF (scrollViewX, 625 + skillsList.Height, scrollViewWidth, 40);
+				});			
+			};
 			skillsList.Frame = new RectangleF (scrollViewX, 600,	scrollViewWidth, skillsList.Height);
 			skillsListHeight = skillsList.Height;
-			var submit = UIButton.FromType (DesignConstants.ButtonType);
-			submit.Frame = new RectangleF (scrollViewX, 625 + skillsListHeight, scrollViewWidth, 40);
+			submit.Frame = new RectangleF (scrollViewX, 625 + skillsList.Height, scrollViewWidth, 40);
 			submit.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.NormalButtonFontSize);
 			submit.SetTitle ("Make Changes", DesignConstants.ButtonControlState);
 			submit.TouchUpInside += delegate {
@@ -134,20 +151,6 @@ namespace CivilPrototype
 				var pass = p.Text;
 				var passCheck = pCheck.Text;
 				this.EditProfileAsync (NSUserDefaults.StandardUserDefaults.StringForKey ("currentUserID"), user, pass, passCheck, first, last, email);
-				u.Text = "";
-				fn.Text = "";
-				ln.Text = "";
-				p.Text = "";
-				pCheck.Text = "";
-				e.Text = "";
-				u.RemoveFromSuperview ();
-				fn.RemoveFromSuperview ();
-				ln.RemoveFromSuperview ();
-				p.RemoveFromSuperview ();
-				pCheck.RemoveFromSuperview ();
-				submit.RemoveFromSuperview ();
-				e.RemoveFromSuperview ();
-				skillsList.RemoveFromSuperview();
 				editing = false;
 			};
 			editButton = new EditProfileButton (Bounds.Width);
@@ -165,7 +168,7 @@ namespace CivilPrototype
 						scrollProfileView.Add (p);
 						scrollProfileView.Add (pCheck);
 						scrollProfileView.Add (submit);
-						scrollProfileView.Add (skillsList);
+						skillsList.SetEditing(true,true);
 					});
 				} else {
 					editing = false;
@@ -177,7 +180,7 @@ namespace CivilPrototype
 						pCheck.RemoveFromSuperview ();
 						submit.RemoveFromSuperview ();
 						e.RemoveFromSuperview ();
-						skillsList.RemoveFromSuperview();
+						skillsList.SetEditing(false,true);
 					});
 				}
 			};
@@ -220,6 +223,7 @@ namespace CivilPrototype
 					Font = UIFont.FromName(DesignConstants.HeaderFontStyle,DesignConstants.HeaderSmallFontSize),
 					BackgroundColor = UIColor.Clear,
 				},
+				skillsList
 			};
 			scrollProfileView.DelaysContentTouches = false;
 			scrollProfileView.CanCancelContentTouches = false;

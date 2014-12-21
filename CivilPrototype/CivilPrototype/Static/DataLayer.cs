@@ -227,11 +227,12 @@ namespace CivilPrototype
 			}
 			return data;
 		}
-		public async static Task<string> EditUser(string id, string username, string password,string passwordCheck, string firstName, string lastName, string email, string movements=""){
+		public async static Task<string> EditUser(string id, string username, string password,string passwordCheck, string firstName, string lastName, string email, List<string> skills, string movements=""){
 
 			var request = (HttpWebRequest)WebRequest.Create("http://127.0.0.1:3000/users/" + id);
 			var editableUser = new EditableUserObject ();
-
+			var theSkills = skills;
+			theSkills.RemoveAt (skills.Count - 1);
 			if (!String.IsNullOrEmpty (firstName))
 				editableUser.firstName = firstName;
 			if(!String.IsNullOrEmpty(lastName))
@@ -244,6 +245,8 @@ namespace CivilPrototype
 				editableUser.password = password;
 			if(!String.IsNullOrEmpty(passwordCheck))
 				editableUser.passwordCheck = passwordCheck;
+			if (skills != null)
+				editableUser.skills = theSkills;
 			var postData = Newtonsoft.Json.JsonConvert.SerializeObject (editableUser);
 			Console.WriteLine (postData);
 			var data = Encoding.ASCII.GetBytes(postData);
@@ -286,7 +289,7 @@ namespace CivilPrototype
 		public string password { get; set;}
 		public string passwordCheck{ get; set; }
 		public string username{ get; set;}
-		public string skills { get; set;}
+		public List<string> skills { get; set;}
 
 	}
 	public class MovementID

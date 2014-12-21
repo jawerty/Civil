@@ -41,6 +41,7 @@ namespace CivilPrototype
 			if (numMovementsReturned >= numQueuedMovements) {
 
 				for (int i = 0; i < numQueuedMovements; i++) {
+					currentMovementIndex++;
  					var movement = await DataLayer.GetMovement (movementIds [i].id);
 					movements.Add (movement);
 				}
