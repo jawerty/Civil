@@ -123,6 +123,7 @@ exports.movementsPOST = function(req, res, next) {
 			founder: data.founder,
 			title: data.title,
 			description: data.description,
+			members: [],
 			yays: 1,
 			nays: 1,
 			tags: data.tags
@@ -233,4 +234,48 @@ exports.movementsIdNayPUT = function(req, res) {
 			res.send("{ \"message\": \""+movementId+" received a nay\" }");
 
 	});
+}
+
+exports.movementsIdJoinPUT = function(req, res) {
+	var data = req.body;
+	var movementId = req.params.id;
+	if (data.username) {
+		movements.findOne({_id: movementId}, function(err, foundMovement){
+			if (err) sendERR(err, res);
+			if (foundMovement) {
+				if (foundMovement.members.indexOf(data.username) > -1) {
+					sendERR("User already joined movement", res);
+				} else {
+					users.findOne({username: data.username}, function(err1, foundUser) {
+						if (err1) sendERR(err1, res);
+						if (foundUser) {
+							if (foundUser.movements.indexOf(foundMovement._id) > -1) {
+								sendERR("User already joined movement", res);
+							} else {
+								foundMovement.members.push(data.username);								
+								foundUser.movements.push(foundMovement._id);
+								
+								foundMovement.save();
+								foundUser.save();
+
+								res.send("{ \"message\": \"User "+foundUser.username+" joined movement "+foundMovement._id+"\" }")
+
+							}
+
+						} else {
+							sendERR("User not found", res);
+						}
+					});
+				}
+				
+
+				
+			} else {
+				sendERR("Movement not found", res);
+			}
+		})
+	} else {
+		sendERR("Username not sent in body", res);
+	}
+	
 }

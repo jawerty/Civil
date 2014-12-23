@@ -72,7 +72,8 @@ app.post('/usersLogout', Users.usersLogout);
 
 /* yays and nays */
 app.put('/movements/:id/yay', Movements.movementsIdYayPUT);
-app.put('/movements/:id/nay', Movements.movementsIdNayPUT)
+app.put('/movements/:id/nay', Movements.movementsIdNayPUT);
+app.put('/movements/:id/join', Movements.movementsIdJoinPUT);
 
 var server = app.listen(3000, function () {
   var host = server.address().address;
