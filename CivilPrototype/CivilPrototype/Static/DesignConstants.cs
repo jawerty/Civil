@@ -9,7 +9,7 @@ namespace CivilPrototype
 		public static UIColor peakcock = UIColor.FromRGB (7, 57, 62);
 		public static UIColor surfer = UIColor.FromRGB (26, 149, 149);
 		public static UIColor grey = UIColor.FromRGB (110, 115, 123);
-		public static UIColor lgrey = UIColor.FromRGB(123, 138, 160);
+		public static UIColor lgrey = UIColor.FromRGB(255,255,255);
 
 		//Header Styles
 		public static int HeaderLargeFontSize = 50;
@@ -35,11 +35,10 @@ namespace CivilPrototype
 		public static float ButtonWidth = -20.0f; //Added to Bounds.Width
 		public static float ButtonHeight = 40.0f;
 		public static float ButtonFrameX = 10.0f;
-		public static UIButtonType ButtonType = UIButtonType.RoundedRect;
+		public static UIButtonType ButtonType = UIButtonType.Custom;
 		public static float LargeButtonFontSize = 23.0f;
 		public static float NormalButtonFontSize = 18.0f;
-		public static string ButtonFontStyle = "HelveticaNeue";
-		public static UIControlState ButtonControlState = UIControlState.Normal;
+		public static string ButtonFontStyle = "GeosansLight";
 	}
 }
 

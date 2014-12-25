@@ -104,8 +104,14 @@
     <BundleResource Include="Resources\NordicaHairline.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
-    <BundleResource Include="Resources\greenButton.png" />
-    <BundleResource Include="Resources\greenButtonHighlight.png" />
+    <BundleResource Include="Resources\blueButtonHighlight.png" />
+    <BundleResource Include="Resources\blueButtonReg.png" />
+    <BundleResource Include="Resources\surfer.jpg" />
+    <BundleResource Include="Resources\createAccDark.png" />
+    <BundleResource Include="Resources\createAcc.png" />
+    <BundleResource Include="Resources\login.png" />
+    <BundleResource Include="Resources\loginDark.png" />
+    <BundleResource Include="Resources\iphone.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

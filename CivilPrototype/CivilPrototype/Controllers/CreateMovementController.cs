@@ -67,7 +67,7 @@ namespace CivilPrototype
 			var submitButton = UIButton.FromType(DesignConstants.ButtonType);
 			submitButton.Frame = new RectangleF(DesignConstants.ButtonFrameX, 375, View.Bounds.Width + DesignConstants.ButtonWidth, DesignConstants.ButtonHeight);
 			submitButton.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.LargeButtonFontSize);
-			submitButton.SetTitle("Create Movement!", DesignConstants.ButtonControlState);
+			submitButton.SetTitle("Create Movement!", UIControlState.Normal);
 			submitButton.TouchUpInside += delegate
 			{
 				string title = titleField.Text;
@@ -77,7 +77,7 @@ namespace CivilPrototype
 			var discoverButton = UIButton.FromType(DesignConstants.ButtonType);
 			discoverButton.Frame = new RectangleF(DesignConstants.ButtonFrameX, 435, View.Bounds.Width + DesignConstants.ButtonWidth, DesignConstants.ButtonHeight);
 			discoverButton.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.NormalButtonFontSize);
-			discoverButton.SetTitle("Back", DesignConstants.ButtonControlState);
+			discoverButton.SetTitle("Back", UIControlState.Normal);
 			discoverButton.TouchUpInside += delegate
 			{
 				navigation.PopToRootViewController(true);

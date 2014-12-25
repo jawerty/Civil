@@ -142,7 +142,7 @@ namespace CivilPrototype
 			skillsListHeight = skillsList.Height;
 			submit.Frame = new RectangleF (scrollViewX, 625 + skillsList.Height, scrollViewWidth, 40);
 			submit.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.NormalButtonFontSize);
-			submit.SetTitle ("Make Changes", DesignConstants.ButtonControlState);
+			submit.SetTitle ("Make Changes", UIControlState.Normal);
 			submit.TouchUpInside += delegate {
 				var user = u.Text;
 				var email = e.Text;

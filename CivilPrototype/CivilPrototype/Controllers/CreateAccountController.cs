@@ -89,10 +89,10 @@ namespace CivilPrototype
 			skillsList.Frame = new RectangleF (DesignConstants.TextFieldFrameX, 7*(2*(DesignConstants.TextFieldMarginBottom-marginAdjustment)),	View.Bounds.Width + DesignConstants.TextFieldWidth, skillsList.Height );
 			skillsListHeight = skillsList.Height;
 			var submitButton = UIButton.FromType(DesignConstants.ButtonType);
-				submitButton.Frame = new RectangleF(DesignConstants.ButtonFrameX, 375, View.Bounds.Width + DesignConstants.ButtonWidth, DesignConstants.ButtonHeight);
-				submitButton.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.LargeButtonFontSize);
-				submitButton.SetTitle("Sign up!", DesignConstants.ButtonControlState);
-				submitButton.TouchUpInside += delegate
+			submitButton.Frame = new RectangleF(DesignConstants.ButtonFrameX, 375, View.Bounds.Width + DesignConstants.ButtonWidth, DesignConstants.ButtonHeight);
+			submitButton.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.LargeButtonFontSize);
+			submitButton.SetTitle("Sign up!", UIControlState.Normal);
+			submitButton.TouchUpInside += delegate
 				{
 					string firstName = firstNameField.Text;
 					string lastName = lastNameField.Text;
@@ -105,7 +105,7 @@ namespace CivilPrototype
 			var loginButton = UIButton.FromType(DesignConstants.ButtonType);
 				loginButton.Frame = new RectangleF(DesignConstants.ButtonFrameX, 435, View.Bounds.Width + DesignConstants.ButtonWidth, DesignConstants.ButtonHeight);
 				loginButton.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.NormalButtonFontSize);
-				loginButton.SetTitle("Back to Login", DesignConstants.ButtonControlState);
+				loginButton.SetTitle("Back to Login", UIControlState.Normal);
 				loginButton.TouchUpInside += delegate
 				{
 					navigation.PopToRootViewController(true);
