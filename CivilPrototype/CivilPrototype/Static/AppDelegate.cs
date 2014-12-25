@@ -21,7 +21,14 @@ namespace CivilPrototype
 		public override void FinishedLaunching (UIApplication application)
 		{
 			NSUserDefaults.StandardUserDefaults.SetBool (false, "userLoggedIn");
-
+			foreach (string family in UIFont.FamilyNames) {
+				Console.Write (" - Family + :");
+					foreach(string name in UIFont.FontNamesForFamilyName(family)){
+						Console.Write (name + ", ");
+					}
+			}
+			var s = UIFont.FamilyNames;
+			Console.Write ("");
 		}
 		// This method is invoked when the application is about to move from active to inactive state.
 		// OpenGL applications should use this method to pause.

@@ -1,18 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.1" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CivilPrototype/Views/MainProfileView.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CivilPrototype/Abstracts/EditableTableViewSource.cs">
     <Files>
-      <File FileName="CivilPrototype/Views/MainProfileView.cs" Line="1" Column="1" />
-      <File FileName="CivilPrototype/Static/DataLayer.cs" Line="38" Column="38" />
-      <File FileName="CivilPrototype/Abstracts/EditableTableViewSource.cs" Line="27" Column="27" />
-      <File FileName="CivilPrototype/Static/Main.cs" Line="1" Column="1" />
-      <File FileName="CivilPrototype/Abstracts/EditableListView.cs" Line="5" Column="5" />
+      <File FileName="CivilPrototype/Views/MainProfileView.cs" Line="24" Column="24" />
+      <File FileName="CivilPrototype/Static/DataLayer.cs" Line="1" Column="1" />
+      <File FileName="CivilPrototype/Abstracts/EditableTableViewSource.cs" Line="50" Column="50" />
+      <File FileName="CivilPrototype/Abstracts/EditableListView.cs" Line="1" Column="1" />
+      <File FileName="CivilPrototype/Static/DesignConstants.cs" Line="3" Column="3" />
+      <File FileName="CivilPrototype/Info.plist" />
+      <File FileName="CivilPrototype/Views/LoginView.cs" Line="1" Column="1" />
+      <File FileName="CivilPrototype/Static/AppDelegate.cs" Line="11" Column="11" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/carter/Desktop/Civil/CivilPrototype/CivilPrototype/Views/MainProfileView.cs" line="153" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
