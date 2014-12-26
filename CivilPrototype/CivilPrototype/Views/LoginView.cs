@@ -6,119 +6,142 @@ using MonoTouch.CoreAnimation;
 
 namespace CivilPrototype
 {
-	public class LoginView : UIView
+	public class LoginView: UIView
 	{
 		UIViewController rootControl;
-		public LoginView (RectangleF frame,UIViewController rootControl) :base()
+		UITextField usernameField, passwordField;
+		UITextView titleView;
+		UIImageView topImageView;
+		UIView topView, contentView;
+		RoundableUIView inputView;
+		UIView topHR, contentHR;
+		UIImage topViewImage, loginImage, loginImageDark, createImage, creatImageDark;
+		float pageStartHeight, imageViewHeight, imageViewWidth, hRHeight;//defines where navigation bar, etc ends
+		float headerWidth;
+		float inputViewWidth, inputViewHeight;
+		public LoginView (RectangleF frame, UIViewController rootControl) : base ()
 		{
 			this.Frame = frame;
 			this.rootControl = rootControl;
-			BackgroundColor = UIColor.FromRGB(241,241,241);
+			BackgroundColor = DesignConstants.lgrey;
+			topViewImage = UIImage.FromFile ("iphone.png");
 
-			UITextField usernameField, passwordField;
-			UITextView titleView;
-			UIImageView topImageView;
-			UIView topView, contentView;
-			CAGradientLayer gradient = new CAGradientLayer ();
-			gradient.Frame = Bounds;
-			gradient.Colors = new CGColor[]{UIColor.White.CGColor, UIColor.Black.CGColor};
+			pageStartHeight = 25;
+			imageViewHeight = 150;
+			imageViewWidth = CalculateImageViewWidth (topViewImage, imageViewHeight) + 40;
+			hRHeight = 1;
+
+			headerWidth = Bounds.Width + DesignConstants.HeaderFrameWidth;
+
+			inputViewWidth = Bounds.Width - 20;
+			//GRADIENT BACKGROUND CODE vvv
+			//CAGradientLayer gradient = new CAGradientLayer ();
+			//gradient.Frame = Bounds;
+			//gradient.Colors = new CGColor[]{UIColor.White.CGColor, UIColor.Black.CGColor};
 			//Layer.InsertSublayer (gradient, 0);
-			// keep the code the username UITextField
 			topView = new UIView {
-				Frame = new RectangleF (0, 
-					25,
-					Bounds.Width, 
-					151),
-				BackgroundColor = UIColor.FromRGB(241,241,241)
+				Frame = new RectangleF (0,
+					pageStartHeight,
+					Bounds.Width,
+					hRHeight+imageViewHeight),
+				BackgroundColor = DesignConstants.lgrey
 			};
+
 			topImageView = new UIImageView {
-				Frame = new RectangleF ((Bounds.Width/2)-((Bounds.Width-130)/2), 
+				Frame = new RectangleF (DesignConstants.GetMiddleX(Bounds.Width,imageViewWidth),
 					0,
-					Bounds.Width-130, 
-					150),
-				Image = UIImage.FromFile("iphone.png")
+					imageViewWidth,
+					imageViewHeight),
+				Image = topViewImage
 			};
-			var topHR = new UIView {
-				BackgroundColor = UIColor.FromRGB(230,230,230),
-				Frame = new RectangleF (0, 
-					topImageView.Frame.Height, 
+			topHR = new UIView {
+				BackgroundColor = DesignConstants.grey,
+				Frame = new RectangleF (0,
+					topImageView.Frame.Height,
 					topView.Bounds.Width,
-					1),
+					hRHeight),
 			};
 			topView.AddSubview (topImageView);
 			topView.AddSubview (topHR);
+
+
+
 			contentView = new UIView {
-				Frame = new RectangleF (0, 
+				Frame = new RectangleF (0,
 					topView.Frame.Height + topView.Frame.Y,
-					Bounds.Width, 
-					Bounds.Height-topView.Frame.Height),
+					Bounds.Width,
+					Bounds.Height - topView.Frame.Height),
 				BackgroundColor = UIColor.White
 			};
+
+
 			titleView = new UITextView {
 				Text = "Civil",
-				TextColor = UIColor.FromRGB(75,75,75),
+				TextColor = DesignConstants.dgrey,
 				BackgroundColor = DesignConstants.HeaderBackground,
 				Font = UIFont.FromName (DesignConstants.HeaderFontStyle, DesignConstants.HeaderLargeFontSize),
 				TextAlignment = DesignConstants.HeaderAlignment,
-				Frame = new RectangleF (DesignConstants.HeaderFrameX, 
+				Frame = new RectangleF (DesignConstants.GetMiddleX(Bounds.Width,headerWidth),
 					0,
-					Bounds.Width + DesignConstants.HeaderFrameWidth, 
+					headerWidth,
 					DesignConstants.HeaderFrameHeight),
 			};
-			var inputView = new RoundableUIView {
+
+
+			inputView = new RoundableUIView {
 				CornerRadius = 5,
-				BorderColor = UIColor.FromRGB(230,230,230).CGColor,
+				BorderColor = DesignConstants.grey.CGColor,
 				BorderWidth = 1.0f,
 				BackgroundColor = UIColor.White,
-				Frame = new RectangleF  ((Bounds.Width/2) - ((Bounds.Width - 20)/2), 
-					(2 * DesignConstants.TextFieldMarginBottom)+titleView.Frame.Y, 
-										Bounds.Width - 20, 
-										(DesignConstants.TextFieldHeight * 2) + 5)
-				
+				Frame = new RectangleF (DesignConstants.GetMiddleX(Bounds.Width,inputViewWidth),
+					15 + titleView.Frame.Y + titleView.Frame.Height,
+					inputViewWidth,
+					(DesignConstants.TextFieldHeight * 2) + 15)
+
 			};
 			usernameField = new UITextField {
 				Placeholder = "Username",
 				BorderStyle = DesignConstants.TextFieldBorderStyle,
 				Font = UIFont.FromName (DesignConstants.TextFieldFontStyle, DesignConstants.TextFieldFontSize),
-				Frame = new RectangleF ((inputView.Bounds.Width/2) - ((inputView.Bounds.Width - 20)/2), 
-					0, 
-					inputView.Bounds.Width - 20, 
+				Frame = new RectangleF ((inputView.Bounds.Width / 2) - ((inputView.Bounds.Width - 20) / 2),
+					0,
+					inputView.Bounds.Width - 20,
 					DesignConstants.TextFieldHeight)
 			};
-			var hr = new UIView {
-				BackgroundColor = UIColor.FromRGB(230,230,230),
-				Frame = new RectangleF ((inputView.Bounds.Width/2) - ((inputView.Bounds.Width - 20)/2), 
-										DesignConstants.TextFieldHeight+2, 
-										inputView.Bounds.Width - 20,
-										1),
+			contentHR = new UIView {
+				BackgroundColor = UIColor.FromRGB (230, 230, 230),
+				Frame = new RectangleF ((inputView.Bounds.Width / 2) - ((inputView.Bounds.Width - 20) / 2),
+					DesignConstants.TextFieldHeight + 2,
+					inputView.Bounds.Width - 20,
+					1),
 
 			};
 			passwordField = new UITextField {
 				Placeholder = "Password",
 				BorderStyle = DesignConstants.TextFieldBorderStyle,
 				Font = UIFont.FromName (DesignConstants.TextFieldFontStyle, DesignConstants.TextFieldFontSize),
-				Frame = new RectangleF ((inputView.Bounds.Width/2) - ((inputView.Bounds.Width - 20)/2), 
-					DesignConstants.TextFieldHeight+5, 
-					inputView.Bounds.Width - 20, 
+				Frame = new RectangleF ((inputView.Bounds.Width / 2) - ((inputView.Bounds.Width - 20) / 2),
+					DesignConstants.TextFieldHeight + 5,
+					inputView.Bounds.Width - 20,
 					DesignConstants.TextFieldHeight),
 				SecureTextEntry = true
 			};
 			inputView.Add (usernameField);
 			inputView.Add (passwordField);
-			inputView.Add (hr);
+			inputView.Add (contentHR);
 			var submitButton = UIButton.FromType (DesignConstants.ButtonType);
 
 			submitButton.SetTitleColor (UIColor.White, UIControlState.Normal);
 
-			UIImage greenButtonImage = UIImage.FromFile("login.png").CreateResizableImage(new UIEdgeInsets(18,18,18,18));
-			submitButton.SetBackgroundImage(greenButtonImage,UIControlState.Normal);
+			UIImage greenButtonImage = UIImage.FromFile ("login.png").CreateResizableImage (new UIEdgeInsets (18, 18, 18, 18));
+			submitButton.SetBackgroundImage (greenButtonImage, UIControlState.Normal);
 
-			UIImage greenButtonImageDark = UIImage.FromFile("loginDark.png").CreateResizableImage(new UIEdgeInsets(18,18,18,18));
-			submitButton.SetBackgroundImage(greenButtonImageDark,UIControlState.Highlighted);
+			UIImage greenButtonImageDark = UIImage.FromFile ("loginDark.png").CreateResizableImage (new UIEdgeInsets (18, 18, 18, 18));
+			submitButton.SetBackgroundImage (greenButtonImageDark, UIControlState.Highlighted);
 
-			submitButton.Frame = new RectangleF (DesignConstants.ButtonFrameX, 
-				inputView.Frame.Y + inputView.Frame.Height + 20, 
-				Bounds.Width + DesignConstants.ButtonWidth, 
+			submitButton.Frame = new RectangleF (DesignConstants.ButtonFrameX,
+				inputView.Frame.Y + inputView.Frame.Height + 20,
+				Bounds.Width + DesignConstants.ButtonWidth,
 				DesignConstants.ButtonHeight);
 
 			submitButton.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.LargeButtonFontSize);
@@ -130,25 +153,25 @@ namespace CivilPrototype
 			};
 			var minorButtonsView = new UIView {
 
-				Frame = new RectangleF(DesignConstants.ButtonFrameX, 
-				submitButton.Frame.Y + submitButton.Frame.Height + 10, 
-				Bounds.Width + DesignConstants.ButtonWidth, 
+				Frame = new RectangleF (DesignConstants.ButtonFrameX,
+					submitButton.Frame.Y + submitButton.Frame.Height + 10,
+					Bounds.Width + DesignConstants.ButtonWidth,
 					DesignConstants.ButtonHeight),
 
 			};
 			var createAccountButton = UIButton.FromType (DesignConstants.ButtonType);
 
-			createAccountButton.SetTitleColor (UIColor.FromRGB(75,75,75), UIControlState.Normal);
+			createAccountButton.SetTitleColor (DesignConstants.dgrey, UIControlState.Normal);
 
-			UIImage grayButtonImage = UIImage.FromFile("createAcc.png").CreateResizableImage(new UIEdgeInsets(18,18,18,18));
-			createAccountButton.SetBackgroundImage(grayButtonImage,UIControlState.Normal);
+			UIImage grayButtonImage = UIImage.FromFile ("createAcc.png").CreateResizableImage (new UIEdgeInsets (18, 18, 18, 18));
+			createAccountButton.SetBackgroundImage (grayButtonImage, UIControlState.Normal);
 
-			UIImage grayButtonImageDark = UIImage.FromFile("createAccDark.png").CreateResizableImage(new UIEdgeInsets(18,18,18,18));
-			createAccountButton.SetBackgroundImage(grayButtonImageDark,UIControlState.Highlighted);
+			UIImage grayButtonImageDark = UIImage.FromFile ("createAccDark.png").CreateResizableImage (new UIEdgeInsets (18, 18, 18, 18));
+			createAccountButton.SetBackgroundImage (grayButtonImageDark, UIControlState.Highlighted);
 
-			createAccountButton.Frame = new RectangleF (minorButtonsView.Bounds.Width*.40f, 
-				0, 
-				minorButtonsView.Bounds.Width * .60f, 
+			createAccountButton.Frame = new RectangleF (minorButtonsView.Bounds.Width * .40f,
+				0,
+				minorButtonsView.Bounds.Width * .60f,
 				DesignConstants.ButtonHeight);
 
 			createAccountButton.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.NormalButtonFontSize);
@@ -158,7 +181,7 @@ namespace CivilPrototype
 
 			};
 			var forgotPassword = UIButton.FromType (UIButtonType.RoundedRect);
-			forgotPassword.Frame = new RectangleF (0,0,minorButtonsView.Bounds.Width * .40f,DesignConstants.ButtonHeight);
+			forgotPassword.Frame = new RectangleF (0, 0, minorButtonsView.Bounds.Width * .40f, DesignConstants.ButtonHeight);
 			forgotPassword.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.NormalButtonFontSize);
 			forgotPassword.SetTitle ("Forgot Password", UIControlState.Normal);
 			minorButtonsView.AddSubview (createAccountButton);
@@ -170,11 +193,17 @@ namespace CivilPrototype
 			AddSubview (topView);
 			AddSubview (contentView);
 		}
+
 		public async void LoginUserAsync (string username, string password)
 		{
 			await DataLayer.LoginUser (username, password);
 			rootControl.ViewDidLoad ();
 		}
+		public float CalculateImageViewWidth(UIImage image,float height){
+
+			float realWidth = image.CGImage.Width;
+			float realHeight = image.CGImage.Height;
+			return (realWidth / realHeight) * height;
+		}
 	}
 }
-

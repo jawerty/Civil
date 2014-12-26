@@ -8,9 +8,9 @@ namespace CivilPrototype
 		public static UIColor teal = UIColor.FromRGB (77, 166, 235);
 		public static UIColor peakcock = UIColor.FromRGB (7, 57, 62);
 		public static UIColor surfer = UIColor.FromRGB (26, 149, 149);
-		public static UIColor grey = UIColor.FromRGB (110, 115, 123);
-		public static UIColor lgrey = UIColor.FromRGB(255,255,255);
-
+		public static UIColor grey = UIColor.FromRGB (230, 230, 230);
+		public static UIColor dgrey = UIColor.FromRGB(75,75,75);
+		public static UIColor lgrey = UIColor.FromRGB(241,241,241);
 		//Header Styles
 		public static int HeaderLargeFontSize = 50;
 		public static int HeaderSmallFontSize = 15;
@@ -39,6 +39,12 @@ namespace CivilPrototype
 		public static float LargeButtonFontSize = 23.0f;
 		public static float NormalButtonFontSize = 18.0f;
 		public static string ButtonFontStyle = "GeosansLight";
+
+		public static float GetMiddleX(float parentWidth, float thisWidth){
+
+			return (parentWidth / 2) - (thisWidth / 2);
+
+		}
 	}
 }
 
