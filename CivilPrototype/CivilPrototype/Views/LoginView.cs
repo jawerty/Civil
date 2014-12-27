@@ -177,7 +177,7 @@ namespace CivilPrototype
 			createAccountButton.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.NormalButtonFontSize);
 			createAccountButton.SetTitle ("Create Account", UIControlState.Normal);
 			createAccountButton.TouchUpInside += delegate {
-				//rootControl.NavigationController.PushViewController (new CreateAccountController (rootControl.NavigationController), true);
+				rootControl.NavigationController.PushViewController (new CreateAccountController (rootControl.NavigationController), true);
 
 			};
 			var forgotPassword = UIButton.FromType (UIButtonType.RoundedRect);

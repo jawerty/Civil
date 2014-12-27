@@ -20,15 +20,9 @@ namespace CivilPrototype
 		}
 		public override void FinishedLaunching (UIApplication application)
 		{
-			NSUserDefaults.StandardUserDefaults.SetBool (false, "userLoggedIn");
-			foreach (string family in UIFont.FamilyNames) {
-				Console.Write (" - Family + :");
-					foreach(string name in UIFont.FontNamesForFamilyName(family)){
-						Console.Write (name + ", ");
-					}
-			}
-			var s = UIFont.FamilyNames;
-			Console.Write ("");
+			UITextAttributes titleTextAttributes = new UITextAttributes();
+			titleTextAttributes.Font = UIFont.FromName("GeosansLight", 19);
+			UIBarButtonItem.AppearanceWhenContainedIn(typeof(UINavigationBar)).SetTitleTextAttributes(titleTextAttributes,UIControlState.Normal);
 		}
 		// This method is invoked when the application is about to move from active to inactive state.
 		// OpenGL applications should use this method to pause.

@@ -19,6 +19,11 @@ namespace CivilPrototype
 		public RootViewController (IntPtr handle) : base (handle)
 		{
 		}
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewDidAppear (animated);
+			NavigationController.NavigationBarHidden = true;
+		}
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();

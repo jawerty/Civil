@@ -112,6 +112,7 @@
     <BundleResource Include="Resources\login.png" />
     <BundleResource Include="Resources\loginDark.png" />
     <BundleResource Include="Resources\iphone.png" />
+    <BundleResource Include="Resources\leaf.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -140,6 +141,8 @@
     <Compile Include="Abstracts\EditableTableViewSource.cs" />
     <Compile Include="Controllers\CreateMovementController.cs" />
     <Compile Include="Abstracts\RoundableUITextView.cs" />
+    <Compile Include="Controllers\CreateAccountController2.cs" />
+    <Compile Include="Abstracts\RoundableUILabel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
