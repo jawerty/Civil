@@ -143,6 +143,7 @@
     <Compile Include="Abstracts\RoundableUITextView.cs" />
     <Compile Include="Controllers\CreateAccountController2.cs" />
     <Compile Include="Abstracts\RoundableUILabel.cs" />
+    <Compile Include="Static\CiviliOSDefaults.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>

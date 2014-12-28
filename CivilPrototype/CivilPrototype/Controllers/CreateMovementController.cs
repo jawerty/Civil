@@ -41,7 +41,7 @@ namespace CivilPrototype
 			titleView = new UITextView {
 				Text = "Create a Movement",
 				BackgroundColor = DesignConstants.HeaderBackground,
-				Font = UIFont.FromName (DesignConstants.HeaderFontStyle, DesignConstants.HeaderLargeFontSize),
+				Font = UIFont.FromName (DesignConstants.HeaderFontStyle, DesignConstants.NormalButtonFontSize),
 				TextAlignment = DesignConstants.HeaderAlignment,
 				Frame = new RectangleF(-DesignConstants.HeaderFrameX, 
 					DesignConstants.HeaderFrameY, 

@@ -20,6 +20,7 @@ namespace CivilPrototype
 		}
 		public override void FinishedLaunching (UIApplication application)
 		{
+			NSUserDefaults.StandardUserDefaults.SetBool (false,"userLoggedIn");
 			UITextAttributes titleTextAttributes = new UITextAttributes();
 			titleTextAttributes.Font = UIFont.FromName("GeosansLight", 19);
 			UIBarButtonItem.AppearanceWhenContainedIn(typeof(UINavigationBar)).SetTitleTextAttributes(titleTextAttributes,UIControlState.Normal);

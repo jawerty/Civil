@@ -1,9 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.1" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CivilPrototype/Static/AppDelegate.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CivilPrototype/Views/LoginView.cs">
     <Files>
-      <File FileName="CivilPrototype/Views/LoginView.cs" Line="25" Column="25" />
-      <File FileName="CivilPrototype/Static/AppDelegate.cs" Line="8" Column="8" />
+      <File FileName="CivilPrototype/Controllers/CreateAccountController.cs" Line="37" Column="37" />
+      <File FileName="CivilPrototype/Views/LoginView.cs" Line="28" Column="28" />
+      <File FileName="CivilPrototype/Static/CiviliOSDefaults.cs" Line="26" Column="26" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

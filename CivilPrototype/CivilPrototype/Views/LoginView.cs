@@ -15,10 +15,12 @@ namespace CivilPrototype
 		UIView topView, contentView;
 		RoundableUIView inputView;
 		UIView topHR, contentHR;
-		UIImage topViewImage, loginImage, loginImageDark, createImage, creatImageDark;
+		UIImage topViewImage, loginImage, loginImageDark, createImage, createImageDark;
 		float pageStartHeight, imageViewHeight, imageViewWidth, hRHeight;//defines where navigation bar, etc ends
 		float headerWidth;
-		float inputViewWidth, inputViewHeight;
+		float inputViewWidth;
+		float minorButtonsForgotShare, minorButtonsCreateShare;
+
 		public LoginView (RectangleF frame, UIViewController rootControl) : base ()
 		{
 			this.Frame = frame;
@@ -34,6 +36,14 @@ namespace CivilPrototype
 			headerWidth = Bounds.Width + DesignConstants.HeaderFrameWidth;
 
 			inputViewWidth = Bounds.Width - 20;
+
+			loginImage = UIImage.FromFile ("login.png").CreateResizableImage (new UIEdgeInsets (18, 18, 18, 18));
+			loginImageDark = UIImage.FromFile ("loginDark.png").CreateResizableImage (new UIEdgeInsets (18, 18, 18, 18));
+			createImage = UIImage.FromFile ("createAcc.png").CreateResizableImage (new UIEdgeInsets (18, 18, 18, 18));
+			createImageDark = UIImage.FromFile ("createAccDark.png").CreateResizableImage (new UIEdgeInsets (18, 18, 18, 18));
+
+			minorButtonsForgotShare = .4f;
+			minorButtonsCreateShare = 1 - .4f;
 			//GRADIENT BACKGROUND CODE vvv
 			//CAGradientLayer gradient = new CAGradientLayer ();
 			//gradient.Frame = Bounds;
@@ -63,9 +73,6 @@ namespace CivilPrototype
 			};
 			topView.AddSubview (topImageView);
 			topView.AddSubview (topHR);
-
-
-
 			contentView = new UIView {
 				Frame = new RectangleF (0,
 					topView.Frame.Height + topView.Frame.Y,
@@ -73,8 +80,6 @@ namespace CivilPrototype
 					Bounds.Height - topView.Frame.Height),
 				BackgroundColor = UIColor.White
 			};
-
-
 			titleView = new UITextView {
 				Text = "Civil",
 				TextColor = DesignConstants.dgrey,
@@ -97,7 +102,6 @@ namespace CivilPrototype
 					15 + titleView.Frame.Y + titleView.Frame.Height,
 					inputViewWidth,
 					(DesignConstants.TextFieldHeight * 2) + 15)
-
 			};
 			usernameField = new UITextField {
 				Placeholder = "Username",
@@ -114,7 +118,6 @@ namespace CivilPrototype
 					DesignConstants.TextFieldHeight + 2,
 					inputView.Bounds.Width - 20,
 					1),
-
 			};
 			passwordField = new UITextField {
 				Placeholder = "Password",
@@ -129,16 +132,11 @@ namespace CivilPrototype
 			inputView.Add (usernameField);
 			inputView.Add (passwordField);
 			inputView.Add (contentHR);
+
 			var submitButton = UIButton.FromType (DesignConstants.ButtonType);
-
 			submitButton.SetTitleColor (UIColor.White, UIControlState.Normal);
-
-			UIImage greenButtonImage = UIImage.FromFile ("login.png").CreateResizableImage (new UIEdgeInsets (18, 18, 18, 18));
-			submitButton.SetBackgroundImage (greenButtonImage, UIControlState.Normal);
-
-			UIImage greenButtonImageDark = UIImage.FromFile ("loginDark.png").CreateResizableImage (new UIEdgeInsets (18, 18, 18, 18));
-			submitButton.SetBackgroundImage (greenButtonImageDark, UIControlState.Highlighted);
-
+			submitButton.SetBackgroundImage (loginImage, UIControlState.Normal);
+			submitButton.SetBackgroundImage (loginImageDark, UIControlState.Highlighted);
 			submitButton.Frame = new RectangleF (DesignConstants.ButtonFrameX,
 				inputView.Frame.Y + inputView.Frame.Height + 20,
 				Bounds.Width + DesignConstants.ButtonWidth,
@@ -151,6 +149,7 @@ namespace CivilPrototype
 				string password = passwordField.Text;
 				LoginUserAsync (username, password);
 			};
+
 			var minorButtonsView = new UIView {
 
 				Frame = new RectangleF (DesignConstants.ButtonFrameX,
@@ -159,37 +158,34 @@ namespace CivilPrototype
 					DesignConstants.ButtonHeight),
 
 			};
+
 			var createAccountButton = UIButton.FromType (DesignConstants.ButtonType);
-
 			createAccountButton.SetTitleColor (DesignConstants.dgrey, UIControlState.Normal);
-
-			UIImage grayButtonImage = UIImage.FromFile ("createAcc.png").CreateResizableImage (new UIEdgeInsets (18, 18, 18, 18));
-			createAccountButton.SetBackgroundImage (grayButtonImage, UIControlState.Normal);
-
-			UIImage grayButtonImageDark = UIImage.FromFile ("createAccDark.png").CreateResizableImage (new UIEdgeInsets (18, 18, 18, 18));
-			createAccountButton.SetBackgroundImage (grayButtonImageDark, UIControlState.Highlighted);
-
-			createAccountButton.Frame = new RectangleF (minorButtonsView.Bounds.Width * .40f,
-				0,
-				minorButtonsView.Bounds.Width * .60f,
-				DesignConstants.ButtonHeight);
-
+			createAccountButton.SetBackgroundImage (createImage, UIControlState.Normal);
+			createAccountButton.SetBackgroundImage (createImageDark, UIControlState.Highlighted);
 			createAccountButton.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.NormalButtonFontSize);
 			createAccountButton.SetTitle ("Create Account", UIControlState.Normal);
+			createAccountButton.Frame = new RectangleF (minorButtonsView.Bounds.Width * minorButtonsForgotShare,
+				0,
+				minorButtonsView.Bounds.Width * minorButtonsCreateShare,
+				DesignConstants.ButtonHeight);
 			createAccountButton.TouchUpInside += delegate {
 				rootControl.NavigationController.PushViewController (new CreateAccountController (rootControl.NavigationController), true);
 
 			};
 			var forgotPassword = UIButton.FromType (UIButtonType.RoundedRect);
-			forgotPassword.Frame = new RectangleF (0, 0, minorButtonsView.Bounds.Width * .40f, DesignConstants.ButtonHeight);
+			forgotPassword.Frame = new RectangleF (0, 0, minorButtonsView.Bounds.Width * minorButtonsForgotShare, DesignConstants.ButtonHeight);
 			forgotPassword.Font = UIFont.FromName (DesignConstants.ButtonFontStyle, DesignConstants.NormalButtonFontSize);
 			forgotPassword.SetTitle ("Forgot Password", UIControlState.Normal);
+
 			minorButtonsView.AddSubview (createAccountButton);
 			minorButtonsView.AddSubview (forgotPassword);
+
 			contentView.AddSubview (titleView);
 			contentView.AddSubview (inputView);
 			contentView.AddSubview (submitButton);
 			contentView.AddSubview (minorButtonsView);
+
 			AddSubview (topView);
 			AddSubview (contentView);
 		}
