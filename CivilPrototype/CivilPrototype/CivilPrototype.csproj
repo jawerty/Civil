@@ -113,6 +113,25 @@
     <BundleResource Include="Resources\loginDark.png" />
     <BundleResource Include="Resources\iphone.png" />
     <BundleResource Include="Resources\leaf.png" />
+    <BundleResource Include="Resources\crossed_stripes.png" />
+    <BundleResource Include="Resources\civil.png" />
+    <BundleResource Include="Resources\Icon-60.png" />
+    <BundleResource Include="Resources\Icon-72.png" />
+    <BundleResource Include="Resources\Icon-72%402x.png" />
+    <BundleResource Include="Resources\Icon-Small-50.png" />
+    <BundleResource Include="Resources\Icon-Small-50%402x.png" />
+    <BundleResource Include="Resources\Icon.png" />
+    <BundleResource Include="Resources\Icon%402x.png" />
+    <BundleResource Include="Resources\AppIcon.appiconset\Icon-40.png" />
+    <BundleResource Include="Resources\AppIcon.appiconset\Icon-40%402x.png" />
+    <BundleResource Include="Resources\AppIcon.appiconset\Icon-40%403x.png" />
+    <BundleResource Include="Resources\AppIcon.appiconset\Icon-60%402x.png" />
+    <BundleResource Include="Resources\AppIcon.appiconset\Icon-60%403x.png" />
+    <BundleResource Include="Resources\AppIcon.appiconset\Icon-76.png" />
+    <BundleResource Include="Resources\AppIcon.appiconset\Icon-76%402x.png" />
+    <BundleResource Include="Resources\AppIcon.appiconset\Icon-Small.png" />
+    <BundleResource Include="Resources\AppIcon.appiconset\Icon-Small%402x.png" />
+    <BundleResource Include="Resources\AppIcon.appiconset\Icon-Small%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -157,5 +176,9 @@
     <Folder Include="Controllers\" />
     <Folder Include="Static\" />
     <Folder Include="Abstracts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="Resources\iTunesArtwork.png" />
+    <ITunesArtwork Include="Resources\iTunesArtwork%402x.png" />
   </ItemGroup>
 </Project>
