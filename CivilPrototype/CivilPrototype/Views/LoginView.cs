@@ -94,8 +94,8 @@ namespace CivilPrototype
 										DesignConstants.ButtonHeight),
 			};
 			submitButton.TouchUpInside += delegate {
-				string username = usernameField.Text;
-				string password = passwordField.Text;
+				string username = ((UITextField)inputView.Subviews[0]).Text;
+				string password = ((UITextField)inputView.Subviews[2]).Text;
 				LoginUserAsync (username, password);
 			};
 

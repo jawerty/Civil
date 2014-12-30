@@ -1,6 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone5s.8.1" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="CivilPrototype/Controllers/FlyoutNavigationController.cs">
+    <Files>
+      <File FileName="CivilPrototype/Controllers/CreateAccountController.cs" Line="4" Column="4" />
+      <File FileName="CivilPrototype/Views/LoginView.cs" Line="57" Column="57" />
+      <File FileName="CivilPrototype/Static/Main.cs" Line="1" Column="1" />
+      <File FileName="CivilPrototype/Controllers/FlyoutNavigationController.cs" Line="4" Column="4" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

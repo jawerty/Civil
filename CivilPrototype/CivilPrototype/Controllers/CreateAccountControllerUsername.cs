@@ -13,40 +13,32 @@ using MonoTouch.CoreGraphics;
 
 namespace CivilPrototype
 {
-	public class CreateAccountController : UIViewController
+	public class CreateAccountControllerUsername : UIViewController
 	{
-		UINavigationController navigation;
 		float skillsListHeight;
-		public CreateAccountController (UINavigationController nav) : base ()
+		public CreateAccountControllerUsername () : base ()
 		{
-			navigation = nav;
 		}
 
 		public override void DidReceiveMemoryWarning ()
 		{
 			// Releases the view if it doesn't have a superview.
 			base.DidReceiveMemoryWarning ();
-			
+
 			// Release any cached data, images, etc that aren't in use.
-		}
-		public override void ViewWillAppear (bool animated)
-		{
-			base.ViewWillAppear (animated);
-			this.Title = "Sign Up";
 		}
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			NavigationController.NavigationBarHidden = false;
+//			NavigationController.NavigationBarHidden = false;
 //			NavigationController.NavigationBar.Translucent = false;
 //			NavigationController.NavigationBar.BarTintColor = UIColor.White;
 			NavigationItem.Title = "Sign Up";
-			var j = NavigationController.NavigationBar.BackIndicatorTransitionMaskImage;
-			NavigationItem.LeftBarButtonItem = new UIBarButtonItem ("\U000025C0\U0000FE0E Back", UIBarButtonItemStyle.Done, delegate {NavigationController.PopViewControllerAnimated(true);
-			});
 			NSDictionary attributes = NSDictionary.FromObjectAndKey(UIFont.FromName("GeosansLight",30),UIStringAttributeKey.Font);
 			NavigationController.NavigationBar.TitleTextAttributes = new UIStringAttributes (attributes);
 			var s = new UIBarButtonItem (new UIImageView{Image = UIImage.FromFile("civil.png"),Frame = new RectangleF(0,0,35,40)});
+			NavigationItem.LeftBarButtonItem = new UIBarButtonItem ("\U000025C0\U0000FE0E Back", UIBarButtonItemStyle.Done, delegate {NavigationController.PopViewControllerAnimated(true);
+			});
 			s.Width = 50;
 			this.NavigationItem.SetRightBarButtonItem (s,true);
 			CAGradientLayer gradient = new CAGradientLayer ();
@@ -58,38 +50,52 @@ namespace CivilPrototype
 			View.ClipsToBounds = true;
 			UITextView header, subHeader;
 			UIView vLine;
-			UITextField emailField;
+			UITextField usernameField, passwordField, confirmPasswordField;
 			RoundableUILabel emailLabel;
 			UIButton nextButton;
-			header = new CHeader("Enter an email") {
+			header = new CHeader("Now enter a username and a password") {
 
 				Frame = new RectangleF (DesignConstants.GetMiddleX (View.Bounds.Width, View.Bounds.Width - 20), 25, View.Bounds.Width - 20, 160),
+				Font = UIFont.FromName("GeosansLight",25),
 			};
-			subHeader = new CSubHeader("We promise no spam!"){
-				Frame = new RectangleF (DesignConstants.GetMiddleX (View.Bounds.Width, View.Bounds.Width - 20), header.Frame.Y + header.Frame.Height, View.Bounds.Width - 20, 30),
-			};
-			emailField = new CTextFieldWLabel(new RectangleF(DesignConstants.GetMiddleX(View.Bounds.Width,300),subHeader.Frame.Y + subHeader.Frame.Height + 20,300,50), "Email")
+			usernameField = new CTextFieldWLabel(new RectangleF(DesignConstants.GetMiddleX(View.Bounds.Width,300),header.Frame.Y + header.Frame.Height + 20,300,50), "Username")
 			{
 				BorderStyle = UITextBorderStyle.RoundedRect,
-				Frame = new RectangleF(DesignConstants.GetMiddleX(View.Bounds.Width,300),subHeader.Frame.Y + subHeader.Frame.Height + 20,300,50),
 				LeftViewMode = UITextFieldViewMode.Always,
-				BackgroundColor = UIColor.White
+				BackgroundColor = UIColor.White,
+				SecureTextEntry = false
+			};
+			passwordField = new CTextFieldWLabel(new RectangleF(DesignConstants.GetMiddleX(View.Bounds.Width,300),usernameField.Frame.Y + usernameField.Frame.Height + 20,300,50), "Password")
+			{
+				BorderStyle = UITextBorderStyle.RoundedRect,
+				LeftViewMode = UITextFieldViewMode.Always,
+				BackgroundColor = UIColor.White,
+				SecureTextEntry = true
+			};
+			confirmPasswordField = new CTextFieldWLabel(new RectangleF(DesignConstants.GetMiddleX(View.Bounds.Width,300),passwordField.Frame.Y + passwordField.Frame.Height + 5,300,50), "Confirm")
+			{
+				BorderStyle = UITextBorderStyle.RoundedRect,
+				LeftViewMode = UITextFieldViewMode.Always,
+				BackgroundColor = UIColor.White,
+				SecureTextEntry = true
 			};
 			nextButton = new CGreenButton ("Next"){
 				Frame = new RectangleF (DesignConstants.GetMiddleX(View.Bounds.Width,View.Bounds.Width-100),
-					subHeader.Frame.Y + subHeader.Frame.Height + emailField.Bounds.Height + 50,
+					confirmPasswordField.Frame.Y + confirmPasswordField.Frame.Height + 50,
 					View.Bounds.Width - 100,
 					DesignConstants.ButtonHeight),
 			};
 			nextButton.TouchUpInside += delegate {
-				navigation.PushViewController (new CreateAccountControllerUsername(), true);
-				NSUserDefaults.StandardUserDefaults.SetBool(true,"creatingAccount");
-				NSUserDefaults.StandardUserDefaults.SetString(emailField.Text,"createAccountEmail");
+				NavigationController.PushViewController (new CreateAccountControllerReview(), true);
+				NSUserDefaults.StandardUserDefaults.SetString(usernameField.Text,"createAccountUsername");
+				NSUserDefaults.StandardUserDefaults.SetString(passwordField.Text,"createAccountPassword");
+				NSUserDefaults.StandardUserDefaults.SetString(confirmPasswordField.Text,"createAccountConfirmPassword");
 			};
 
 			View.AddSubview (header);
-			View.AddSubview (subHeader);
-			View.AddSubview(emailField);
+			View.AddSubview(usernameField);
+			View.AddSubview(passwordField);
+			View.AddSubview(confirmPasswordField);
 			View.AddSubview (nextButton);
 			// Perform any additional setup after loading the view, typically from a nib.
 		}

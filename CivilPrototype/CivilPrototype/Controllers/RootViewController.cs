@@ -22,11 +22,13 @@ namespace CivilPrototype
 		public override void ViewWillAppear (bool animated)
 		{
 			base.ViewDidAppear (animated);
+			ViewDidLoad ();
 			NavigationController.NavigationBarHidden = true;
 		}
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
+			NavigationItem.Title = "Back";
 //			DataLayer.SendBitMap ();
 			userLoggedIn = NSUserDefaults.StandardUserDefaults.BoolForKey ("userLoggedIn");
 			NavigationController.NavigationBarHidden = true;

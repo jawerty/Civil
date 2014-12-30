@@ -9,6 +9,7 @@ namespace CivilPrototype
 		public CHeader (string text)
 		{
 			Text = text;
+			Editable = false;
 			TextColor = DesignConstants.dgrey;
 			BackgroundColor = DesignConstants.HeaderBackground;
 			Font = UIFont.FromName (DesignConstants.HeaderFontStyle, DesignConstants.HeaderLargeFontSize);
@@ -26,10 +27,11 @@ namespace CivilPrototype
 		public CSubHeader (string text)
 		{
 			Text = text;
+			Editable = false;
 			Font = UIFont.FromName ("GeosansLight", 20);
 			BackgroundColor = UIColor.Clear;
 			TextAlignment = UITextAlignment.Center;
-			TextColor = UIColor.White;
+			TextColor = DesignConstants.dgrey;
 		}
 	}
 	public class CButton {
@@ -77,6 +79,9 @@ namespace CivilPrototype
 		public CTextFieldWLabel (RectangleF frame, string labelText)
 		{
 			BorderStyle = UITextBorderStyle.RoundedRect;
+			Layer.BorderColor = UIColor.FromRGB (200, 200, 200).CGColor;
+			Layer.BorderWidth = 1;
+			Layer.CornerRadius = 5;
 			LeftViewMode = UITextFieldViewMode.Always;
 			BackgroundColor = UIColor.White;
 			Frame = frame;

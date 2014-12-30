@@ -132,6 +132,7 @@
     <BundleResource Include="Resources\AppIcon.appiconset\Icon-Small.png" />
     <BundleResource Include="Resources\AppIcon.appiconset\Icon-Small%402x.png" />
     <BundleResource Include="Resources\AppIcon.appiconset\Icon-Small%403x.png" />
+    <BundleResource Include="Resources\crossword.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -160,9 +161,10 @@
     <Compile Include="Abstracts\EditableTableViewSource.cs" />
     <Compile Include="Controllers\CreateMovementController.cs" />
     <Compile Include="Abstracts\RoundableUITextView.cs" />
-    <Compile Include="Controllers\CreateAccountController2.cs" />
     <Compile Include="Abstracts\RoundableUILabel.cs" />
     <Compile Include="Static\CiviliOSDefaults.cs" />
+    <Compile Include="Controllers\CreateAccountControllerUsername.cs" />
+    <Compile Include="Controllers\CreateAccountControllerReview.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
