@@ -85,6 +85,15 @@ exports.movementsGET = function(req, res, next) {
 			}]
 		}
 		console.log(new_skip)
+		tquery = tquery.push({
+		     loc:
+		       { $near :
+		          {
+		            $geometry : { type : "Point" , coordinates: location },
+		            $maxDistance : distance
+		          }
+		       }
+		   });
 		movements.aggregate(tquery).skip(new_skip).limit(20).exec(function(err, movementsFound) {
 			if (err) sendERR(err, res);
 			if (movementsFound) {
@@ -126,7 +135,8 @@ exports.movementsPOST = function(req, res, next) {
 			members: [],
 			yays: 1,
 			nays: 1,
-			tags: data.tags
+			tags: data.tags,
+			location: data.location
 		});  
 
 		newMovement.save();
@@ -254,7 +264,7 @@ exports.movementsIdJoinPUT = function(req, res) {
 							} else {
 								foundMovement.members.push(data.username);								
 								foundUser.movements.push(foundMovement._id);
-								
+
 								foundMovement.save();
 								foundUser.save();
 
