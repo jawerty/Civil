@@ -1,5 +1,12 @@
-Add skills editer to create account
-Make create account span multiple pages
+Get glyphicons/Change pngs to transparent
+Clean up resources
+Build movement page design
+Build create movement design
+Make profile design
+Get outline of Civil Feather got flyout nav
+Make settings page in monotouch.dialog
+
+
 and a million other things...
 
 An App for activism, becoming an activist, ordinary people becomign activists

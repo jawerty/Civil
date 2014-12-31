@@ -133,6 +133,9 @@
     <BundleResource Include="Resources\AppIcon.appiconset\Icon-Small%402x.png" />
     <BundleResource Include="Resources\AppIcon.appiconset\Icon-Small%403x.png" />
     <BundleResource Include="Resources\crossword.png" />
+    <BundleResource Include="Resources\discoverImage.png" />
+    <BundleResource Include="Resources\settingsImage.png" />
+    <BundleResource Include="Resources\profileImage.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

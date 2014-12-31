@@ -14,6 +14,7 @@
 
 using System;
 using CivilPrototype;
+using System.Drawing;
 
 
 #if __UNIFIED__
@@ -50,7 +51,6 @@ namespace FlyoutNavigation
 		FlyOutNavigationPosition position;
 		DialogViewController navigation;
 		int selectedIndex;
-		UIView shadowView;
 		bool isOpen = false;
 		#if __UNIFIED__
 		nfloat startX;
@@ -64,7 +64,7 @@ namespace FlyoutNavigation
 
 		public FlyoutNavigationController(IntPtr handle) : base(handle)
 		{
-			Initialize();
+			//InitialshadowViewize();
 		}
 
 		public FlyoutNavigationController(UITableViewStyle navigationStyle = UITableViewStyle.Plain)
@@ -89,7 +89,7 @@ namespace FlyoutNavigation
 			}
 			set {
 				position = value;
-				shadowView.Layer.ShadowOffset = new CGSize(Position == FlyOutNavigationPosition.Left ? -5 : 5, -1);
+				//shadowView.Layer.ShadowOffset = new CGSize(Position == FlyOutNavigationPosition.Left ? -5 : 5, -1);
 			}
 		}
 
@@ -108,20 +108,20 @@ namespace FlyoutNavigation
 					return;
 				hideShadow = value;
 				if (hideShadow) {
-					if (mainView != null)
-						View.InsertSubviewBelow (shadowView, mainView);
+//					if (mainView != null)
+						//View.InsertSubviewBelow (shadowView, mainView);
 				} else {
-					shadowView.RemoveFromSuperview ();
+					//shadowView.RemoveFromSuperview ();
 				}
 
 			}
 		}
 
-		public UIColor ShadowViewColor
-		{
-			get { return shadowView.BackgroundColor; }
-			set { shadowView.BackgroundColor = value; }
-		}
+//		public UIColor ShadowViewColor
+//		{
+//			get { return shadowView.BackgroundColor; }
+//			set { shadowView.BackgroundColor = value; }
+//		}
 
 		public NavigableViewController CurrentViewController { get; private set; }
 
@@ -216,10 +216,11 @@ namespace FlyoutNavigation
 			public string AccessibilityId {get;set;}
 		}
 
-		void Initialize(UITableViewStyle navigationStyle = UITableViewStyle.Plain)
+		void Initialize(UITableViewStyle navigationStyle = UITableViewStyle.Grouped)
 		{
 			DisableStatusBarMoving = true;
 			statusImage = new UAUIView{ ClipsToBounds = true, AccessibilityId = "statusbar" };//.SetAccessibilityId( "statusbar");
+			statusImage.BackgroundColor = UIColor.Blue;
 			navigation = new DialogViewController(navigationStyle, null);
 			navigation.OnSelection += NavigationItemSelected;
 			CGRect navFrame = navigation.View.Frame;
@@ -233,23 +234,24 @@ namespace FlyoutNavigation
 			//		//Delegate = new SearchDelegate (this),
 			//		TintColor = TintColor
 			//	};
-
-			TintColor = UIColor.Black;
 			var version = new System.Version(UIDevice.CurrentDevice.SystemVersion);
 			isIos8 = version.Major >= 8;
 			isIos7 = version.Major >= 7;
 			if(isIos7)
 				navigation.TableView.TableHeaderView = new UIView(new CGRect(0, 0, 320, 22))
 			{
-				BackgroundColor = UIColor.Clear
+				BackgroundColor = UIColor.White,
 			};
 			navigation.TableView.TableFooterView = new UIView(new CGRect(0, 0, 100, 100)) {BackgroundColor = UIColor.Clear};
+			navigation.View.AddSubview (new UIImageView (new RectangleF (39, 300, 100, 100)){ Image = UIImage.FromFile ("civil.png") });
 			navigation.TableView.ScrollsToTop = false;
-			shadowView = new UIView(){AccessibilityLabel = "flyOutShadowLayeLabel" , IsAccessibilityElement = true}.SetAccessibilityId("flyOutShadowLayer");
-			shadowView.BackgroundColor = UIColor.White;
-			shadowView.Layer.ShadowOffset = new CGSize(Position == FlyOutNavigationPosition.Left ? -5 : 5, -1);
-			shadowView.Layer.ShadowColor = UIColor.Black.CGColor;
-			shadowView.Layer.ShadowOpacity = .75f;
+			navigation.TableView.SeparatorColor = UIColor.Clear;
+			//navigation.TableView.BackgroundColor = UIColor.Clear;
+//			shadowView = new UIView(){AccessibilityLabel = "flyOutShadowLayeLabel" , IsAccessibilityElement = true}.SetAccessibilityId("flyOutShadowLayer");
+//			shadowView.BackgroundColor = UIColor.White;
+//			shadowView.Layer.ShadowOffset = new CGSize(Position == FlyOutNavigationPosition.Left ? -5 : 5, -1);
+//			shadowView.Layer.ShadowColor = UIColor.Black.CGColor;
+//			shadowView.Layer.ShadowOpacity = .75f;
 			closeButton = new UIButton ();
 			closeButton.AccessibilityLabel = "Close Menu";
 			closeButton.TouchUpInside += delegate { HideMenu(); };
@@ -284,11 +286,11 @@ namespace FlyoutNavigation
 		{
 			if (ShouldStayOpen || mainView == null)
 				return;
-			if (!HideShadow)
-				View.InsertSubviewBelow(shadowView, mainView);
+//			if (!HideShadow)
+//				View.InsertSubviewBelow(shadowView, mainView);
 			navigation.View.Hidden = false;
 			CGRect frame = mainView.Frame;
-			shadowView.Frame = frame;
+			//shadowView.Frame = frame;
 			var translation = panGesture.TranslationInView(View).X;
 			if (panGesture.State == UIGestureRecognizerState.Began)
 			{
@@ -353,15 +355,17 @@ namespace FlyoutNavigation
 		protected void NavigationItemSelected(int index)
 		{
 			selectedIndex = index;
+			navigation.TableView.TableHeaderView.BackgroundColor = UIColor.White;
 			for (int i = 0; i < navigation.Root [0].Count; i++) {
+				navigation.TableView.CellAt (GetIndexPath (i)).TextLabel.Font = UIFont.FromName ("GeosansLight", 25);
 				if (i == index){
 					navigation.TableView.CellAt (GetIndexPath (i)).BackgroundColor = DesignConstants.teal;
 					navigation.TableView.CellAt (GetIndexPath (i)).TextLabel.TextColor = UIColor.White;
-			}
+				}
 				else{
 					navigation.TableView.CellAt (GetIndexPath(i)).BackgroundColor = UIColor.White;
-					navigation.TableView.CellAt (GetIndexPath(i)).TextLabel.TextColor = UIColor.Black;
-		}
+					navigation.TableView.CellAt (GetIndexPath(i)).TextLabel.TextColor = UIColor.FromRGB(75,75,75);
+				}
 
 			}
 			if (viewControllers == null || viewControllers.Length <= index || index < 0)
@@ -412,14 +416,14 @@ namespace FlyoutNavigation
 					//isOpen = true;
 					navigation.View.Hidden = false;
 					closeButton.Frame = mainView.Frame;
-					shadowView.Frame = mainView.Frame;
+					//shadowView.Frame = mainView.Frame;
 					var statusFrame = UIApplication.SharedApplication.StatusBarFrame;
 					statusFrame.X = mainView.Frame.X;
 					statusImage.Frame = statusFrame;
 					if (!ShouldStayOpen)
 						View.AddSubview(closeButton);
-					if (!HideShadow)
-						View.InsertSubviewBelow (shadowView, mainView);
+					//if (!HideShadow)
+					//	View.InsertSubviewBelow (shadowView, mainView);
 					UIView.BeginAnimations("slideMenu");
 					UIView.SetAnimationCurve(UIViewAnimationCurve.EaseIn);
 					//UIView.SetAnimationDuration(2);
@@ -429,7 +433,7 @@ namespace FlyoutNavigation
 					SetLocation(frame);
 					setViewSize();
 					frame = mainView.Frame;
-					shadowView.Frame = frame;
+					//shadowView.Frame = frame;
 					closeButton.Frame = frame;
 					statusFrame.X = mainView.Frame.X;
 					statusImage.Frame = statusFrame;
@@ -458,7 +462,7 @@ namespace FlyoutNavigation
 			var center = new CGPoint(frame.Left + frame.Width/2,
 				frame.Top + frame.Height/2);
 			mainView.Center = center;
-			shadowView.Center = center;
+			//shadowView.Center = center;
 
 			if (Math.Abs(frame.X - 0) > float.Epsilon)
 			{
@@ -489,7 +493,7 @@ namespace FlyoutNavigation
 			this.View.AddSubview(statusImage);
 			foreach (var view in statusImage.Subviews)
 				view.RemoveFromSuperview ();
-			statusImage.AddSubview (image);
+			//statusImage.AddSubview (image);
 			statusImage.Frame = UIApplication.SharedApplication.StatusBarFrame;
 			UIApplication.SharedApplication.StatusBarHidden = true;
 
@@ -522,7 +526,7 @@ namespace FlyoutNavigation
 					//isOpen = false;
 					navigation.FinishSearch();
 					closeButton.RemoveFromSuperview();
-					shadowView.Frame = mainView.Frame;
+					//shadowView.Frame = mainView.Frame;
 					var statusFrame = statusImage.Frame;
 					statusFrame.X = mainView.Frame.X;
 					statusImage.Frame = statusFrame;
@@ -534,7 +538,7 @@ namespace FlyoutNavigation
 							frame.X = 0;
 							setViewSize();
 							SetLocation(frame);
-							shadowView.Frame = frame;
+							//shadowView.Frame = frame;
 							statusFrame.X = 0;
 							statusImage.Frame = statusFrame;
 						}, hideComplete);
@@ -545,7 +549,7 @@ namespace FlyoutNavigation
 		void hideComplete()
 		{
 			hideStatus();
-			shadowView.RemoveFromSuperview();
+			//shadowView.RemoveFromSuperview();
 			navigation.View.Hidden = true;
 		}
 

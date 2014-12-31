@@ -31,6 +31,7 @@ namespace CivilPrototype
 			NavigationItem.Title = "Back";
 //			DataLayer.SendBitMap ();
 			userLoggedIn = NSUserDefaults.StandardUserDefaults.BoolForKey ("userLoggedIn");
+			userLoggedIn = true;
 			NavigationController.NavigationBarHidden = true;
 			if (userLoggedIn) {
 				var discoverView = new DiscoverView (new RectangleF (0, 0, View.Bounds.Width, View.Bounds.Height),this);
@@ -73,13 +74,16 @@ namespace CivilPrototype
 						}
 					},
 				};
+				var s = new CHeader ("Civil");
+				s.Frame = new RectangleF (0, 0, 100, 80);
 				navigation = new FlyoutNavigationController {
 					// Create the navigation menu
-					NavigationRoot = new RootElement ("Navigation") {
-						new Section ("Civil") {
-							new StringElement ("Discover"),
-							new StringElement ("Profile"),
-							new StringElement ("Settings"),
+
+					NavigationRoot = new RootElement ("") {
+						new Section (s) {
+							new ImageStringElement ("Discover",UIImage.FromFile("discoverImage.png").Scale(new SizeF(20,20))),
+							new ImageStringElement ("Profile",UIImage.FromFile("profileImage.png").Scale(new SizeF(20,20))),
+							new ImageStringElement ("Settings",UIImage.FromFile("settingsImage.png").Scale(new SizeF(20,20))),
 						}
 					},
 					// Supply view controllers corresponding to menu items:
