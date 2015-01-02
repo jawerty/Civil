@@ -19,7 +19,7 @@ exports.movementsGET = function(req, res, next) {
 		return r; // returns ratio from -1 to 1
 	}
 
-	function discover(type, location, skip, distance) {
+	function discover(type, location, skip, distance, searchQuery) {
 		var tquery;
 		new_skip = skip * 20;
 
@@ -74,18 +74,28 @@ exports.movementsGET = function(req, res, next) {
 			},  
 			{ 
 			    $sort: { net: 1 } 
-			}]
+			}];
 		} else if (type == "new") {
 			tquery = [{
 				$sort: { dateCreated: -1 }
-			}]
+			}];
+		} else if (type == "search") {
+			if (searchQuery != null) {
+				tquery = [{
+					$text: { $search: searchQuery }
+				}];
+			} else {
+				tquery = [{
+					$sort: { yays: -1 }
+				}];
+			}
 		} else {
 			tquery = [{
 				$sort: { yays: -1 }
-			}]
+			}];
 		}
 		console.log(new_skip)
-		tquery = tquery.push({
+		/*tquery = tquery.push({
 		     loc:
 		       { $near :
 		          {
@@ -93,11 +103,11 @@ exports.movementsGET = function(req, res, next) {
 		            $maxDistance : distance
 		          }
 		       }
-		   });
+		   });*/
 		movements.aggregate(tquery).skip(new_skip).limit(20).exec(function(err, movementsFound) {
 			if (err) sendERR(err, res);
 			if (movementsFound) {
-				res.send(movementsFound)
+				res.send(movementsFound);
 			}
 		});
 
@@ -105,10 +115,10 @@ exports.movementsGET = function(req, res, next) {
 	}
 
 	var query = req.query;
-
 	var type = query.type;
 	console.log(type)
 	var skip =  query.skip;
+	var searchQuery = query.q || null;
 	var location = query.location || "all";
 	
 	//var tags = query.tags || [];
@@ -119,7 +129,7 @@ exports.movementsGET = function(req, res, next) {
 		var distance = query.distance || "25";
 	}
 
-	discover(type, location, skip, distance)
+	discover(type, location, skip, distance, searchQuery)
 
 }	
 	
