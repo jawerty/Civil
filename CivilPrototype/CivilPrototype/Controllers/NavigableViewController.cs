@@ -5,16 +5,18 @@ using System.CodeDom.Compiler;
 using FlyoutNavigation;
 using MonoTouch.Dialog;
 using System.Drawing;
+using System.Threading;
 
 namespace CivilPrototype
 {
 	public partial class NavigableViewController : UIViewController
 	{
-		RoundableUIView sliderMenuButton;
 		RoundableUIView navigationView;
 		RectangleF navRect;
-		RectangleF sliderRect;
+		CustomNavBar navBar;
+		TappableUIView sliderMenuButton;
 		UIView mainView;
+		RectangleF sliderRect;
 		FlyoutNavigationController navControl;
 		public delegate void MovedTouches(MonoTouch.Foundation.NSSet touches, UIEvent evt);
 		public event MovedTouches touchMoved = delegate {};
@@ -22,22 +24,24 @@ namespace CivilPrototype
 		public event BeganTouches touchBegan = delegate {};
 		public delegate void EndedTouches(MonoTouch.Foundation.NSSet touches, UIEvent evt);
 		public event EndedTouches touchEnded = delegate {};
-		public NavigableViewController () : base ()
+		public NavigableViewController (CustomNavBar navBar) : base ()
 		{
-
-		}
-		public RoundableUIView SliderMenuButton{
-
-			get{ return sliderMenuButton; }
-			set{ sliderMenuButton = value; }
-
+			this.navBar = navBar;
 		}
 		public UIView MainView{
-
 			get{ return mainView; }
 			set{ mainView = value; }
+		}
+		private void SlowMethod ()
+		{
+			Thread.Sleep (150);
+			InvokeOnMainThread (delegate {
+				sliderMenuButton.Alpha = 1.0f;
+			});
+		}
+		public void TapSlider(){
 
-
+			sliderMenuButton.TapButton ();
 		}
 		public override void TouchesBegan (NSSet touches, UIEvent evt)
 		{
@@ -46,8 +50,10 @@ namespace CivilPrototype
 			var something = touch.LocationInView (this.View);
 			if(navRect.Contains(something)){
 				if(new RectangleF(new PointF(sliderRect.X+navRect.X,sliderRect.Y+navRect.Y),sliderRect.Size).Contains(something)){
-					sliderMenuButton.Alpha = .5f;
-					navControl.ToggleMenu ();
+					TapSlider ();
+				}
+				else if(new RectangleF(new PointF(navBar.rightButton.Frame.X+navRect.X,navBar.rightButton.Frame.Y+navRect.Y),navBar.rightButton.Frame.Size).Contains(something)){
+					navBar.rightButton.TapButton ();
 				}
 			}
 			touchBegan (touches, evt);
@@ -66,39 +72,28 @@ namespace CivilPrototype
 		{
 			base.ViewDidLoad ();
 			float screenWidth = this.View.Bounds.Width;
-			navRect= new RectangleF(new PointF(0,0),new SizeF(screenWidth,52f));
-			sliderRect = new RectangleF (new PointF (2, 20), new SizeF (30f, 30f));
+			navRect= new RectangleF(new PointF(0,0),new SizeF(screenWidth,60f));
 			navigationView = new RoundableUIView {
-				BackgroundColor = UIColor.Clear,
+				BackgroundColor = UIColor.White,
 				Frame = navRect,
-				CornerRadius = 2
+				CornerRadius = 5
 			};
-			sliderMenuButton = new RoundableUIView
-			{
-				BackgroundColor = DesignConstants.grey,
-				Frame = sliderRect,
-				CornerRadius = 4,
-				Alpha = 1.0f
+			navigationView.Add (new UIView (new RectangleF (0, navigationView.Frame.Height, screenWidth, .5f)){BackgroundColor = UIColor.Black});
+			sliderRect = new RectangleF (new PointF (2, 20), new SizeF (30f, 30f));
+			sliderMenuButton = new CSliderButton (sliderRect);
+			sliderMenuButton.ButtonTapped += delegate {
+				sliderMenuButton.Alpha = .5f;
+				navControl.ToggleMenu ();
+				ThreadPool.QueueUserWorkItem (o => SlowMethod ());
 			};
-			var miniViews = new RoundableUIView{new RoundableUIView{
-					Frame = new RectangleF(new PointF(5f,7.5f),new SizeF(20f,3f)),
-					BackgroundColor = DesignConstants.surfer,
-					CornerRadius = 2
-				},	
-				new RoundableUIView{
-					Frame = new RectangleF(new PointF(5f,13.5f),new SizeF(20f,3f)),
-					BackgroundColor = DesignConstants.surfer,
-					CornerRadius = 2
-				},
-				new RoundableUIView{
-					Frame = new RectangleF(new PointF(5f,20f),new SizeF(20f,3f)),
-					BackgroundColor = DesignConstants.surfer,
-					CornerRadius = 2
+			var headerView = new CHeader (navBar.header) {
+				Frame = new RectangleF (DesignConstants.GetMiddleX(screenWidth,200), 10, 200, 50),
+				Font = UIFont.FromName ("GeosansLight", 30),
 
-				}
 			};
-			sliderMenuButton.AddSubviews (miniViews);
 			navigationView.AddSubview (sliderMenuButton);
+			navigationView.AddSubview (headerView);
+			navigationView.AddSubview (navBar.rightButton);
 			View.AddSubview (navigationView);
 			View.AddSubview (mainView);
 			View.BringSubviewToFront (mainView);
@@ -110,5 +105,9 @@ namespace CivilPrototype
 			set{ navControl = value;}
 
 		}
+	}
+	public class CustomNavBar{
+		public string header{get;set;}
+		public TappableUIView rightButton{ get; set;}
 	}
 }

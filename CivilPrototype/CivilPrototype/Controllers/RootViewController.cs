@@ -16,6 +16,7 @@ namespace CivilPrototype
 		PointF lastTouchLocation;
 		float diff = 0;
 		int timeToUpdate = 0;
+		AddMovementButton postButton;
 		public RootViewController (IntPtr handle) : base (handle)
 		{
 		}
@@ -24,6 +25,14 @@ namespace CivilPrototype
 			base.ViewDidAppear (animated);
 			ViewDidLoad ();
 			NavigationController.NavigationBarHidden = true;
+		}
+		private void SlowMethod ()
+		{
+			Thread.Sleep (100);
+			InvokeOnMainThread (delegate {
+				postButton.Alpha = 1.0f;
+				NavigationController.PushViewController(new CreateMovementController(NavigationController),true);
+			});
 		}
 		public override void ViewDidLoad ()
 		{
@@ -34,8 +43,13 @@ namespace CivilPrototype
 			userLoggedIn = true;
 			NavigationController.NavigationBarHidden = true;
 			if (userLoggedIn) {
+				postButton = new AddMovementButton (View.Bounds.Width);
+				postButton.ButtonTapped += delegate{
+					postButton.Alpha = .5f;
+					ThreadPool.QueueUserWorkItem (o => SlowMethod ());
+				};
 				var discoverView = new DiscoverView (new RectangleF (0, 0, View.Bounds.Width, View.Bounds.Height),this);
-				var discoverController = new NavigableViewController () { 
+				var discoverController = new NavigableViewController (new CustomNavBar(){rightButton = postButton,header = "Discover"}) { 
 					Navigation = navigation, 
 					MainView = discoverView,
 				};
@@ -54,23 +68,15 @@ namespace CivilPrototype
 				discoverController.touchEnded += (touches, evt) => {
 					discoverView.MoveMovement(10000);
 				};
+				var mainProfileView = new MainProfileView (new RectangleF (0, 0, View.Bounds.Width, View.Bounds.Height));
 				var viewsControl = new [] {
 					discoverController,
-					new NavigableViewController () { Navigation = navigation, 
-						MainView = new MainProfileView(new RectangleF(0,0,View.Bounds.Width,View.Bounds.Height)),
+					new NavigableViewController (new CustomNavBar(){rightButton = mainProfileView.EditButton,header = "Profile"}) { Navigation = navigation, 
+						MainView = mainProfileView,
 					},
-					new NavigableViewController () { Navigation = navigation, 
+					new NavigableViewController (new CustomNavBar(){rightButton = postButton,header = "Settings"}) { Navigation = navigation, 
 						MainView = new UIView (View.Bounds) {
-							new UITextView {
-								Text = "Settings",
-								BackgroundColor = DesignConstants.HeaderBackground,
-								Font = UIFont.FromName (DesignConstants.HeaderFontStyle, DesignConstants.HeaderLargeFontSize),
-								TextAlignment = DesignConstants.HeaderAlignment,
-								Frame = new RectangleF (DesignConstants.HeaderFrameX, 
-									DesignConstants.HeaderFrameY, 
-									View.Bounds.Width + DesignConstants.HeaderFrameWidth, 
-									DesignConstants.HeaderFrameHeight),
-							},
+
 						}
 					},
 				};
@@ -81,9 +87,9 @@ namespace CivilPrototype
 
 					NavigationRoot = new RootElement ("") {
 						new Section (s) {
-							new ImageStringElement ("Discover",UIImage.FromFile("discoverImage.png").Scale(new SizeF(20,20))),
-							new ImageStringElement ("Profile",UIImage.FromFile("profileImage.png").Scale(new SizeF(20,20))),
-							new ImageStringElement ("Settings",UIImage.FromFile("settingsImage.png").Scale(new SizeF(20,20))),
+							new ImageStringElement ("Discover",UIImage.FromImage(UIImage.FromFile("idea.png").CGImage,(UIImage.FromFile("idea.png").CurrentScale)*2f,UIImageOrientation.Up)),
+							new ImageStringElement ("Profile",UIImage.FromImage(UIImage.FromFile("user.png").CGImage,(UIImage.FromFile("user.png").CurrentScale)*2f,UIImageOrientation.Up)),
+							new ImageStringElement ("Settings",UIImage.FromImage(UIImage.FromFile("settings.png").CGImage,(UIImage.FromFile("settings.png").CurrentScale)*2f,UIImageOrientation.Up)),
 						}
 					},
 					// Supply view controllers corresponding to menu items:

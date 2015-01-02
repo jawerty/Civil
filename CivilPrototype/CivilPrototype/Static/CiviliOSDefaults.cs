@@ -22,6 +22,33 @@ namespace CivilPrototype
 			BackgroundColor = DesignConstants.grey;
 		}
 	}
+	public class CSliderButton : TappableUIView{
+
+		public CSliderButton(RectangleF frame){
+			Frame = frame;
+			CornerRadius = 4;
+			Alpha = 1.0f;
+			var miniViews = new RoundableUIView{new RoundableUIView{
+					Frame = new RectangleF(new PointF(5f,7.5f),new SizeF(20f,3f)),
+					BackgroundColor = UIColor.FromRGB(0,255,0),
+					CornerRadius = 2
+				},	
+				new RoundableUIView{
+					Frame = new RectangleF(new PointF(5f,13.5f),new SizeF(20f,3f)),
+					BackgroundColor = UIColor.FromRGB(0,255,0),
+					CornerRadius = 2
+				},
+				new RoundableUIView{
+					Frame = new RectangleF(new PointF(5f,20f),new SizeF(20f,3f)),
+					BackgroundColor = UIColor.FromRGB(0,255,0),
+					CornerRadius = 2
+
+				}
+			};
+			AddSubviews (miniViews);
+		}
+
+	}
 	public class CSubHeader : UITextView
 	{
 		public CSubHeader (string text)

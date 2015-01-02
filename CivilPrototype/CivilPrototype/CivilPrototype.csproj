@@ -9,6 +9,8 @@
     <RootNamespace>CivilPrototype</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>CivilPrototype</AssemblyName>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -91,7 +93,6 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
-    <BundleResource Include="Resources\edit.png" />
     <BundleResource Include="Resources\GeosansLight.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
@@ -133,9 +134,12 @@
     <BundleResource Include="Resources\AppIcon.appiconset\Icon-Small%402x.png" />
     <BundleResource Include="Resources\AppIcon.appiconset\Icon-Small%403x.png" />
     <BundleResource Include="Resources\crossword.png" />
-    <BundleResource Include="Resources\discoverImage.png" />
-    <BundleResource Include="Resources\settingsImage.png" />
-    <BundleResource Include="Resources\profileImage.png" />
+    <BundleResource Include="Resources\plus.png" />
+    <BundleResource Include="Resources\idea.png" />
+    <BundleResource Include="Resources\search.png" />
+    <BundleResource Include="Resources\settings.png" />
+    <BundleResource Include="Resources\user.png" />
+    <BundleResource Include="Resources\edit.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -168,6 +172,8 @@
     <Compile Include="Static\CiviliOSDefaults.cs" />
     <Compile Include="Controllers\CreateAccountControllerUsername.cs" />
     <Compile Include="Controllers\CreateAccountControllerReview.cs" />
+    <Compile Include="Abstracts\AddMovementButton.cs" />
+    <Compile Include="Abstracts\TappableUIView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>

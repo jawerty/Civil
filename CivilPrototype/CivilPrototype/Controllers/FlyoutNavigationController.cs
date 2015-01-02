@@ -520,8 +520,7 @@ namespace FlyoutNavigation
 		{
 			if (mainView == null || mainView.Frame.X == 0 || ShouldStayOpen)
 				return;
-			CurrentViewController.SliderMenuButton.Alpha = 1.0f;
-			EnsureInvokedOnMainThread(delegate
+				EnsureInvokedOnMainThread(delegate
 				{
 					//isOpen = false;
 					navigation.FinishSearch();

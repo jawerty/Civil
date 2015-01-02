@@ -23,14 +23,6 @@ namespace CivilPrototype
 		List<MovementID> movementIds;
 		EditProfileButton postButton;
 		UIViewController rootControl;
-		private void SlowMethod ()
-		{
-			Thread.Sleep (300);
-			InvokeOnMainThread (delegate {
-				postButton.BackgroundColor = UIColor.White;
-				rootControl.NavigationController.PushViewController(new CreateMovementController(rootControl.NavigationController),true);
-			});
-		}
 		private async void Initialize(){
 			movementIds = await DataLayer.GetMovements ("pop",0);
 			numMovementsReturned = movementIds.Count;
@@ -135,23 +127,6 @@ namespace CivilPrototype
 			rotationAngle = 0;
 			sizeMovement = new SizeF (250, 225);
 			originMovement = new PointF ((Bounds.Width / 2) - (sizeMovement.Width / 2), (Bounds.Height / 2) - (sizeMovement.Height / 2));
-			postButton = new EditProfileButton (Bounds.Width);
-			postButton.ButtonTapped += (touches, evt) => {
-				postButton.BackgroundColor = DesignConstants.lgrey;
-				ThreadPool.QueueUserWorkItem (o => SlowMethod ());
-			};
-			var header = new UITextView {
-				Text = "Discover",
-				BackgroundColor = DesignConstants.HeaderBackground,
-				Font = UIFont.FromName (DesignConstants.HeaderFontStyle, DesignConstants.HeaderLargeFontSize),
-				TextAlignment = DesignConstants.HeaderAlignment,
-				Frame = new RectangleF (DesignConstants.HeaderFrameX, 
-					DesignConstants.HeaderFrameY, 
-					Bounds.Width + DesignConstants.HeaderFrameWidth, 
-					DesignConstants.HeaderFrameHeight)
-			};
-			Add (header);
-			Add (postButton);
 		}
 		public async void storeNextMovement(int h){
 			var i = currentMovementIndex;

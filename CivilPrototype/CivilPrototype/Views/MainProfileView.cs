@@ -20,6 +20,11 @@ namespace CivilPrototype
 		List<string> listSkills;
 		EditableListView skillsList;
 		bool editing = false;
+		public EditProfileButton EditButton{
+			get{ return editButton; }
+			set { editButton = value; }
+
+		}
 		public async void EditProfileAsync (string id, string username, string password, string passwordCheck, string firstName, string lastName, string email, string movements = "")
 		{
 			await DataLayer.EditUser (id, username, password, passwordCheck, firstName, lastName, email, listSkills);
@@ -60,14 +65,6 @@ namespace CivilPrototype
 			scrollProfileView.CanCancelContentTouches = false;
 			scrollProfileView.ContentSize = new SizeF (Bounds.Width, 825 + skillsList.Height);
 			Add (scrollProfileView);
-		}
-
-		private void SlowMethod ()
-		{
-			Thread.Sleep (300);
-			InvokeOnMainThread (delegate {
-				editButton.BackgroundColor = UIColor.White;
-			});
 		}
 		public MainProfileView (RectangleF frame) :  base()
 		{
@@ -154,12 +151,11 @@ namespace CivilPrototype
 				editing = false;
 			};
 			editButton = new EditProfileButton (Bounds.Width);
-			editButton.ButtonTapped += delegate(NSSet touches, UIEvent evt) {
-				editButton.BackgroundColor = DesignConstants.lgrey;
-				ThreadPool.QueueUserWorkItem (o => SlowMethod ());
+			editButton.ButtonTapped += delegate{
 
 				if (!editing) {
 					editing = true;
+					editButton.Alpha = .5f;
 					InvokeOnMainThread (delegate {
 						scrollProfileView.Add (u);
 						scrollProfileView.Add (e);
@@ -172,6 +168,7 @@ namespace CivilPrototype
 					});
 				} else {
 					editing = false;
+					editButton.Alpha = 1f;
 					InvokeOnMainThread (delegate {
 						u.RemoveFromSuperview ();
 						fn.RemoveFromSuperview ();
@@ -183,16 +180,6 @@ namespace CivilPrototype
 						skillsList.SetEditing(false,true);
 					});
 				}
-			};
-			profileView = new UITextView {
-				Text = "Profile",
-				Font = UIFont.FromName (DesignConstants.HeaderFontStyle, DesignConstants.HeaderLargeFontSize),
-				BackgroundColor = DesignConstants.HeaderBackground,
-				TextAlignment = DesignConstants.HeaderAlignment,
-				Frame = new RectangleF (DesignConstants.HeaderFrameX, 
-					DesignConstants.HeaderFrameY, 
-					Bounds.Width + DesignConstants.HeaderFrameWidth, 
-					DesignConstants.HeaderFrameHeight)
 			};
 			scrollProfileView = new UIScrollView (new RectangleF (0, 50, Bounds.Width, 500)) {
 				new UITextView {
@@ -229,8 +216,6 @@ namespace CivilPrototype
 			scrollProfileView.CanCancelContentTouches = false;
 			scrollProfileView.ContentSize = new SizeF (Bounds.Width, 825 + skillsListHeight);
 			Add (scrollProfileView);
-			Add (profileView);
-			Add (editButton);
 
 		}
 	}
