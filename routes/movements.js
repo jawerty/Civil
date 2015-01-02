@@ -100,7 +100,7 @@ exports.movementsGET = function(req, res, next) {
 		console.log(new_skip);
 
 		if (location != "all") {
-			tquery = tquery.push({
+			tquery.unshift({
 				$geoNear: {
 			        near: { type: "Point", coordinates: [parseFloat(location[0]), parseFloat(location[1])] },
 			        distanceField: distance,
@@ -108,6 +108,7 @@ exports.movementsGET = function(req, res, next) {
 			        includeLocs: "dist.location"
 			    }
 			});
+			console.log(tquery)
 		}
 
 		movements.aggregate(tquery).skip(new_skip).limit(20).exec(function(err, movementsFound) {
