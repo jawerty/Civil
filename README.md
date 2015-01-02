@@ -1,6 +1,10 @@
 # Civil
 Socializing democracy
 
+# Running Civil
+```
+
+mongod --setParameter textSearchEnabled=true
 # API
 The API is based around two root endpoints
 
@@ -117,4 +121,13 @@ DATA
 	username: ...,
 	password: ...
 }
+```
+
+### GET /movements
+```
+Example query
+
+http://localhost:3000/movements?type=hot&skip=0&long=2&lat=2&distance=25
+
+^returns hot movements at 2,2 with a 25 mile radius
 ```
