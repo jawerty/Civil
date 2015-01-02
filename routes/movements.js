@@ -54,13 +54,6 @@ exports.movementsGET = function(req, res, next) {
 			}]
 		} else if (type == "hot") {
 			tquery = [{
-				$geoNear: {
-			        near: { type: "Point", coordinates: [parseFloat(location[0]), parseFloat(location[1])] },
-			        distanceField: distance,
-			        query: { type: "public" },
-			        includeLocs: "dist.location"
-			    }
-			},{
 				$match: { 
 					yays: { $gt: 1 }
 				}
@@ -105,6 +98,17 @@ exports.movementsGET = function(req, res, next) {
 			}];
 		}
 		console.log(new_skip);
+
+		if (location != "all") {
+			tquery = tquery.push({
+				$geoNear: {
+			        near: { type: "Point", coordinates: [parseFloat(location[0]), parseFloat(location[1])] },
+			        distanceField: distance,
+			        query: { type: "public" },
+			        includeLocs: "dist.location"
+			    }
+			});
+		}
 
 		movements.aggregate(tquery).skip(new_skip).limit(20).exec(function(err, movementsFound) {
 			if (err) sendERR(err, res);
