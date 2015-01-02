@@ -54,6 +54,13 @@ exports.movementsGET = function(req, res, next) {
 			}]
 		} else if (type == "hot") {
 			tquery = [{
+				$geoNear: {
+			        near: { type: "Point", coordinates: [parseFloat(location[0]), parseFloat(location[1])] },
+			        distanceField: distance,
+			        query: { type: "public" },
+			        includeLocs: "dist.location"
+			    }
+			},{
 				$match: { 
 					yays: { $gt: 1 }
 				}
@@ -82,7 +89,10 @@ exports.movementsGET = function(req, res, next) {
 		} else if (type == "search") {
 			if (searchQuery != null) {
 				tquery = [{
-					$text: { $search: searchQuery }
+					$match: { $text: { $search: searchQuery } },
+
+				}, { 
+					$sort: { score: { $meta: "textScore" } } 
 				}];
 			} else {
 				tquery = [{
@@ -94,19 +104,12 @@ exports.movementsGET = function(req, res, next) {
 				$sort: { yays: -1 }
 			}];
 		}
-		console.log(new_skip)
-		/*tquery = tquery.push({
-		     loc:
-		       { $near :
-		          {
-		            $geometry : { type : "Point" , coordinates: location },
-		            $maxDistance : distance
-		          }
-		       }
-		   });*/
+		console.log(new_skip);
+
 		movements.aggregate(tquery).skip(new_skip).limit(20).exec(function(err, movementsFound) {
 			if (err) sendERR(err, res);
 			if (movementsFound) {
+				console.log(movementsFound)
 				res.send(movementsFound);
 			}
 		});
@@ -119,7 +122,7 @@ exports.movementsGET = function(req, res, next) {
 	console.log(type)
 	var skip =  query.skip;
 	var searchQuery = query.q || null;
-	var location = query.location || "all";
+	var location = [query.long, query.lat] || "all";
 	
 	//var tags = query.tags || [];
 

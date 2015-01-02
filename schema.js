@@ -44,7 +44,7 @@ var movementsSchema = new Schema({
 	description: {type: String},
 	location: {
 	    type: [Number],  // [<longitude>, <latitude>]
-	    index: '2d'      // create the geospatial index
+	    index: '2dsphere'      // create the geospatial index
     },
     members: [{type: String}],
     tags: [{type: String}],
