@@ -98,7 +98,7 @@ exports.movementsGET = function(req, res, next) {
 			}];
 		}
 		console.log(new_skip);
-
+		console.log([parseFloat(location[0]), parseFloat(location[1])])
 		if (location != "all") {
 			tquery.unshift({
 				$geoNear: {
@@ -108,15 +108,21 @@ exports.movementsGET = function(req, res, next) {
 			        includeLocs: "dist.location"
 			    }
 			});
+			console.log(location)
 			console.log(tquery)
 		}
 
 		movements.aggregate(tquery).skip(new_skip).limit(20).exec(function(err, movementsFound) {
-			if (err) sendERR(err, res);
-			if (movementsFound) {
-				console.log(movementsFound)
-				res.send(movementsFound);
+			if (err) {
+				console.log(err);
+				sendERR(err, res);
+			} else {
+				if (movementsFound) {
+					console.log(movementsFound)
+					res.send(movementsFound);
+				}
 			}
+			
 		});
 
 		
@@ -127,7 +133,12 @@ exports.movementsGET = function(req, res, next) {
 	console.log(type)
 	var skip =  query.skip;
 	var searchQuery = query.q || null;
-	var location = [query.long, query.lat] || "all";
+	if (typeof query.long == "undefined" || typeof query.lat == "undefined") {
+		var location = "all";
+	} else {
+		var location = [query.long, query.lat] || "all";
+	}
+	
 	
 	//var tags = query.tags || [];
 

@@ -44,7 +44,6 @@ var movementsSchema = new Schema({
 	description: {type: String},
 	location: {
 	    type: [Number],  // [<longitude>, <latitude>]
-	    index: '2dsphere'      // create the geospatial index
     },
     members: [{type: String}],
     tags: [{type: String}],
@@ -55,6 +54,8 @@ var movementsSchema = new Schema({
 	coverPicture: {type: String}
 
 });
+
+movementsSchema.index({ location: '2dsphere' });
 
 module.exports = db.model('user', usersSchema, 'user'); 
 module.exports = db.model('movement', movementsSchema, 'movement'); 
