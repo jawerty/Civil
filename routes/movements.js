@@ -20,12 +20,12 @@ exports.movementsGET = function(req, res, next) {
 	}
 
 	function discover(type, location, skip, distance, searchQuery) {
-		var tquery;
+		var pipeline;
 		new_skip = skip * 20;
 
 		if (type == "pop") {
 			sort = {yays: -1, nays: 1};
-			tquery = [	
+			pipeline = [	
 		  	{
 				$project: {
 			    	yays: "$yays",
@@ -53,7 +53,7 @@ exports.movementsGET = function(req, res, next) {
 				$sort: { rate: -1 }
 			}]
 		} else if (type == "hot") {
-			tquery = [{
+			pipeline = [{
 				$match: { 
 					yays: { $gt: 1 }
 				}
@@ -76,31 +76,31 @@ exports.movementsGET = function(req, res, next) {
 			    $sort: { net: 1 } 
 			}];
 		} else if (type == "new") {
-			tquery = [{
+			pipeline = [{
 				$sort: { dateCreated: -1 }
 			}];
 		} else if (type == "search") {
 			if (searchQuery != null) {
-				tquery = [{
+				pipeline = [{
 					$match: { $text: { $search: searchQuery } },
 
 				}, { 
 					$sort: { score: { $meta: "textScore" } } 
 				}];
 			} else {
-				tquery = [{
+				pipeline = [{
 					$sort: { yays: -1 }
 				}];
 			}
 		} else {
-			tquery = [{
+			pipeline = [{
 				$sort: { yays: -1 }
 			}];
 		}
 		console.log("Skip: "+new_skip);
 		console.log([parseFloat(location[0]), parseFloat(location[1])])
 		if (location != "all") {
-			tquery.unshift({
+			pipeline.unshift({
 				$geoNear: {
 			        near: { type: "Point", coordinates: [parseFloat(location[0]), parseFloat(location[1])] },
 			        distanceField: "dist.calculated",
@@ -109,10 +109,10 @@ exports.movementsGET = function(req, res, next) {
 			        maxDistance: 100000
 			    }
 			});
-			console.log(tquery)
+			console.log(pipeline)
 		}
 
-		movements.aggregate(tquery).skip(new_skip).limit(20).exec(function(err, movementsFound) {
+		movements.aggregate(pipeline).skip(new_skip).limit(20).exec(function(err, movementsFound) {
 			if (err) {
 				console.log(err);
 				sendERR(err, res);
