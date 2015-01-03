@@ -97,18 +97,18 @@ exports.movementsGET = function(req, res, next) {
 				$sort: { yays: -1 }
 			}];
 		}
-		console.log(new_skip);
+		console.log("Skip: "+new_skip);
 		console.log([parseFloat(location[0]), parseFloat(location[1])])
 		if (location != "all") {
 			tquery.unshift({
 				$geoNear: {
 			        near: { type: "Point", coordinates: [parseFloat(location[0]), parseFloat(location[1])] },
-			        distanceField: distance,
-			        query: { type: "public" },
-			        includeLocs: "dist.location"
+			        distanceField: "dist.calculated",
+			        includeLocs: "location",
+			        spherical: true,
+			        maxDistance: 100000
 			    }
 			});
-			console.log(location)
 			console.log(tquery)
 		}
 
