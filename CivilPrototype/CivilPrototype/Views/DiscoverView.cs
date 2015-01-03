@@ -127,6 +127,16 @@ namespace CivilPrototype
 			rotationAngle = 0;
 			sizeMovement = new SizeF (250, 225);
 			originMovement = new PointF ((Bounds.Width / 2) - (sizeMovement.Width / 2), (Bounds.Height / 2) - (sizeMovement.Height / 2));
+			var checkImg = new UIImageView (new RectangleF (originMovement.X + 5, originMovement.Y + sizeMovement.Height+ 10, 50, 50)){
+
+				Image = UIImage.FromFile("checkImg.png"),
+			};
+			var exImg = new UIImageView (new RectangleF (checkImg.Frame.X +sizeMovement.Width - 50, checkImg.Frame.Y, 50, 50)){
+
+				Image = UIImage.FromFile("exImg.png"),
+			};
+			Add (checkImg);
+			Add (exImg);
 		}
 		public async void storeNextMovement(int h){
 			var i = currentMovementIndex;

@@ -40,7 +40,6 @@ namespace CivilPrototype
 			NavigationItem.Title = "Back";
 //			DataLayer.SendBitMap ();
 			userLoggedIn = NSUserDefaults.StandardUserDefaults.BoolForKey ("userLoggedIn");
-			userLoggedIn = true;
 			NavigationController.NavigationBarHidden = true;
 			if (userLoggedIn) {
 				postButton = new AddMovementButton (View.Bounds.Width);

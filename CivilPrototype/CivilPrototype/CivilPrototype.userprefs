@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.1" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Views/DiscoverView.cs">
+    <Files>
+      <File FileName="Controllers/RootViewController.cs" Line="83" Column="83" />
+      <File FileName="Static/DataLayer.cs" Line="23" Column="23" />
+      <File FileName="Static/Main.cs" Line="35" Column="35" />
+      <File FileName="Views/DiscoverView.cs" Line="127" Column="127" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

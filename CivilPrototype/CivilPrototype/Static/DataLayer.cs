@@ -64,15 +64,14 @@ namespace CivilPrototype
 			return movement;
 		}
 		public async static Task<List<MovementID>> GetMovements(string type,int skips){
-//			string url = "http://localhost:3000/movements?type=" + type +"&skip=" + skips;
-//			var request = (HttpWebRequest)WebRequest.Create(url);
-//			request.Method = "GET";
-//			var response = (HttpWebResponse) await request.GetResponseAsync();
-//
-//			var responseString = new StreamReader (response.GetResponseStream ()).ReadToEnd ();
-//			var responseObj = JsonConvert.DeserializeObject<List<MovementID>>(responseString);
-			//return responseObj;
-			return new List<MovementID>{};
+			string url = "http://localhost:3000/movements?type=" + type +"&skip=" + skips;
+			var request = (HttpWebRequest)WebRequest.Create(url);
+			request.Method = "GET";
+			var response = (HttpWebResponse) await request.GetResponseAsync();
+
+			var responseString = new StreamReader (response.GetResponseStream ()).ReadToEnd ();
+			var responseObj = JsonConvert.DeserializeObject<List<MovementID>>(responseString);
+			return responseObj;
 		}
 		public async static Task<string> CreateMovement(string title,string description){
 
